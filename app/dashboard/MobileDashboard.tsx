@@ -208,6 +208,50 @@ export default function MobileDashboard() {
             </div>
           </div>
         </div>
+        {/* Balance History */}
+      <div className="bg-white p-4 rounded-xl">
+        <h2 className="text-lg font-semibold mb-4">Balance History</h2>
+        <div>
+          <LineChart 
+            width={340} 
+            height={200} 
+            data={[
+              { month: 'Jul', value: 200 },
+              { month: 'Aug', value: 400 },
+              { month: 'Sep', value: 600 },
+              { month: 'Oct', value: 300 },
+              { month: 'Nov', value: 500 },
+              { month: 'Dec', value: 200 },
+              { month: 'Jan', value: 400 }
+            ]}
+            margin={{ top: 5, right: 5, bottom: 5, left: 5 }}
+          >
+            <XAxis 
+              dataKey="month" 
+              axisLine={false} 
+              tickLine={false}
+            />
+            <YAxis 
+              axisLine={false} 
+              tickLine={false}
+            />
+            <Line
+              type="monotone"
+              dataKey="value"
+              stroke="#4F46E5"
+              strokeWidth={2}
+              dot={false}
+              fill="url(#colorGradient)"
+            />
+            <defs>
+              <linearGradient id="colorGradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#4F46E5" stopOpacity={0.1}/>
+                <stop offset="95%" stopColor="#4F46E5" stopOpacity={0}/>
+              </linearGradient>
+            </defs>
+          </LineChart>
+        </div>
+      </div>
       </main>
       <MobileNav />
     </div>
