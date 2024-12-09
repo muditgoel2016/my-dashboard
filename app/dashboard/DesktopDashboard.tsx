@@ -48,8 +48,8 @@ const EMVChip = ({ className = "" }) => (
       { month: 'Sep', value: 600 },
       { month: 'Oct', value: 300 },
       { month: 'Nov', value: 500 },
-      { name: 'Dec', value: 200 },
-      { name: 'Jan', value: 400 },
+      { month: 'Dec', value: 200 },
+      { month: 'Jan', value: 400 },
     ];
   
     const expenseData = [
@@ -66,64 +66,62 @@ const EMVChip = ({ className = "" }) => (
           <TopBar />
           <main className="p-8">
             <div className="flex flex-col space-y-6">
-              {/* First Row: Cards and Recent Transactions */}
+              {/* First Row: All items equal size */}
               <div className="flex gap-6">
-                <div className="flex gap-6 flex-1">
-                  {/* Dark Card */}
-                  <Card className="bg-gray-800 text-white flex-1">
-                    <CardContent className="p-6">
-                      <div className="flex justify-between mb-8">
-                        <div>
-                          <p className="text-sm opacity-80">Balance</p>
-                          <h2 className="text-2xl font-bold">$5,756</h2>
-                        </div>
-                        <div className="w-12 h-12">
-                          <EMVChip className="w-full h-full" />
-                        </div>
+                {/* Dark Card */}
+                <Card className="bg-gray-800 text-white basis-1/3">
+                  <CardContent className="p-6">
+                    <div className="flex justify-between mb-8">
+                      <div>
+                        <p className="text-sm opacity-80">Balance</p>
+                        <h2 className="text-2xl font-bold">$5,756</h2>
                       </div>
-                      <p className="text-xl tracking-wider mb-4">3778 **** **** 1234</p>
-                      <div className="flex justify-between">
-                        <div>
-                          <p className="text-xs opacity-80">CARD HOLDER</p>
-                          <p>Eddy Cusuma</p>
-                        </div>
-                        <div>
-                          <p className="text-xs opacity-80">VALID THRU</p>
-                          <p>12/22</p>
-                        </div>
+                      <div className="w-12 h-12">
+                        <EMVChip className="w-full h-full" />
                       </div>
-                    </CardContent>
-                  </Card>
+                    </div>
+                    <p className="text-xl tracking-wider mb-4">3778 **** **** 1234</p>
+                    <div className="flex justify-between">
+                      <div>
+                        <p className="text-xs opacity-80">CARD HOLDER</p>
+                        <p>Eddy Cusuma</p>
+                      </div>
+                      <div>
+                        <p className="text-xs opacity-80">VALID THRU</p>
+                        <p>12/22</p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
   
-                  {/* Light Card */}
-                  <Card className="flex-1">
-                    <CardContent className="p-6">
-                      <div className="flex justify-between mb-8">
-                        <div>
-                          <p className="text-sm text-gray-600">Balance</p>
-                          <h2 className="text-2xl font-bold">$5,756</h2>
-                        </div>
-                        <div className="w-12 h-12">
-                          <EMVChipBlack className="w-full h-full" />
-                        </div>
+                {/* Light Card */}
+                <Card className="basis-1/3">
+                  <CardContent className="p-6">
+                    <div className="flex justify-between mb-8">
+                      <div>
+                        <p className="text-sm text-gray-600">Balance</p>
+                        <h2 className="text-2xl font-bold">$5,756</h2>
                       </div>
-                      <p className="text-xl tracking-wider mb-4">3778 **** **** 1234</p>
-                      <div className="flex justify-between">
-                        <div>
-                          <p className="text-xs text-gray-600">CARD HOLDER</p>
-                          <p>Eddy Cusuma</p>
-                        </div>
-                        <div>
-                          <p className="text-xs text-gray-600">VALID THRU</p>
-                          <p>12/22</p>
-                        </div>
+                      <div className="w-12 h-12">
+                        <EMVChipBlack className="w-full h-full" />
                       </div>
-                    </CardContent>
-                  </Card>
-                </div>
+                    </div>
+                    <p className="text-xl tracking-wider mb-4">3778 **** **** 1234</p>
+                    <div className="flex justify-between">
+                      <div>
+                        <p className="text-xs text-gray-600">CARD HOLDER</p>
+                        <p>Eddy Cusuma</p>
+                      </div>
+                      <div>
+                        <p className="text-xs text-gray-600">VALID THRU</p>
+                        <p>12/22</p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
   
                 {/* Recent Transactions */}
-                <Card className="w-96">
+                <Card className="basis-1/3">
                   <CardHeader className="pb-2">
                     <div className="flex justify-between items-center">
                       <CardTitle className="text-lg font-semibold">Recent Transaction</CardTitle>
@@ -161,10 +159,10 @@ const EMVChip = ({ className = "" }) => (
                 </Card>
               </div>
   
-              {/* Second Row: Weekly Activity and Expense Statistics */}
+              {/* Second Row: First item double width */}
               <div className="flex gap-6">
                 {/* Weekly Activity */}
-                <Card className="flex-1">
+                <Card className="basis-2/3">
                   <CardHeader className="pb-2">
                     <CardTitle className="text-lg font-semibold">Weekly Activity</CardTitle>
                   </CardHeader>
@@ -191,7 +189,7 @@ const EMVChip = ({ className = "" }) => (
                 </Card>
   
                 {/* Expense Statistics */}
-                <Card className="flex-1">
+                <Card className="basis-1/3">
                   <CardHeader className="pb-2">
                     <CardTitle className="text-lg font-semibold">Expense Statistics</CardTitle>
                   </CardHeader>
@@ -221,10 +219,10 @@ const EMVChip = ({ className = "" }) => (
                 </Card>
               </div>
   
-              {/* Third Row: Quick Transfer and Balance History */}
+              {/* Third Row: Second item double width */}
               <div className="flex gap-6">
                 {/* Quick Transfer */}
-                <Card className="flex-1">
+                <Card className="basis-1/3">
                   <CardHeader>
                     <CardTitle>Quick Transfer</CardTitle>
                   </CardHeader>
@@ -248,7 +246,7 @@ const EMVChip = ({ className = "" }) => (
                 </Card>
   
                 {/* Balance History */}
-                <Card className="flex-1">
+                <Card className="basis-2/3">
                   <CardHeader className="pb-2">
                     <CardTitle className="text-lg font-semibold">Balance History</CardTitle>
                   </CardHeader>
