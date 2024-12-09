@@ -31,260 +31,245 @@ const EMVChip = ({ className = "" }) => (
   </svg>
   );
 
-export default function DesktopDashboard() {
-  const weeklyData = [
-    { name: 'Sat', deposit: 200, withdraw: 400 },
-    { name: 'Sun', deposit: 100, withdraw: 300 },
-    { name: 'Mon', deposit: 250, withdraw: 300 },
-    { name: 'Tue', deposit: 350, withdraw: 450 },
-    { name: 'Wed', deposit: 250, withdraw: 150 },
-    { name: 'Thu', deposit: 230, withdraw: 400 },
-    { name: 'Fri', deposit: 320, withdraw: 400 },
-  ];
-
-  const balanceHistoryData = [
-    { month: 'Jul', value: 200 },
-    { month: 'Aug', value: 400 },
-    { month: 'Sep', value: 600 },
-    { month: 'Oct', value: 300 },
-    { month: 'Nov', value: 500 },
-    { month: 'Dec', value: 200 },
-    { month: 'Jan', value: 400 },
-  ];
-
-  const expenseData = [
-    { name: 'Entertainment', value: 30, color: '#312E81' },
-    { name: 'Bill Expense', value: 15, color: '#F97316' },
-    { name: 'Investment', value: 20, color: '#4F46E5' },
-    { name: 'Others', value: 35, color: '#000000' }
-  ];
-
-  const quickTransferData = [
-    { name: 'Livia Bator', role: 'CEO' },
-    { name: 'Randy Press', role: 'Director' },
-    { name: 'Workman', role: 'Designer' }
-  ];
-
-  return (
-    <div className="min-h-screen bg-gray-50 flex">
-      <Sidenav />
-      <div className="ml-64 flex-1">
-        <TopBar />
-        <main className="p-8">
-                  {/* My Cards Section */}
-                  <div className="mb-8">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-semibold">My Cards</h2>
-              <Button variant="link">See All</Button>
-            </div>
-            <div className="grid grid-cols-2 gap-6">
-              {/* Dark Card */}
-              <Card className="bg-gray-800 text-white">
-                <CardContent className="p-6">
-                  <div className="flex justify-between mb-8">
-                    <div>
-                      <p className="text-sm opacity-80">Balance</p>
-                      <h2 className="text-2xl font-bold">$5,756</h2>
-                    </div>
-                    <div className="w-12 h-12">
-                      <EMVChip className="w-full h-full" />
-                    </div>
-                  </div>
-                  <p className="text-xl tracking-wider mb-4">3778 **** **** 1234</p>
-                  <div className="flex justify-between">
-                    <div>
-                      <p className="text-xs opacity-80">CARD HOLDER</p>
-                      <p>Eddy Cusuma</p>
-                    </div>
-                    <div>
-                      <p className="text-xs opacity-80">VALID THRU</p>
-                      <p>12/22</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Light Card */}
-              <Card>
-                <CardContent className="p-6">
-                  <div className="flex justify-between mb-8">
-                    <div>
-                      <p className="text-sm text-gray-600">Balance</p>
-                      <h2 className="text-2xl font-bold">$5,756</h2>
-                    </div>
-                    <div className="w-12 h-12">
-                      <EMVChipBlack className="w-full h-full" />
-                    </div>
-                  </div>
-                  <p className="text-xl tracking-wider mb-4">3778 **** **** 1234</p>
-                  <div className="flex justify-between">
-                    <div>
-                      <p className="text-xs text-gray-600">CARD HOLDER</p>
-                      <p>Eddy Cusuma</p>
-                    </div>
-                    <div>
-                      <p className="text-xs text-gray-600">VALID THRU</p>
-                      <p>12/22</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 gap-6">
-            <div className="space-y-6">
-              {/* Weekly Activity */}
-              <Card>
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-lg font-semibold">Weekly Activity</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="pt-4">
-                    <div className="flex gap-6 mb-4 justify-end">
-                      <div className="flex items-center gap-2">
-                        <div className="w-3 h-3 rounded-full bg-[#4F46E5]"></div>
-                        <span className="text-sm">Deposit</span>
+  export default function DesktopDashboard() {
+    const weeklyData = [
+      { name: 'Sat', deposit: 200, withdraw: 400 },
+      { name: 'Sun', deposit: 100, withdraw: 300 },
+      { name: 'Mon', deposit: 250, withdraw: 300 },
+      { name: 'Tue', deposit: 350, withdraw: 450 },
+      { name: 'Wed', deposit: 250, withdraw: 150 },
+      { name: 'Thu', deposit: 230, withdraw: 400 },
+      { name: 'Fri', deposit: 320, withdraw: 400 },
+    ];
+  
+    const balanceHistoryData = [
+      { month: 'Jul', value: 200 },
+      { month: 'Aug', value: 400 },
+      { month: 'Sep', value: 600 },
+      { month: 'Oct', value: 300 },
+      { month: 'Nov', value: 500 },
+      { name: 'Dec', value: 200 },
+      { name: 'Jan', value: 400 },
+    ];
+  
+    const expenseData = [
+      { name: 'Entertainment', value: 30, color: '#312E81' },
+      { name: 'Bill Expense', value: 15, color: '#F97316' },
+      { name: 'Investment', value: 20, color: '#4F46E5' },
+      { name: 'Others', value: 35, color: '#000000' }
+    ];
+  
+    return (
+      <div className="min-h-screen bg-gray-50 flex">
+        <Sidenav />
+        <div className="ml-64 flex-1">
+          <TopBar />
+          <main className="p-8">
+            <div className="flex flex-col space-y-6">
+              {/* First Row: Cards and Recent Transactions */}
+              <div className="flex gap-6">
+                <div className="flex gap-6 flex-1">
+                  {/* Dark Card */}
+                  <Card className="bg-gray-800 text-white flex-1">
+                    <CardContent className="p-6">
+                      <div className="flex justify-between mb-8">
+                        <div>
+                          <p className="text-sm opacity-80">Balance</p>
+                          <h2 className="text-2xl font-bold">$5,756</h2>
+                        </div>
+                        <div className="w-12 h-12">
+                          <EMVChip className="w-full h-full" />
+                        </div>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <div className="w-3 h-3 rounded-full bg-black"></div>
-                        <span className="text-sm">Withdraw</span>
-                      </div>
-                    </div>
-                    <BarChart width={500} height={300} data={weeklyData}>
-                      <XAxis dataKey="name" axisLine={false} tickLine={false} />
-                      <YAxis axisLine={false} tickLine={false} />
-                      <Bar dataKey="withdraw" fill="#000000" radius={[4, 4, 0, 0]} />
-                      <Bar dataKey="deposit" fill="#4F46E5" radius={[4, 4, 0, 0]} />
-                    </BarChart>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Quick Transfer */}
-              <Card>
-                <CardHeader>
-                  <CardTitle>Quick Transfer</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex gap-4 mb-6 overflow-x-auto">
-                    {['Livia Bator', 'Randy Press', 'Workman'].map((name, i) => (
-                      <div key={i} className="flex flex-col items-center">
-                        <Avatar className="w-12 h-12 mb-2">
-                          <AvatarImage src={`/api/placeholder/48/48`} />
-                          <AvatarFallback>{name[0]}</AvatarFallback>
-                        </Avatar>
-                        <p className="text-sm font-medium">{name}</p>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="flex gap-2">
-                    <Input placeholder="$525.50" />
-                    <Button>Send</Button>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Balance History */}
-              <Card>
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-lg font-semibold">Balance History</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <LineChart width={500} height={300} data={balanceHistoryData}>
-                    <XAxis dataKey="month" axisLine={false} tickLine={false} />
-                    <YAxis axisLine={false} tickLine={false} />
-                    <Line 
-                      type="monotone" 
-                      dataKey="value" 
-                      stroke="#4F46E5" 
-                      strokeWidth={2}
-                      dot={false}
-                      fill="url(#colorGradient)"
-                    />
-                    <defs>
-                      <linearGradient id="colorGradient" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#4F46E5" stopOpacity={0.1}/>
-                        <stop offset="95%" stopColor="#4F46E5" stopOpacity={0}/>
-                      </linearGradient>
-                    </defs>
-                  </LineChart>
-                </CardContent>
-              </Card>
-            </div>
-
-            <div className="space-y-6">
-              {/* Recent Transactions */}
-              <Card>
-                <CardHeader className="pb-2">
-                  <div className="flex justify-between items-center">
-                    <CardTitle className="text-lg font-semibold">Recent Transaction</CardTitle>
-                    <Button variant="link" className="text-[#4F46E5]">See All</Button>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-yellow-50 rounded-full flex items-center justify-center">
-                          📄
+                      <p className="text-xl tracking-wider mb-4">3778 **** **** 1234</p>
+                      <div className="flex justify-between">
+                        <div>
+                          <p className="text-xs opacity-80">CARD HOLDER</p>
+                          <p>Eddy Cusuma</p>
                         </div>
                         <div>
-                          <p className="font-medium">Deposit from my Card</p>
-                          <p className="text-sm text-gray-500">28 January 2021</p>
+                          <p className="text-xs opacity-80">VALID THRU</p>
+                          <p>12/22</p>
                         </div>
                       </div>
-                      <span className="text-red-500 font-medium">-$850</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center">
-                          🅿️
+                    </CardContent>
+                  </Card>
+  
+                  {/* Light Card */}
+                  <Card className="flex-1">
+                    <CardContent className="p-6">
+                      <div className="flex justify-between mb-8">
+                        <div>
+                          <p className="text-sm text-gray-600">Balance</p>
+                          <h2 className="text-2xl font-bold">$5,756</h2>
+                        </div>
+                        <div className="w-12 h-12">
+                          <EMVChipBlack className="w-full h-full" />
+                        </div>
+                      </div>
+                      <p className="text-xl tracking-wider mb-4">3778 **** **** 1234</p>
+                      <div className="flex justify-between">
+                        <div>
+                          <p className="text-xs text-gray-600">CARD HOLDER</p>
+                          <p>Eddy Cusuma</p>
                         </div>
                         <div>
-                          <p className="font-medium">Deposit Paypal</p>
-                          <p className="text-sm text-gray-500">25 January 2021</p>
+                          <p className="text-xs text-gray-600">VALID THRU</p>
+                          <p>12/22</p>
                         </div>
                       </div>
-                      <span className="text-green-500 font-medium">+$2,500</span>
+                    </CardContent>
+                  </Card>
+                </div>
+  
+                {/* Recent Transactions */}
+                <Card className="w-96">
+                  <CardHeader className="pb-2">
+                    <div className="flex justify-between items-center">
+                      <CardTitle className="text-lg font-semibold">Recent Transaction</CardTitle>
+                      <Button variant="link" className="text-[#4F46E5]">See All</Button>
                     </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Expense Statistics */}
-              <Card>
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-lg font-semibold">Expense Statistics</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <PieChart width={300} height={300}>
-                    <Pie
-                      data={expenseData}
-                      cx={150}
-                      cy={150}
-                      outerRadius={120}
-                      dataKey="value"
-                    >
-                      {expenseData.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={entry.color} />
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 bg-yellow-50 rounded-full flex items-center justify-center">
+                            📄
+                          </div>
+                          <div>
+                            <p className="font-medium">Deposit from my Card</p>
+                            <p className="text-sm text-gray-500">28 January 2021</p>
+                          </div>
+                        </div>
+                        <span className="text-red-500 font-medium">-$850</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center">
+                            🅿️
+                          </div>
+                          <div>
+                            <p className="font-medium">Deposit Paypal</p>
+                            <p className="text-sm text-gray-500">25 January 2021</p>
+                          </div>
+                        </div>
+                        <span className="text-green-500 font-medium">+$2,500</span>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+  
+              {/* Second Row: Weekly Activity and Expense Statistics */}
+              <div className="flex gap-6">
+                {/* Weekly Activity */}
+                <Card className="flex-1">
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-lg font-semibold">Weekly Activity</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="pt-4">
+                      <div className="flex gap-6 mb-4 justify-end">
+                        <div className="flex items-center gap-2">
+                          <div className="w-3 h-3 rounded-full bg-[#4F46E5]"></div>
+                          <span className="text-sm">Deposit</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <div className="w-3 h-3 rounded-full bg-black"></div>
+                          <span className="text-sm">Withdraw</span>
+                        </div>
+                      </div>
+                      <BarChart width={500} height={300} data={weeklyData}>
+                        <XAxis dataKey="name" axisLine={false} tickLine={false} />
+                        <YAxis axisLine={false} tickLine={false} />
+                        <Bar dataKey="withdraw" fill="#000000" radius={[4, 4, 0, 0]} />
+                        <Bar dataKey="deposit" fill="#4F46E5" radius={[4, 4, 0, 0]} />
+                      </BarChart>
+                    </div>
+                  </CardContent>
+                </Card>
+  
+                {/* Expense Statistics */}
+                <Card className="flex-1">
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-lg font-semibold">Expense Statistics</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <PieChart width={300} height={300}>
+                      <Pie
+                        data={expenseData}
+                        cx={150}
+                        cy={150}
+                        outerRadius={120}
+                        dataKey="value"
+                      >
+                        {expenseData.map((entry, index) => (
+                          <Cell key={`cell-${index}`} fill={entry.color} />
+                        ))}
+                      </Pie>
+                    </PieChart>
+                    <div className="flex flex-wrap gap-4 justify-center mt-4">
+                      {expenseData.map((item, index) => (
+                        <div key={index} className="flex items-center gap-2">
+                          <div className="w-3 h-3 rounded-full" style={{ backgroundColor: item.color }}></div>
+                          <span className="text-sm">{item.name} {item.value}%</span>
+                        </div>
                       ))}
-                    </Pie>
-                  </PieChart>
-                  <div className="flex flex-wrap gap-4 justify-center mt-4">
-                    {expenseData.map((item, index) => (
-                      <div key={index} className="flex items-center gap-2">
-                        <div className="w-3 h-3 rounded-full" style={{ backgroundColor: item.color }}></div>
-                        <span className="text-sm">{item.name} {item.value}%</span>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+  
+              {/* Third Row: Quick Transfer and Balance History */}
+              <div className="flex gap-6">
+                {/* Quick Transfer */}
+                <Card className="flex-1">
+                  <CardHeader>
+                    <CardTitle>Quick Transfer</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="flex gap-4 mb-6 overflow-x-auto">
+                      {['Livia Bator', 'Randy Press', 'Workman'].map((name, i) => (
+                        <div key={i} className="flex flex-col items-center">
+                          <Avatar className="w-12 h-12 mb-2">
+                            <AvatarImage src={`/api/placeholder/48/48`} />
+                            <AvatarFallback>{name[0]}</AvatarFallback>
+                          </Avatar>
+                          <p className="text-sm font-medium">{name}</p>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="flex gap-2">
+                      <Input placeholder="$525.50" />
+                      <Button>Send</Button>
+                    </div>
+                  </CardContent>
+                </Card>
+  
+                {/* Balance History */}
+                <Card className="flex-1">
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-lg font-semibold">Balance History</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <LineChart width={500} height={300} data={balanceHistoryData}>
+                      <XAxis dataKey="month" axisLine={false} tickLine={false} />
+                      <YAxis axisLine={false} tickLine={false} />
+                      <Line 
+                        type="monotone" 
+                        dataKey="value" 
+                        stroke="#4F46E5" 
+                        strokeWidth={2}
+                        dot={false}
+                      />
+                    </LineChart>
+                  </CardContent>
+                </Card>
+              </div>
             </div>
-          </div>
-        </main>
+          </main>
+        </div>
       </div>
-    </div>
-  );
-}
+    );
+  }
