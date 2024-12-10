@@ -70,7 +70,7 @@ const EMVChip = ({ className = "" }) => (
               <div className="flex gap-6">
                 {/* Cards Wrapper with Multi-bar */}
                 <div className="flex flex-col basis-2/3">
-                  <div className="bg-white rounded-t-lg border p-3 flex justify-between items-center">
+                  <div className="rounded-t-lg border-x border-t p-3 flex justify-between items-center bg-inherit">
                     <h2 className="text-lg font-semibold">My Cards</h2>
                     <div className="flex gap-2">
                       <Button variant="outline" size="sm">Add Card</Button>
@@ -134,7 +134,7 @@ const EMVChip = ({ className = "" }) => (
   
                 {/* Recent Transactions with Multi-bar */}
                 <div className="flex flex-col basis-1/3">
-                  <div className="bg-white rounded-t-lg border p-3 flex justify-between items-center">
+                  <div className="rounded-t-lg border-x border-t p-3 flex justify-between items-center bg-inherit">
                     <h2 className="text-lg font-semibold">Recent Transactions</h2>
                     <div className="flex gap-2">
                       <Button variant="outline" size="sm">Filter</Button>
@@ -178,7 +178,7 @@ const EMVChip = ({ className = "" }) => (
               <div className="flex gap-6">
                 {/* Weekly Activity with Multi-bar */}
                 <div className="flex flex-col basis-2/3">
-                  <div className="bg-white rounded-t-lg border p-3 flex justify-between items-center">
+                  <div className="rounded-t-lg border-x border-t p-3 flex justify-between items-center bg-inherit">
                     <h2 className="text-lg font-semibold">Weekly Activity</h2>
                     <div className="flex gap-2">
                       <Button variant="outline" size="sm">Last 7 Days</Button>
@@ -211,7 +211,7 @@ const EMVChip = ({ className = "" }) => (
   
                 {/* Expense Statistics with Multi-bar */}
                 <div className="flex flex-col basis-1/3">
-                  <div className="bg-white rounded-t-lg border p-3 flex justify-between items-center">
+                  <div className="rounded-t-lg border-x border-t p-3 flex justify-between items-center bg-inherit">
                     <h2 className="text-lg font-semibold">Expense Statistics</h2>
                     <div className="flex gap-2">
                       <Button variant="outline" size="sm">This Month</Button>
@@ -249,7 +249,7 @@ const EMVChip = ({ className = "" }) => (
               <div className="flex gap-6">
                 {/* Quick Transfer with Multi-bar */}
                 <div className="flex flex-col basis-1/3">
-                  <div className="bg-white rounded-t-lg border p-3 flex justify-between items-center">
+                  <div className="rounded-t-lg border-x border-t p-3 flex justify-between items-center bg-inherit">
                     <h2 className="text-lg font-semibold">Quick Transfer</h2>
                     <div className="flex gap-2">
                       <Button variant="outline" size="sm">History</Button>
@@ -278,7 +278,7 @@ const EMVChip = ({ className = "" }) => (
   
                 {/* Balance History with Multi-bar */}
                 <div className="flex flex-col basis-2/3">
-                  <div className="bg-white rounded-t-lg border p-3 flex justify-between items-center">
+                  <div className="rounded-t-lg border-x border-t p-3 flex justify-between items-center bg-inherit">
                     <h2 className="text-lg font-semibold">Balance History</h2>
                     <div className="flex gap-2">
                       <Button variant="outline" size="sm">This Year</Button>
