@@ -208,49 +208,46 @@ const EMVChip = ({ className = "" }) => (
                     <CardContent className="h-[calc(100%-48px)]">
                       <div className="pt-4">
                         <div className="flex gap-6 mb-4 justify-end">
-                          <div className="flex items-center gap-2">
-                            <div className="w-3 h-3 rounded-full bg-[#4F46E5]"></div>
-                            <span className="text-sm">Deposit</span>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <div className="w-3 h-3 rounded-full bg-black"></div>
-                            <span className="text-sm">Withdraw</span>
-                          </div>
+                      <div className="flex items-center gap-2">
+                        <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#396AFF' }}></div>
+                        <span className="text-sm">Deposit</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#232323' }}></div>
+                          <span className="text-sm">Withdraw</span>
                         </div>
+                      </div>
                         <BarChart
-  width={600} // Adjust width as per the mockup
-  height={300} // Adjust height as per the mockup
-  data={weeklyData}
-  margin={{ top: 20, right: 30, left: 20, bottom: 20 }} // Add spacing around the chart
-  barCategoryGap="50%" // Increase spacing between groups (days)
->
-  <XAxis
-    dataKey="name"
-    axisLine={false}
-    tickLine={false}
-    tick={{ fontSize: 14, fill: '#6B7280' }} // Match font and color in the mockup
-  />
-  <YAxis
-    axisLine={false}
-    tickLine={false}
-    tick={{ fontSize: 14, fill: '#6B7280' }} // Match font and color
-  />
-  <Bar
-    dataKey="withdraw"
-    fill="#232323" // Black color for Withdraw bars
-    barSize={15} // Set bar thickness to 15px
-    radius={[10, 10, 10, 10]} // Rounded top and bottom corners
-  />
-  <Bar
-    dataKey="deposit"
-    fill="#396AFF" // Blue color for Deposit bars
-    barSize={15} // Set bar thickness to 15px
-    radius={[10, 10, 10, 10]} // Rounded top and bottom corners
-  />
-</BarChart>
-
-
-
+                          width={600} // Adjust width as per the mockup
+                          height={300} // Adjust height as per the mockup
+                          data={weeklyData}
+                          margin={{ top: 20, right: 30, left: 20, bottom: 20 }} // Add spacing around the chart
+                          barCategoryGap="50%" // Increase spacing between groups (days)
+                        >
+                          <XAxis
+                            dataKey="name"
+                            axisLine={false}
+                            tickLine={false}
+                            tick={{ fontSize: 14, fill: '#6B7280' }} // Match font and color in the mockup
+                          />
+                          <YAxis
+                            axisLine={false}
+                            tickLine={false}
+                            tick={{ fontSize: 14, fill: '#6B7280' }} // Match font and color
+                          />
+                          <Bar
+                            dataKey="withdraw"
+                            fill="#232323" // Black color for Withdraw bars
+                            barSize={15} // Set bar thickness to 15px
+                            radius={[10, 10, 10, 10]} // Rounded top and bottom corners
+                          />
+                          <Bar
+                            dataKey="deposit"
+                            fill="#396AFF" // Blue color for Deposit bars
+                            barSize={15} // Set bar thickness to 15px
+                            radius={[10, 10, 10, 10]} // Rounded top and bottom corners
+                          />
+                        </BarChart>
                       </div>
                     </CardContent>
                   </Card>
