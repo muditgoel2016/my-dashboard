@@ -61,15 +61,17 @@ const EMVChip = ({ className = "" }) => (
   
     return (
       <div className="min-h-screen bg-gray-50 flex">
-        <Sidenav />
-        <div className="ml-64 flex-1">
-          <TopBar />
-          <main className="p-8">
-            <div className="flex flex-col space-y-6">
-              {/* First Row: All items equal size */}
-              <div className="flex gap-6">
+      <Sidenav />
+      <div className="ml-64 flex-1">
+        <TopBar />
+        <main className="p-8">
+          <div className="flex flex-col space-y-6">
+            {/* First Row */}
+            <div className="flex gap-6">
+              {/* Cards Wrapper */}
+              <div className="flex gap-6 basis-2/3">
                 {/* Dark Card */}
-                <Card className="bg-gray-800 text-white basis-1/3">
+                <Card className="bg-gray-800 text-white flex-1">
                   <CardContent className="p-6">
                     <div className="flex justify-between mb-8">
                       <div>
@@ -93,9 +95,9 @@ const EMVChip = ({ className = "" }) => (
                     </div>
                   </CardContent>
                 </Card>
-  
+
                 {/* Light Card */}
-                <Card className="basis-1/3">
+                <Card className="flex-1">
                   <CardContent className="p-6">
                     <div className="flex justify-between mb-8">
                       <div>
@@ -119,46 +121,46 @@ const EMVChip = ({ className = "" }) => (
                     </div>
                   </CardContent>
                 </Card>
-  
-                {/* Recent Transactions */}
-                <Card className="basis-1/3">
-                  <CardHeader className="pb-2">
-                    <div className="flex justify-between items-center">
-                      <CardTitle className="text-lg font-semibold">Recent Transaction</CardTitle>
-                      <Button variant="link" className="text-[#4F46E5]">See All</Button>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-4">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 bg-yellow-50 rounded-full flex items-center justify-center">
-                            📄
-                          </div>
-                          <div>
-                            <p className="font-medium">Deposit from my Card</p>
-                            <p className="text-sm text-gray-500">28 January 2021</p>
-                          </div>
-                        </div>
-                        <span className="text-red-500 font-medium">-$850</span>
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center">
-                            🅿️
-                          </div>
-                          <div>
-                            <p className="font-medium">Deposit Paypal</p>
-                            <p className="text-sm text-gray-500">25 January 2021</p>
-                          </div>
-                        </div>
-                        <span className="text-green-500 font-medium">+$2,500</span>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
               </div>
-  
+
+              {/* Recent Transactions */}
+              <Card className="basis-1/3">
+                <CardHeader className="pb-2">
+                  <div className="flex justify-between items-center">
+                    <CardTitle className="text-lg font-semibold">Recent Transaction</CardTitle>
+                    <Button variant="link" className="text-[#4F46E5]">See All</Button>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 bg-yellow-50 rounded-full flex items-center justify-center">
+                          📄
+                        </div>
+                        <div>
+                          <p className="font-medium">Deposit from my Card</p>
+                          <p className="text-sm text-gray-500">28 January 2021</p>
+                        </div>
+                      </div>
+                      <span className="text-red-500 font-medium">-$850</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center">
+                          🅿️
+                        </div>
+                        <div>
+                          <p className="font-medium">Deposit Paypal</p>
+                          <p className="text-sm text-gray-500">25 January 2021</p>
+                        </div>
+                      </div>
+                      <span className="text-green-500 font-medium">+$2,500</span>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
               {/* Second Row: First item double width */}
               <div className="flex gap-6">
                 {/* Weekly Activity */}
