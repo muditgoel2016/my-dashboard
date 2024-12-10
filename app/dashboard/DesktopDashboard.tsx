@@ -310,7 +310,6 @@ const EMVChip = ({ className = "" }) => (
                   </Card>
                 </div>
               </div>
-  
               {/* Third Row */}
               <div className="flex gap-6">
                 {/* Quick Transfer */}
@@ -319,26 +318,62 @@ const EMVChip = ({ className = "" }) => (
                     <h2 className="text-lg font-semibold">Quick Transfer</h2>
                   </div>
                   <Card className="flex-1 rounded-none">
-                    <CardContent className="h-[calc(100%-48px)]">
-                      <div className="flex gap-4 mb-6 overflow-x-auto">
-                        {['Livia Bator', 'Randy Press', 'Workman'].map((name, i) => (
-                          <div key={i} className="flex flex-col items-center">
-                            <Avatar className="w-12 h-12 mb-2">
-                              <AvatarImage src={`/api/placeholder/48/48`} />
-                              <AvatarFallback>{name[0]}</AvatarFallback>
-                            </Avatar>
-                            <p className="text-sm font-medium">{name}</p>
+                    <CardContent className="p-6 flex flex-col h-[calc(100%-48px)]">
+                      {/* First Row - 2/3 of total height */}
+                      <div className="flex gap-4 h-2/3 mb-4">
+                        {/* Profile Section - 3/4 width */}
+                        <div className="flex-[3] m-auto overflow-hidden">
+                          <div className="flex gap-4 justify-around overflow-x-hidden">
+                            {[
+                              { name: 'Livia Bator', title: 'CEO', initial: 'L' },
+                              { name: 'Randy Press', title: 'Director', initial: 'R' },
+                              { name: 'Workman', title: 'Designer', initial: 'W' }
+                            ].map((person, i) => (
+                              <div key={i} className="flex flex-col items-center flex-shrink-0">
+                                <Avatar className="w-12 h-12 mb-2">
+                                  <AvatarImage src={`/api/placeholder/48/48`} />
+                                  <AvatarFallback>{person.initial}</AvatarFallback>
+                                </Avatar>
+                                <p className="text-sm font-medium">{person.name}</p>
+                                <p className="text-sm text-gray-500">{person.title}</p>
+                              </div>
+                            ))}
                           </div>
-                        ))}
+                        </div>
+
+                        {/* Scroll Arrow Section - 1/4 width */}
+                        <div className="flex-1 flex items-center justify-center">
+                          <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center cursor-pointer hover:bg-gray-200">
+                            <svg 
+                              width="24" 
+                              height="24" 
+                              viewBox="0 0 24 24" 
+                              fill="none" 
+                              stroke="currentColor" 
+                              strokeWidth="2" 
+                              strokeLinecap="round" 
+                              strokeLinejoin="round"
+                            >
+                              <path d="M9 18l6-6-6-6"/>
+                            </svg>
+                          </div>
+                        </div>
                       </div>
-                      <div className="flex gap-2">
-                        <Input placeholder="$525.50" />
-                        <Button>Send</Button>
+
+                      {/* Second Row - 1/3 of total height */}
+                      <div className="h-1/3 flex items-start">
+                        <div className="flex gap-2 w-full">
+                          <Input 
+                            placeholder="Write Amount" 
+                            defaultValue="$525.50"
+                            className="flex-1 h-12 text-lg" 
+                          />
+                          <Button className="h-12 px-8">Send</Button>
+                        </div>
                       </div>
                     </CardContent>
                   </Card>
                 </div>
-  
                 {/* Balance History */}
                 <div className="flex flex-col basis-2/3 rounded-lg overflow-hidden">
                   <div className="p-3 flex justify-between items-center bg-inherit">
