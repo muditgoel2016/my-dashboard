@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { LineChart, Line, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis } from 'recharts';
+import { LineChart, Line, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid } from 'recharts';
 
 const EMVChip = ({ className = "" }) => (
   <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
@@ -217,37 +217,42 @@ const EMVChip = ({ className = "" }) => (
                           <span className="text-sm">Withdraw</span>
                         </div>
                       </div>
-                        <BarChart
-                          width={600} // Adjust width as per the mockup
-                          height={300} // Adjust height as per the mockup
-                          data={weeklyData}
-                          margin={{ top: 20, right: 30, left: 20, bottom: 20 }} // Add spacing around the chart
-                          barCategoryGap="50%" // Increase spacing between groups (days)
-                        >
-                          <XAxis
-                            dataKey="name"
-                            axisLine={false}
-                            tickLine={false}
-                            tick={{ fontSize: 14, fill: '#6B7280' }} // Match font and color in the mockup
-                          />
-                          <YAxis
-                            axisLine={false}
-                            tickLine={false}
-                            tick={{ fontSize: 14, fill: '#6B7280' }} // Match font and color
-                          />
-                          <Bar
-                            dataKey="withdraw"
-                            fill="#232323" // Black color for Withdraw bars
-                            barSize={15} // Set bar thickness to 15px
-                            radius={[10, 10, 10, 10]} // Rounded top and bottom corners
-                          />
-                          <Bar
-                            dataKey="deposit"
-                            fill="#396AFF" // Blue color for Deposit bars
-                            barSize={15} // Set bar thickness to 15px
-                            radius={[10, 10, 10, 10]} // Rounded top and bottom corners
-                          />
-                        </BarChart>
+                      <BarChart
+                        width={600} // Adjust width as needed
+                        height={300} // Adjust height as needed
+                        data={weeklyData}
+                        margin={{ top: 20, right: 30, left: 20, bottom: 20 }} // Add spacing around the chart
+                        barCategoryGap="50%" // Increase spacing between groups (days)
+                      >
+                        {/* Add horizontal grid lines */}
+                        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E5E7EB" />
+
+                        <XAxis
+                          dataKey="name"
+                          axisLine={false}
+                          tickLine={false}
+                          tick={{ fontSize: 14, fill: '#6B7280' }} // Match font and color
+                        />
+                        <YAxis
+                          axisLine={false}
+                          tickLine={false}
+                          ticks={[0, 100, 200, 300, 400, 500, 600]} // Set specific tick values
+                          domain={[0, 600]} // Explicitly set the range
+                          tick={{ fontSize: 14, fill: '#6B7280' }} // Match font and color
+                        />
+                        <Bar
+                          dataKey="withdraw"
+                          fill="#232323" // Black color for Withdraw bars
+                          barSize={15} // Set bar thickness to 15px
+                          radius={[10, 10, 10, 10]} // Rounded top and bottom corners
+                        />
+                        <Bar
+                          dataKey="deposit"
+                          fill="#396AFF" // Blue color for Deposit bars
+                          barSize={15} // Set bar thickness to 15px
+                          radius={[10, 10, 10, 10]} // Rounded top and bottom corners
+                        />
+                      </BarChart>
                       </div>
                     </CardContent>
                   </Card>
