@@ -217,12 +217,40 @@ const EMVChip = ({ className = "" }) => (
                             <span className="text-sm">Withdraw</span>
                           </div>
                         </div>
-                        <BarChart width={500} height={300} data={weeklyData}>
-                          <XAxis dataKey="name" axisLine={false} tickLine={false} />
-                          <YAxis axisLine={false} tickLine={false} />
-                          <Bar dataKey="withdraw" fill="#000000" radius={[4, 4, 0, 0]} />
-                          <Bar dataKey="deposit" fill="#4F46E5" radius={[4, 4, 0, 0]} />
-                        </BarChart>
+                        <BarChart
+  width={600} // Adjust width as per the mockup
+  height={300} // Adjust height as per the mockup
+  data={weeklyData}
+  margin={{ top: 20, right: 30, left: 20, bottom: 20 }} // Add spacing around the chart
+  barCategoryGap="50%" // Increase spacing between groups (days)
+>
+  <XAxis
+    dataKey="name"
+    axisLine={false}
+    tickLine={false}
+    tick={{ fontSize: 14, fill: '#6B7280' }} // Match font and color in the mockup
+  />
+  <YAxis
+    axisLine={false}
+    tickLine={false}
+    tick={{ fontSize: 14, fill: '#6B7280' }} // Match font and color
+  />
+  <Bar
+    dataKey="withdraw"
+    fill="#232323" // Black color for Withdraw bars
+    barSize={15} // Set bar thickness to 15px
+    radius={[10, 10, 10, 10]} // Rounded top and bottom corners
+  />
+  <Bar
+    dataKey="deposit"
+    fill="#396AFF" // Blue color for Deposit bars
+    barSize={15} // Set bar thickness to 15px
+    radius={[10, 10, 10, 10]} // Rounded top and bottom corners
+  />
+</BarChart>
+
+
+
                       </div>
                     </CardContent>
                   </Card>
