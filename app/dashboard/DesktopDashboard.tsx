@@ -68,9 +68,9 @@ const EMVChip = ({ className = "" }) => (
             <div className="flex flex-col space-y-6">
               {/* First Row */}
               <div className="flex gap-6">
-                {/* Cards Wrapper with Multi-bar */}
-                <div className="flex flex-col basis-2/3">
-                  <div className="rounded-t-lg border-x border-t p-3 flex justify-between items-center bg-inherit">
+                {/* Cards Wrapper */}
+                <div className="flex flex-col basis-2/3 rounded-lg overflow-hidden">
+                  <div className="p-3 flex justify-between items-center bg-inherit">
                     <h2 className="text-lg font-semibold">My Cards</h2>
                     <div className="flex gap-2">
                       <Button variant="outline" size="sm">Add Card</Button>
@@ -132,18 +132,18 @@ const EMVChip = ({ className = "" }) => (
                   </div>
                 </div>
   
-                {/* Recent Transactions with Multi-bar */}
-                <div className="flex flex-col basis-1/3">
-                  <div className="rounded-t-lg border-x border-t p-3 flex justify-between items-center bg-inherit">
+                {/* Recent Transactions */}
+                <div className="flex flex-col basis-1/3 rounded-lg overflow-hidden">
+                  <div className="p-3 flex justify-between items-center bg-inherit">
                     <h2 className="text-lg font-semibold">Recent Transactions</h2>
                     <div className="flex gap-2">
                       <Button variant="outline" size="sm">Filter</Button>
                       <Button variant="outline" size="sm">See All</Button>
                     </div>
                   </div>
-                  <Card className="flex-1 rounded-t-none">
+                  <Card className="flex-1 rounded-none">
                     <CardContent className="h-[calc(100%-48px)]">
-                      <div className="space-y-4">
+                    <div className="space-y-4">
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-3">
                             <div className="w-10 h-10 bg-yellow-50 rounded-full flex items-center justify-center">
@@ -176,18 +176,18 @@ const EMVChip = ({ className = "" }) => (
   
               {/* Second Row */}
               <div className="flex gap-6">
-                {/* Weekly Activity with Multi-bar */}
-                <div className="flex flex-col basis-2/3">
-                  <div className="rounded-t-lg border-x border-t p-3 flex justify-between items-center bg-inherit">
+                {/* Weekly Activity */}
+                <div className="flex flex-col basis-2/3 rounded-lg overflow-hidden">
+                  <div className="p-3 flex justify-between items-center bg-inherit">
                     <h2 className="text-lg font-semibold">Weekly Activity</h2>
                     <div className="flex gap-2">
                       <Button variant="outline" size="sm">Last 7 Days</Button>
                       <Button variant="outline" size="sm">Download</Button>
                     </div>
                   </div>
-                  <Card className="flex-1 rounded-t-none">
+                  <Card className="flex-1 rounded-none">
                     <CardContent className="h-[calc(100%-48px)]">
-                      <div className="pt-4">
+                    <div className="pt-4">
                         <div className="flex gap-6 mb-4 justify-end">
                           <div className="flex items-center gap-2">
                             <div className="w-3 h-3 rounded-full bg-[#4F46E5]"></div>
@@ -209,17 +209,17 @@ const EMVChip = ({ className = "" }) => (
                   </Card>
                 </div>
   
-                {/* Expense Statistics with Multi-bar */}
-                <div className="flex flex-col basis-1/3">
-                  <div className="rounded-t-lg border-x border-t p-3 flex justify-between items-center bg-inherit">
+                {/* Expense Statistics */}
+                <div className="flex flex-col basis-1/3 rounded-lg overflow-hidden">
+                  <div className="p-3 flex justify-between items-center bg-inherit">
                     <h2 className="text-lg font-semibold">Expense Statistics</h2>
                     <div className="flex gap-2">
                       <Button variant="outline" size="sm">This Month</Button>
                     </div>
                   </div>
-                  <Card className="flex-1 rounded-t-none">
+                  <Card className="flex-1 rounded-none">
                     <CardContent className="h-[calc(100%-48px)]">
-                      <PieChart width={300} height={300}>
+                    <PieChart width={300} height={300}>
                         <Pie
                           data={expenseData}
                           cx={150}
@@ -247,17 +247,17 @@ const EMVChip = ({ className = "" }) => (
   
               {/* Third Row */}
               <div className="flex gap-6">
-                {/* Quick Transfer with Multi-bar */}
-                <div className="flex flex-col basis-1/3">
-                  <div className="rounded-t-lg border-x border-t p-3 flex justify-between items-center bg-inherit">
+                {/* Quick Transfer */}
+                <div className="flex flex-col basis-1/3 rounded-lg overflow-hidden">
+                  <div className="p-3 flex justify-between items-center bg-inherit">
                     <h2 className="text-lg font-semibold">Quick Transfer</h2>
                     <div className="flex gap-2">
                       <Button variant="outline" size="sm">History</Button>
                     </div>
                   </div>
-                  <Card className="flex-1 rounded-t-none">
+                  <Card className="flex-1 rounded-none">
                     <CardContent className="h-[calc(100%-48px)]">
-                      <div className="flex gap-4 mb-6 overflow-x-auto">
+                    <div className="flex gap-4 mb-6 overflow-x-auto">
                         {['Livia Bator', 'Randy Press', 'Workman'].map((name, i) => (
                           <div key={i} className="flex flex-col items-center">
                             <Avatar className="w-12 h-12 mb-2">
@@ -276,18 +276,18 @@ const EMVChip = ({ className = "" }) => (
                   </Card>
                 </div>
   
-                {/* Balance History with Multi-bar */}
-                <div className="flex flex-col basis-2/3">
-                  <div className="rounded-t-lg border-x border-t p-3 flex justify-between items-center bg-inherit">
+                {/* Balance History */}
+                <div className="flex flex-col basis-2/3 rounded-lg overflow-hidden">
+                  <div className="p-3 flex justify-between items-center bg-inherit">
                     <h2 className="text-lg font-semibold">Balance History</h2>
                     <div className="flex gap-2">
                       <Button variant="outline" size="sm">This Year</Button>
                       <Button variant="outline" size="sm">Export</Button>
                     </div>
                   </div>
-                  <Card className="flex-1 rounded-t-none">
+                  <Card className="flex-1 rounded-none">
                     <CardContent className="h-[calc(100%-48px)]">
-                      <LineChart width={500} height={300} data={balanceHistoryData}>
+                    <LineChart width={500} height={300} data={balanceHistoryData}>
                         <XAxis dataKey="month" axisLine={false} tickLine={false} />
                         <YAxis axisLine={false} tickLine={false} />
                         <Line 
