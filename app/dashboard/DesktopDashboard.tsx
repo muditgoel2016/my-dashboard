@@ -90,56 +90,73 @@ const EMVChip = ({ className = "" }) => (
                     <span className="text-lg font-semibold hover:underline cursor-pointer">See All</span>
                   </div>
                   <div className="flex gap-6 h-[calc(100%-48px)]">
-                    {/* Dark Card */}
-                    <Card className="bg-gray-800 text-white flex-1">
-                      <CardContent className="p-6">
-                        <div className="flex justify-between mb-8">
-                          <div>
-                            <p className="text-sm opacity-80">Balance</p>
-                            <h2 className="text-2xl font-bold">$5,756</h2>
-                          </div>
-                          <div className="w-12 h-12">
-                            <EMVChip className="w-full h-full" />
-                          </div>
-                        </div>
-                        <p className="text-xl tracking-wider mb-4">3778 **** **** 1234</p>
-                        <div className="flex justify-between">
-                          <div>
-                            <p className="text-xs opacity-80">CARD HOLDER</p>
-                            <p>Eddy Cusuma</p>
-                          </div>
-                          <div>
-                            <p className="text-xs opacity-80">VALID THRU</p>
-                            <p>12/22</p>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-                    {/* Light Card */}
-                    <Card className="flex-1">
-                      <CardContent className="p-6">
-                        <div className="flex justify-between mb-8">
-                          <div>
-                            <p className="text-sm text-gray-600">Balance</p>
-                            <h2 className="text-2xl font-bold">$5,756</h2>
-                          </div>
-                          <div className="w-12 h-12">
-                            <EMVChipBlack className="w-full h-full" />
-                          </div>
-                        </div>
-                        <p className="text-xl tracking-wider mb-4">3778 **** **** 1234</p>
-                        <div className="flex justify-between">
-                          <div>
-                            <p className="text-xs text-gray-600">CARD HOLDER</p>
-                            <p>Eddy Cusuma</p>
-                          </div>
-                          <div>
-                            <p className="text-xs text-gray-600">VALID THRU</p>
-                            <p>12/22</p>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
+               {/* Dark Card */}
+              <Card className="bg-[#31304D] text-white flex-1 rounded-2xl">
+                <CardContent className="p-6 h-[235px] flex flex-col">
+                  {/* Top Row - Balance and Chip */}
+                  <div className="flex-1 flex justify-between">
+                    <div>
+                      <p className="text-sm text-white">Balance</p>
+                      <h2 className="text-2xl font-bold">$5,756</h2>
+                    </div>
+                    <div className="w-12 h-12">
+                      <EMVChip className="w-full h-full" />
+                    </div>
+                  </div>
+
+                  {/* Middle Row - Card Holder and Valid Info */}
+                  <div className="flex-[2] flex justify-between items-center">
+                    <div>
+                      <p className="text-xs text-white">CARD HOLDER</p>
+                      <p className="font-medium">Eddy Cusuma</p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-white">VALID THRU</p>
+                      <p className="font-medium">12/22</p>
+                    </div>
+                  </div>
+
+                  {/* Bottom Row - Card Number and Logo */}
+                  <div className="flex-1 flex justify-between items-center">
+                    <p className="text-xl tracking-wider mb-4">3778 **** **** 1234</p>
+                    <MasterCardLogo />
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Light Card */}
+              <Card className="flex-1 rounded-2xl bg-[#f8faff] border-[#e6efff]">
+                <CardContent className="p-6 h-[235px] flex flex-col">
+                  {/* Top Row - Balance and Chip */}
+                  <div className="flex-1 flex justify-between">
+                    <div>
+                      <p className="text-sm text-[#1a1f36]">Balance</p>
+                      <h2 className="text-2xl font-bold text-[#1a1f36]">$5,756</h2>
+                    </div>
+                    <div className="w-12 h-12">
+                      <EMVChipBlack className="w-full h-full" />
+                    </div>
+                  </div>
+
+                  {/* Middle Row - Card Holder and Valid Info */}
+                  <div className="flex-[2] flex justify-between items-center">
+                    <div>
+                      <p className="text-xs text-[#1a1f36]">CARD HOLDER</p>
+                      <p className="font-medium text-[#1a1f36]">Eddy Cusuma</p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-[#1a1f36]">VALID THRU</p>
+                      <p className="font-medium text-[#1a1f36]">12/22</p>
+                    </div>
+                  </div>
+
+                  {/* Bottom Row - Card Number and Logo */}
+                  <div className="flex-1 flex justify-between items-center">
+                    <p className="text-xl tracking-wider mb-4">3778 **** **** 1234</p>
+                    <MasterCardLogoDark />
+                  </div>
+                </CardContent>
+              </Card>
                   </div>
                 </div>
                 {/* Recent Transactions */}
