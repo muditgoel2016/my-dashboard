@@ -31,6 +31,21 @@ const EMVChip = ({ className = "" }) => (
   </svg>
   );
 
+  const MasterCardLogo = ({ className = "" }) => (
+    <svg width="44" height="30" viewBox="0 0 44 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="15" cy="15" r="15" fill="white" fillOpacity="0.5"/>
+      <circle cx="29" cy="15" r="15" fill="white" fillOpacity="0.5"/>
+    </svg>
+  );
+  
+  // And for the dark version
+  const MasterCardLogoDark = ({ className = "" }) => (
+    <svg width="44" height="30" viewBox="0 0 44 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="15" cy="15" r="15" fill="#1a1f36" fillOpacity="0.5"/>
+      <circle cx="29" cy="15" r="15" fill="#1a1f36" fillOpacity="0.5"/>
+    </svg>
+  );
+
   export default function DesktopDashboard() {
     const weeklyData = [
       { name: 'Sat', deposit: 200, withdraw: 400 },
@@ -72,7 +87,7 @@ const EMVChip = ({ className = "" }) => (
                 <div className="flex flex-col basis-2/3 rounded-lg overflow-hidden">
                   <div className="p-3 flex justify-between items-center bg-inherit">
                     <h2 className="text-lg font-semibold">My Cards</h2>
-                    <span className="text-lg font-semibold hover:underline cursor-pointer">See all</span>
+                    <span className="text-lg font-semibold hover:underline cursor-pointer">See All</span>
                   </div>
                   <div className="flex gap-6 h-[calc(100%-48px)]">
                     {/* Dark Card */}
