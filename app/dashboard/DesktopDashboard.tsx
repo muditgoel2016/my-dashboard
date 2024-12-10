@@ -235,19 +235,39 @@ const EMVChip = ({ className = "" }) => (
                   </div>
                   <Card className="flex-1 rounded-none">
                     <CardContent className="h-[calc(100%-48px)]">
-                      <PieChart width={300} height={300}>
-                        <Pie
-                          data={expenseData}
-                          cx={150}
-                          cy={150}
-                          outerRadius={120}
-                          dataKey="value"
-                        >
-                          {expenseData.map((entry, index) => (
-                            <Cell key={`cell-${index}`} fill={entry.color} />
-                          ))}
-                        </Pie>
-                      </PieChart>
+                    <PieChart width={300} height={300}>
+                    <Pie
+                      data={expenseData}
+                      cx={150}
+                      cy={150}
+                      outerRadius={120}
+                      dataKey="value"
+                      labelLine={false} // Hide the label lines
+                      paddingAngle={2} // Add gap between slices
+                      label={({cx, cy, midAngle, innerRadius, outerRadius, percent, name}) => {
+                        const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+                        const x = cx + radius * Math.cos(-midAngle * Math.PI / 180);
+                        const y = cy + radius * Math.sin(-midAngle * Math.PI / 180);
+                        
+                        return (
+                          <text 
+                            x={x} 
+                            y={y} 
+                            fill="white" 
+                            textAnchor="middle" 
+                            dominantBaseline="middle"
+                          >
+                            <tspan x={x} y={y-10}>{`${(percent * 100).toFixed(0)}%`}</tspan>
+                            <tspan x={x} y={y+10}>{name}</tspan>
+                          </text>
+                        );
+                      }}
+                    >
+                      {expenseData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={entry.color} />
+                      ))}
+                    </Pie>
+                  </PieChart>
                       <div className="flex flex-wrap gap-4 justify-center mt-4">
                         {expenseData.map((item, index) => (
                           <div key={index} className="flex items-center gap-2">
