@@ -61,211 +61,246 @@ const EMVChip = ({ className = "" }) => (
   
     return (
       <div className="min-h-screen bg-gray-50 flex">
-      <Sidenav />
-      <div className="ml-64 flex-1">
-        <TopBar />
-        <main className="p-8">
-          <div className="flex flex-col space-y-6">
-            {/* First Row */}
-            <div className="flex gap-6">
-              {/* Cards Wrapper */}
-              <div className="flex gap-6 basis-2/3">
-                {/* Dark Card */}
-                <Card className="bg-gray-800 text-white flex-1">
-                  <CardContent className="p-6">
-                    <div className="flex justify-between mb-8">
-                      <div>
-                        <p className="text-sm opacity-80">Balance</p>
-                        <h2 className="text-2xl font-bold">$5,756</h2>
-                      </div>
-                      <div className="w-12 h-12">
-                        <EMVChip className="w-full h-full" />
-                      </div>
-                    </div>
-                    <p className="text-xl tracking-wider mb-4">3778 **** **** 1234</p>
-                    <div className="flex justify-between">
-                      <div>
-                        <p className="text-xs opacity-80">CARD HOLDER</p>
-                        <p>Eddy Cusuma</p>
-                      </div>
-                      <div>
-                        <p className="text-xs opacity-80">VALID THRU</p>
-                        <p>12/22</p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                {/* Light Card */}
-                <Card className="flex-1">
-                  <CardContent className="p-6">
-                    <div className="flex justify-between mb-8">
-                      <div>
-                        <p className="text-sm text-gray-600">Balance</p>
-                        <h2 className="text-2xl font-bold">$5,756</h2>
-                      </div>
-                      <div className="w-12 h-12">
-                        <EMVChipBlack className="w-full h-full" />
-                      </div>
-                    </div>
-                    <p className="text-xl tracking-wider mb-4">3778 **** **** 1234</p>
-                    <div className="flex justify-between">
-                      <div>
-                        <p className="text-xs text-gray-600">CARD HOLDER</p>
-                        <p>Eddy Cusuma</p>
-                      </div>
-                      <div>
-                        <p className="text-xs text-gray-600">VALID THRU</p>
-                        <p>12/22</p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-
-              {/* Recent Transactions */}
-              <Card className="basis-1/3">
-                <CardHeader className="pb-2">
-                  <div className="flex justify-between items-center">
-                    <CardTitle className="text-lg font-semibold">Recent Transaction</CardTitle>
-                    <Button variant="link" className="text-[#4F46E5]">See All</Button>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-yellow-50 rounded-full flex items-center justify-center">
-                          📄
-                        </div>
-                        <div>
-                          <p className="font-medium">Deposit from my Card</p>
-                          <p className="text-sm text-gray-500">28 January 2021</p>
-                        </div>
-                      </div>
-                      <span className="text-red-500 font-medium">-$850</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center">
-                          🅿️
-                        </div>
-                        <div>
-                          <p className="font-medium">Deposit Paypal</p>
-                          <p className="text-sm text-gray-500">25 January 2021</p>
-                        </div>
-                      </div>
-                      <span className="text-green-500 font-medium">+$2,500</span>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-              {/* Second Row: First item double width */}
+        <Sidenav />
+        <div className="ml-64 flex-1">
+          <TopBar />
+          <main className="p-8">
+            <div className="flex flex-col space-y-6">
+              {/* First Row */}
               <div className="flex gap-6">
-                {/* Weekly Activity */}
-                <Card className="basis-2/3">
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-lg font-semibold">Weekly Activity</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="pt-4">
-                      <div className="flex gap-6 mb-4 justify-end">
-                        <div className="flex items-center gap-2">
-                          <div className="w-3 h-3 rounded-full bg-[#4F46E5]"></div>
-                          <span className="text-sm">Deposit</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <div className="w-3 h-3 rounded-full bg-black"></div>
-                          <span className="text-sm">Withdraw</span>
-                        </div>
-                      </div>
-                      <BarChart width={500} height={300} data={weeklyData}>
-                        <XAxis dataKey="name" axisLine={false} tickLine={false} />
-                        <YAxis axisLine={false} tickLine={false} />
-                        <Bar dataKey="withdraw" fill="#000000" radius={[4, 4, 0, 0]} />
-                        <Bar dataKey="deposit" fill="#4F46E5" radius={[4, 4, 0, 0]} />
-                      </BarChart>
-                    </div>
-                  </CardContent>
-                </Card>
-  
-                {/* Expense Statistics */}
-                <Card className="basis-1/3">
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-lg font-semibold">Expense Statistics</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <PieChart width={300} height={300}>
-                      <Pie
-                        data={expenseData}
-                        cx={150}
-                        cy={150}
-                        outerRadius={120}
-                        dataKey="value"
-                      >
-                        {expenseData.map((entry, index) => (
-                          <Cell key={`cell-${index}`} fill={entry.color} />
-                        ))}
-                      </Pie>
-                    </PieChart>
-                    <div className="flex flex-wrap gap-4 justify-center mt-4">
-                      {expenseData.map((item, index) => (
-                        <div key={index} className="flex items-center gap-2">
-                          <div className="w-3 h-3 rounded-full" style={{ backgroundColor: item.color }}></div>
-                          <span className="text-sm">{item.name} {item.value}%</span>
-                        </div>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-  
-              {/* Third Row: Second item double width */}
-              <div className="flex gap-6">
-                {/* Quick Transfer */}
-                <Card className="basis-1/3">
-                  <CardHeader>
-                    <CardTitle>Quick Transfer</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="flex gap-4 mb-6 overflow-x-auto">
-                      {['Livia Bator', 'Randy Press', 'Workman'].map((name, i) => (
-                        <div key={i} className="flex flex-col items-center">
-                          <Avatar className="w-12 h-12 mb-2">
-                            <AvatarImage src={`/api/placeholder/48/48`} />
-                            <AvatarFallback>{name[0]}</AvatarFallback>
-                          </Avatar>
-                          <p className="text-sm font-medium">{name}</p>
-                        </div>
-                      ))}
-                    </div>
+                {/* Cards Wrapper with Multi-bar */}
+                <div className="flex flex-col basis-2/3">
+                  <div className="bg-white rounded-t-lg border p-3 flex justify-between items-center">
+                    <h2 className="text-lg font-semibold">My Cards</h2>
                     <div className="flex gap-2">
-                      <Input placeholder="$525.50" />
-                      <Button>Send</Button>
+                      <Button variant="outline" size="sm">Add Card</Button>
+                      <Button variant="outline" size="sm">View All</Button>
                     </div>
-                  </CardContent>
-                </Card>
+                  </div>
+                  <div className="flex gap-6 h-[calc(100%-48px)]">
+                    {/* Dark Card */}
+                    <Card className="bg-gray-800 text-white flex-1">
+                      <CardContent className="p-6">
+                        <div className="flex justify-between mb-8">
+                          <div>
+                            <p className="text-sm opacity-80">Balance</p>
+                            <h2 className="text-2xl font-bold">$5,756</h2>
+                          </div>
+                          <div className="w-12 h-12">
+                            <EMVChip className="w-full h-full" />
+                          </div>
+                        </div>
+                        <p className="text-xl tracking-wider mb-4">3778 **** **** 1234</p>
+                        <div className="flex justify-between">
+                          <div>
+                            <p className="text-xs opacity-80">CARD HOLDER</p>
+                            <p>Eddy Cusuma</p>
+                          </div>
+                          <div>
+                            <p className="text-xs opacity-80">VALID THRU</p>
+                            <p>12/22</p>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
   
-                {/* Balance History */}
-                <Card className="basis-2/3">
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-lg font-semibold">Balance History</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <LineChart width={500} height={300} data={balanceHistoryData}>
-                      <XAxis dataKey="month" axisLine={false} tickLine={false} />
-                      <YAxis axisLine={false} tickLine={false} />
-                      <Line 
-                        type="monotone" 
-                        dataKey="value" 
-                        stroke="#4F46E5" 
-                        strokeWidth={2}
-                        dot={false}
-                      />
-                    </LineChart>
-                  </CardContent>
-                </Card>
+                    {/* Light Card */}
+                    <Card className="flex-1">
+                      <CardContent className="p-6">
+                        <div className="flex justify-between mb-8">
+                          <div>
+                            <p className="text-sm text-gray-600">Balance</p>
+                            <h2 className="text-2xl font-bold">$5,756</h2>
+                          </div>
+                          <div className="w-12 h-12">
+                            <EMVChipBlack className="w-full h-full" />
+                          </div>
+                        </div>
+                        <p className="text-xl tracking-wider mb-4">3778 **** **** 1234</p>
+                        <div className="flex justify-between">
+                          <div>
+                            <p className="text-xs text-gray-600">CARD HOLDER</p>
+                            <p>Eddy Cusuma</p>
+                          </div>
+                          <div>
+                            <p className="text-xs text-gray-600">VALID THRU</p>
+                            <p>12/22</p>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </div>
+                </div>
+  
+                {/* Recent Transactions with Multi-bar */}
+                <div className="flex flex-col basis-1/3">
+                  <div className="bg-white rounded-t-lg border p-3 flex justify-between items-center">
+                    <h2 className="text-lg font-semibold">Recent Transactions</h2>
+                    <div className="flex gap-2">
+                      <Button variant="outline" size="sm">Filter</Button>
+                      <Button variant="outline" size="sm">See All</Button>
+                    </div>
+                  </div>
+                  <Card className="flex-1 rounded-t-none">
+                    <CardContent className="h-[calc(100%-48px)]">
+                      <div className="space-y-4">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 bg-yellow-50 rounded-full flex items-center justify-center">
+                              📄
+                            </div>
+                            <div>
+                              <p className="font-medium">Deposit from my Card</p>
+                              <p className="text-sm text-gray-500">28 January 2021</p>
+                            </div>
+                          </div>
+                          <span className="text-red-500 font-medium">-$850</span>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center">
+                              🅿️
+                            </div>
+                            <div>
+                              <p className="font-medium">Deposit Paypal</p>
+                              <p className="text-sm text-gray-500">25 January 2021</p>
+                            </div>
+                          </div>
+                          <span className="text-green-500 font-medium">+$2,500</span>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+              </div>
+  
+              {/* Second Row */}
+              <div className="flex gap-6">
+                {/* Weekly Activity with Multi-bar */}
+                <div className="flex flex-col basis-2/3">
+                  <div className="bg-white rounded-t-lg border p-3 flex justify-between items-center">
+                    <h2 className="text-lg font-semibold">Weekly Activity</h2>
+                    <div className="flex gap-2">
+                      <Button variant="outline" size="sm">Last 7 Days</Button>
+                      <Button variant="outline" size="sm">Download</Button>
+                    </div>
+                  </div>
+                  <Card className="flex-1 rounded-t-none">
+                    <CardContent className="h-[calc(100%-48px)]">
+                      <div className="pt-4">
+                        <div className="flex gap-6 mb-4 justify-end">
+                          <div className="flex items-center gap-2">
+                            <div className="w-3 h-3 rounded-full bg-[#4F46E5]"></div>
+                            <span className="text-sm">Deposit</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <div className="w-3 h-3 rounded-full bg-black"></div>
+                            <span className="text-sm">Withdraw</span>
+                          </div>
+                        </div>
+                        <BarChart width={500} height={300} data={weeklyData}>
+                          <XAxis dataKey="name" axisLine={false} tickLine={false} />
+                          <YAxis axisLine={false} tickLine={false} />
+                          <Bar dataKey="withdraw" fill="#000000" radius={[4, 4, 0, 0]} />
+                          <Bar dataKey="deposit" fill="#4F46E5" radius={[4, 4, 0, 0]} />
+                        </BarChart>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+  
+                {/* Expense Statistics with Multi-bar */}
+                <div className="flex flex-col basis-1/3">
+                  <div className="bg-white rounded-t-lg border p-3 flex justify-between items-center">
+                    <h2 className="text-lg font-semibold">Expense Statistics</h2>
+                    <div className="flex gap-2">
+                      <Button variant="outline" size="sm">This Month</Button>
+                    </div>
+                  </div>
+                  <Card className="flex-1 rounded-t-none">
+                    <CardContent className="h-[calc(100%-48px)]">
+                      <PieChart width={300} height={300}>
+                        <Pie
+                          data={expenseData}
+                          cx={150}
+                          cy={150}
+                          outerRadius={120}
+                          dataKey="value"
+                        >
+                          {expenseData.map((entry, index) => (
+                            <Cell key={`cell-${index}`} fill={entry.color} />
+                          ))}
+                        </Pie>
+                      </PieChart>
+                      <div className="flex flex-wrap gap-4 justify-center mt-4">
+                        {expenseData.map((item, index) => (
+                          <div key={index} className="flex items-center gap-2">
+                            <div className="w-3 h-3 rounded-full" style={{ backgroundColor: item.color }}></div>
+                            <span className="text-sm">{item.name} {item.value}%</span>
+                          </div>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+              </div>
+  
+              {/* Third Row */}
+              <div className="flex gap-6">
+                {/* Quick Transfer with Multi-bar */}
+                <div className="flex flex-col basis-1/3">
+                  <div className="bg-white rounded-t-lg border p-3 flex justify-between items-center">
+                    <h2 className="text-lg font-semibold">Quick Transfer</h2>
+                    <div className="flex gap-2">
+                      <Button variant="outline" size="sm">History</Button>
+                    </div>
+                  </div>
+                  <Card className="flex-1 rounded-t-none">
+                    <CardContent className="h-[calc(100%-48px)]">
+                      <div className="flex gap-4 mb-6 overflow-x-auto">
+                        {['Livia Bator', 'Randy Press', 'Workman'].map((name, i) => (
+                          <div key={i} className="flex flex-col items-center">
+                            <Avatar className="w-12 h-12 mb-2">
+                              <AvatarImage src={`/api/placeholder/48/48`} />
+                              <AvatarFallback>{name[0]}</AvatarFallback>
+                            </Avatar>
+                            <p className="text-sm font-medium">{name}</p>
+                          </div>
+                        ))}
+                      </div>
+                      <div className="flex gap-2">
+                        <Input placeholder="$525.50" />
+                        <Button>Send</Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+  
+                {/* Balance History with Multi-bar */}
+                <div className="flex flex-col basis-2/3">
+                  <div className="bg-white rounded-t-lg border p-3 flex justify-between items-center">
+                    <h2 className="text-lg font-semibold">Balance History</h2>
+                    <div className="flex gap-2">
+                      <Button variant="outline" size="sm">This Year</Button>
+                      <Button variant="outline" size="sm">Export</Button>
+                    </div>
+                  </div>
+                  <Card className="flex-1 rounded-t-none">
+                    <CardContent className="h-[calc(100%-48px)]">
+                      <LineChart width={500} height={300} data={balanceHistoryData}>
+                        <XAxis dataKey="month" axisLine={false} tickLine={false} />
+                        <YAxis axisLine={false} tickLine={false} />
+                        <Line 
+                          type="monotone" 
+                          dataKey="value" 
+                          stroke="#4F46E5" 
+                          strokeWidth={2}
+                          dot={false}
+                        />
+                      </LineChart>
+                    </CardContent>
+                  </Card>
+                </div>
               </div>
             </div>
           </main>
