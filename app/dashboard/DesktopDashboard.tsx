@@ -420,7 +420,7 @@ const EMVChip = ({ className = "" }) => (
                         axisLine={false} 
                         tickLine={true}
                         tickSize={8}
-                        tick={{ fill: '#DFE5EE', fontSize: 14 }}
+                        tick={{ fill: '#718EBF', fontSize: 14 }}
                         dy={10}
                         stroke="#718EBF"
                       />
@@ -429,7 +429,7 @@ const EMVChip = ({ className = "" }) => (
                         axisLine={false} 
                         tickLine={true}
                         tickSize={8}
-                        tick={{ fill: '#DFE5EE', fontSize: 14 }}
+                        tick={{ fill: '#718EBF', fontSize: 14 }}
                         tickCount={5}
                         domain={[0, 800]}
                         dx={-10}
