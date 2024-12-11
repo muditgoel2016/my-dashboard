@@ -207,8 +207,8 @@ import EMVChipBlack from '@/components/dashboard/EMVChipBlack';
                 <div className="p-3 flex justify-between items-center bg-inherit">
                   <h2 className="text-lg font-semibold">Quick Transfer</h2>
                 </div>
-                <Card className="flex-1 rounded-none">
-                  <CardContent className="p-0">
+                <Card className="flex-1 rounded-[25px]">
+                  <CardContent className="p-0 flex items-center justify-center h-full"> {/* Added flex centering */}
                     <QuickTransfer 
                       users={quickTransferUserData}
                       defaultAmount="$525.50"

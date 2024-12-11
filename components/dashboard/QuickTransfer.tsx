@@ -2,86 +2,86 @@ import React from "react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Send } from "lucide-react"; // Added this import
 
 const DEFAULT_AVATAR_URL = "https://avatar.iran.liara.run/public";
 
-const QuickTransfer = ({ users, defaultAmount }) => {
+interface User {
+  name: string;
+  title: string;
+  avatarUrl: string;
+}
+
+interface QuickTransferProps {
+  users: User[];
+  defaultAmount?: string;
+}
+
+// Update QuickTransfer component to be more fluid:
+export default function QuickTransfer({ users, defaultAmount = "525.50" }: QuickTransferProps) {
   return (
-    <div className="p-6 flex flex-col h-[calc(100%-48px)]">
-      {/* First Row - 2/3 of total height */}
-      <div className="flex gap-4 h-2/3 mb-4">
-        {/* Profile Section - 3/4 width */}
-        <div className="flex-[3] m-auto overflow-hidden">
-          <div className="flex gap-4 justify-around overflow-x-hidden">
-            {users.map((user, index) => (
-              <div key={index} className="flex flex-col items-center flex-shrink-0">
-                <Avatar className="w-12 h-12 mb-2">
-                  <AvatarImage 
-                    src={user.avatarUrl || DEFAULT_AVATAR_URL} 
-                    alt={user.name}
-                  />
-                  <AvatarFallback>
-                    <img 
-                      src={DEFAULT_AVATAR_URL} 
-                      alt={user.name}
-                      className="w-full h-full object-cover"
-                    />
-                  </AvatarFallback>
-                </Avatar>
-                <p className="text-sm font-medium">{user.name}</p>
-                <p className="text-sm text-gray-500">{user.title}</p>
-              </div>
-            ))}
-          </div>
+    <div className="w-full max-w-[445px] flex flex-col gap-8 bg-white rounded-tl-[25px] p-6">
+      {/* Profile Section */}
+      <div className="flex items-center">
+        <div className="flex-1 grid grid-cols-3 gap-6">
+          {users.map((user, index) => (
+            <div key={index} className="flex flex-col items-center">
+              <Avatar className="w-[4.5rem] h-[4.5rem] mb-3 ring-4 ring-white">
+                <AvatarImage 
+                  src={user.avatarUrl} 
+                  alt={user.name}
+                  className="object-cover" 
+                />
+                <AvatarFallback>{user.name[0]}</AvatarFallback>
+              </Avatar>
+              <span className="text-sm font-semibold text-[#1A1F36] mb-1">
+                {user.name}
+              </span>
+              <span className="text-xs text-[#718EBF]">
+                {user.title}
+              </span>
+            </div>
+          ))}
         </div>
 
-        {/* Scroll Arrow Section - 1/4 width */}
-        <div className="flex-1 flex items-center justify-center">
-          <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center cursor-pointer hover:bg-gray-200">
-            <svg 
-              width="24" 
-              height="24" 
-              viewBox="0 0 24 24" 
-              fill="none" 
-              stroke="currentColor" 
-              strokeWidth="2" 
-              strokeLinecap="round" 
+        {/* Scroll Arrow */}
+        <div className="ml-4 bg-white rounded-full w-[3.125rem] h-[3.125rem] flex items-center justify-center shadow-[4px_4px_18px_-2px_#E7E4E8CC]">
+          <button className="w-full h-full rounded-full bg-[#FFF] flex items-center justify-center hover:bg-[#F0F3F9] transition-colors">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#718EBF"
+              strokeWidth="2"
+              strokeLinecap="round"
               strokeLinejoin="round"
             >
-              <path d="M9 18l6-6-6-6"/>
+              <path d="M9 18l6-6-6-6" />
             </svg>
-          </div>
+          </button>
         </div>
       </div>
 
-      {/* Second Row - 1/3 of total height */}
-      <div className="h-1/3">
-        <div className="flex items-center gap-4">
-          <span className="text-gray-500 whitespace-nowrap">Write Amount</span>
-          <div className="flex flex-1 overflow-hidden rounded-full bg-gray-100">
-            <Input 
-              defaultValue={defaultAmount}
-              className="flex-1 h-12 text-lg border-none bg-transparent focus:ring-0" 
-            />
-            <Button className="h-12 px-8 rounded-full">
+      {/* Amount Input Section */}
+      <div className="flex items-center w-full">
+        <span className="text-sm text-[#718EBF] whitespace-nowrap">Write Amount</span>
+        <div className="flex-1 ml-4">
+          <div className="flex h-[3.125rem] bg-[#F7F9FC] rounded-full">
+            <div className="flex-1 relative flex items-center">
+              <span className="absolute left-5 text-[#1A1F36] text-lg">$</span>
+              <Input
+                defaultValue={defaultAmount}
+                className="border-0 h-full pl-10 text-base bg-transparent focus:ring-0 text-[#718EBF]"
+              />
+            </div>
+            <Button className="h-[3.125rem] px-6 bg-[#1A1F36] hover:bg-[#1A1F36]/90 text-white rounded-full flex items-center">
               Send
-              <svg 
-                className="ml-2 w-4 h-4" 
-                viewBox="0 0 24 24" 
-                fill="none" 
-                stroke="currentColor" 
-                strokeWidth="2" 
-                strokeLinecap="round" 
-                strokeLinejoin="round"
-              >
-                <path d="M5 12h14M12 5l7 7-7 7"/>
-              </svg>
+              <Send size={20} className="ml-2" />
             </Button>
           </div>
         </div>
       </div>
     </div>
   );
-};
-
-export default QuickTransfer;
+}
