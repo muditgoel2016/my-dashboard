@@ -94,9 +94,9 @@ import EMVChipBlack from '@/components/dashboard/EMVChipBlack';
     ];
 
     const quickTransferUserData = [
-      { name: 'Livia Bator', title: 'CEO', initial: 'L', avatarUrl: 'https://example.com/livia.jpg' },
+      { name: 'Livia Bator', title: 'CEO', initial: 'L', avatarUrl: 'https://picsum.photos/id/64/96/96' },
       { name: 'Randy Press', title: 'Director', initial: 'R' }, // Will use default avatar
-      { name: 'Workman', title: 'Designer', initial: 'W', avatarUrl: 'https://example.com/workman.jpg' }
+      { name: 'Workman', title: 'Designer', initial: 'W', avatarUrl: 'https://picsum.photos/id/64/96/96' }
     ];
 
     const cardsData = [
@@ -167,29 +167,19 @@ import EMVChipBlack from '@/components/dashboard/EMVChipBlack';
               </div>
               {/* Second Row */}
               <div className="flex gap-6">
-              {/* Weekly Activity */}
-              <div className="flex flex-col basis-2/3 rounded-lg overflow-hidden">
-                <div className="p-3 flex justify-between items-center bg-inherit">
-                  <h2 className="text-lg font-semibold">Weekly Activity</h2>
-                </div>
-                <Card className="flex-1 rounded-none">
-                  <CardContent className="h-[calc(100%-48px)]">
-                    <div className="pt-4">
-                      <div className="flex gap-6 mb-4 justify-end">
-                        <div className="flex items-center gap-2">
-                          <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#396AFF' }}></div>
-                          <span className="text-sm">Deposit</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#232323' }}></div>
-                          <span className="text-sm">Withdraw</span>
-                        </div>
-                      </div>
-                      <WeeklyActivity data={weeklyData} />
-                    </div>
-                  </CardContent>
-                </Card>
+            {/* Weekly Activity */}
+            <div className="flex flex-col basis-2/3 rounded-lg overflow-hidden">
+              <div className="p-3 flex justify-between items-center bg-inherit">
+                <h2 className="text-lg font-semibold">Weekly Activity</h2>
               </div>
+              <Card className="flex-1 rounded-none">
+                <CardContent className="h-[calc(100%-48px)]">
+                  <div className="pt-4">
+                    <WeeklyActivity data={weeklyData} />
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
             {/* Expense Statistics */}
             <div className="flex flex-col basis-1/3 rounded-lg overflow-hidden">
               <div className="p-3 flex justify-between items-center bg-inherit">
