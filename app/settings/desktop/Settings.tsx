@@ -26,7 +26,7 @@ export default function Settings() {
     <div className="min-h-screen bg-[#F7F9FC] flex">
       <Sidenav />
       <div className="ml-64 flex-1">
-        <TopBar />
+        <TopBar title= "Settings"/>
         <main className="p-6">
           <Card className="mx-4 bg-white shadow-sm rounded-lg">
             <CardContent className="p-8">

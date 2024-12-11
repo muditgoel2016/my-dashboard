@@ -26,7 +26,7 @@ export default function Settings() {
 
   return (
     <div className="min-h-screen bg-[#f6f7fa]">
-      <TopBar onMenuClick={() => setIsMobileMenuOpen(true)} />
+      <TopBar title="Settings" onMenuClick={() => setIsMobileMenuOpen(true)} />
       <main className="pb-24">
         <div
           className="bg-white rounded-[15px] shadow-md mx-auto mt-6"
