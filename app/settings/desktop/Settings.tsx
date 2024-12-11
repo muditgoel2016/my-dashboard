@@ -1,6 +1,6 @@
 import React from 'react';
-import Sidenav from '@/components/layout/side-nav';
-import TopBar from '@/components/layout/top-bar';
+import Sidenav from '@/components/layout/desktop/nav';
+import TopBar from '@/components/layout/desktop/top-bar';
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -21,7 +21,7 @@ const formFields = [
   { label: "Country", defaultValue: "USA", type: "text" },
 ];
 
-export default function DesktopSettings() {
+export default function Settings() {
   return (
     <div className="min-h-screen bg-[#F7F9FC] flex">
       <Sidenav />

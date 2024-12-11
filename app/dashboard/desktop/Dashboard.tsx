@@ -1,6 +1,6 @@
 import React from 'react';
-import Sidenav from '@/components/layout/side-nav';
-import TopBar from '@/components/layout/top-bar';
+import Sidenav from '@/components/layout/desktop/nav';
+import TopBar from '@/components/layout/desktop/top-bar';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -46,7 +46,7 @@ const EMVChip = ({ className = "" }) => (
     </svg>
   );
 
-  export default function DesktopDashboard() {
+  export default function Dashboard() {
     const weeklyData = [
       { name: 'Sat', deposit: 200, withdraw: 400 },
       { name: 'Sun', deposit: 100, withdraw: 300 },

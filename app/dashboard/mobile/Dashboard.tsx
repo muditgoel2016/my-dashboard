@@ -19,7 +19,7 @@ const EMVChip = ({ className = "" }) => (
   </svg>
 );
 
-export default function MobileDashboard() {
+export default function Dashboard() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const weeklyData = [

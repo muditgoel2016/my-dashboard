@@ -1,4 +1,3 @@
-// app/settings/MobileSettings.tsx
 'use client'
 import { useState } from 'react'
 import TopBar from '@/components/layout/mobile/top-bar'
@@ -6,7 +5,7 @@ import MobileNav from '@/components/layout/mobile/nav'
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 
-export default function MobileSettings() {
+export default function Settings() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   return (
