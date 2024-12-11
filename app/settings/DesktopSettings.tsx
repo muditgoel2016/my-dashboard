@@ -8,33 +8,47 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Pencil, ChevronDown } from "lucide-react";
 
+const formFields = [
+  { label: "Your Name", defaultValue: "Charlene Reed", type: "text" },
+  { label: "User Name", defaultValue: "Charlene Reed", type: "text" },
+  { label: "Email", defaultValue: "charlenereed@gmail.com", type: "email" },
+  { label: "Password", defaultValue: "********", type: "password" },
+  { label: "Date of Birth", defaultValue: "25 January 1990", type: "text", hasDropdown: true },
+  { label: "Present Address", defaultValue: "San Jose, California, USA", type: "text" },
+  { label: "Permanent Address", defaultValue: "San Jose, California, USA", type: "text" },
+  { label: "City", defaultValue: "San Jose", type: "text" },
+  { label: "Postal Code", defaultValue: "45962", type: "text" },
+  { label: "Country", defaultValue: "USA", type: "text" },
+];
+
 export default function DesktopSettings() {
   return (
-    <div className="min-h-screen bg-gray-50 flex">
+    <div className="min-h-screen bg-[#F7F9FC] flex">
       <Sidenav />
       <div className="ml-64 flex-1">
         <TopBar />
         <main className="p-8">
-          <Card className="max-w-4xl mx-auto bg-white shadow-sm rounded-2xl">
-            <CardContent className="p-8">
+          <h1 className="text-2xl font-semibold mb-6">Setting</h1>
+          <Card className="max-w-[1000px] mx-auto bg-white shadow-sm rounded-2xl">
+            <CardContent className="p-10">
               <Tabs defaultValue="profile" className="w-full">
-                <div className="border-b mb-8">
-                  <TabsList className="space-x-8 border-0">
+                <div className="border-b mb-10">
+                  <TabsList className="space-x-12 border-0">
                     <TabsTrigger 
                       value="profile" 
-                      className="border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent px-0 pb-4"
+                      className="border-b-2 border-transparent data-[state=active]:border-[#4F46E5] data-[state=active]:bg-transparent data-[state=active]:text-[#1A1F36] px-0 pb-6 text-lg"
                     >
                       Edit Profile
                     </TabsTrigger>
                     <TabsTrigger 
                       value="preferences" 
-                      className="border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent px-0 pb-4 text-gray-500"
+                      className="border-b-2 border-transparent data-[state=active]:border-[#4F46E5] data-[state=active]:bg-transparent px-0 pb-6 text-[#718EBF] text-lg"
                     >
                       Preferences
                     </TabsTrigger>
                     <TabsTrigger 
                       value="security" 
-                      className="border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent px-0 pb-4 text-gray-500"
+                      className="border-b-2 border-transparent data-[state=active]:border-[#4F46E5] data-[state=active]:bg-transparent px-0 pb-6 text-[#718EBF] text-lg"
                     >
                       Security
                     </TabsTrigger>
@@ -42,133 +56,50 @@ export default function DesktopSettings() {
                 </div>
 
                 <TabsContent value="profile">
-                  <div className="flex justify-center mb-8">
-                    <div className="relative">
-                      <Avatar className="w-24 h-24">
-                        <AvatarImage 
-                          src="/api/placeholder/96/96" 
-                          alt="Profile" 
-                          className="object-cover"
-                        />
-                      </Avatar>
-                      <button className="absolute bottom-0 right-0 bg-gray-900 text-white p-2 rounded-full w-8 h-8 flex items-center justify-center">
-                        <Pencil size={16} />
-                      </button>
-                    </div>
-                  </div>
-
-                  <form className="grid grid-cols-2 gap-x-8 gap-y-6">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Your Name
-                      </label>
-                      <Input 
-                        defaultValue="Charlene Reed"
-                        className="bg-gray-50 border-gray-200 rounded-xl h-12" 
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        User Name
-                      </label>
-                      <Input 
-                        defaultValue="Charlene Reed"
-                        className="bg-gray-50 border-gray-200 rounded-xl h-12" 
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Email
-                      </label>
-                      <Input 
-                        type="email"
-                        defaultValue="charlenereed@gmail.com"
-                        className="bg-gray-50 border-gray-200 rounded-xl h-12" 
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Password
-                      </label>
-                      <Input 
-                        type="password"
-                        defaultValue="********"
-                        className="bg-gray-50 border-gray-200 rounded-xl h-12" 
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Date of Birth
-                      </label>
+                  <div className="flex gap-12">
+                    {/* Profile Image Section */}
+                    <div className="flex flex-col items-center w-1/3">
                       <div className="relative">
-                        <Input 
-                          defaultValue="25 January 1990"
-                          className="bg-gray-50 border-gray-200 rounded-xl h-12 pr-10" 
-                        />
-                        <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500" size={20} />
+                        <Avatar className="w-32 h-32 border border-gray-300 rounded-full">
+                          <AvatarImage 
+                            src="/api/placeholder/128/128" 
+                            alt="Profile" 
+                            className="object-cover rounded-full"
+                          />
+                        </Avatar>
+                        <button className="absolute bottom-0 right-0 bg-black/80 text-white p-2 rounded-full w-10 h-10 flex items-center justify-center border border-white">
+                          <Pencil size={18} />
+                        </button>
                       </div>
                     </div>
 
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Present Address
-                      </label>
-                      <Input 
-                        defaultValue="San Jose, California, USA"
-                        className="bg-gray-50 border-gray-200 rounded-xl h-12" 
-                      />
-                    </div>
+                    {/* Form Section */}
+                    <form className="grid grid-cols-2 gap-x-12 gap-y-8 flex-1">
+                      {formFields.map((field, index) => (
+                        <div key={index}>
+                          <label className="block text-[15px] text-[#1A1F36] mb-3">
+                            {field.label}
+                          </label>
+                          <div className="relative">
+                            <Input 
+                              defaultValue={field.defaultValue}
+                              type={field.type}
+                              className={`border-[#E5E7EB] rounded-xl h-14 px-4 ${field.hasDropdown ? 'pr-10' : ''} focus:border-[#4F46E5]`} 
+                            />
+                            {field.hasDropdown && (
+                              <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-[#718EBF]" size={20} />
+                            )}
+                          </div>
+                        </div>
+                      ))}
 
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Permanent Address
-                      </label>
-                      <Input 
-                        defaultValue="San Jose, California, USA"
-                        className="bg-gray-50 border-gray-200 rounded-xl h-12" 
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        City
-                      </label>
-                      <Input 
-                        defaultValue="San Jose"
-                        className="bg-gray-50 border-gray-200 rounded-xl h-12" 
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Postal Code
-                      </label>
-                      <Input 
-                        defaultValue="45962"
-                        className="bg-gray-50 border-gray-200 rounded-xl h-12" 
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Country
-                      </label>
-                      <Input 
-                        defaultValue="USA"
-                        className="bg-gray-50 border-gray-200 rounded-xl h-12" 
-                      />
-                    </div>
-
-                    <div className="col-span-2 mt-4">
-                      <Button className="w-full bg-gray-900 hover:bg-gray-800 text-white h-12 rounded-xl">
-                        Save
-                      </Button>
-                    </div>
-                  </form>
+                      <div className="col-span-2 flex justify-end mt-4">
+                        <Button className="bg-[#1A1F36] hover:bg-[#1A1F36]/90 text-white h-14 px-12 rounded-2xl">
+                          Save
+                        </Button>
+                      </div>
+                    </form>
+                  </div>
                 </TabsContent>
               </Tabs>
             </CardContent>
