@@ -6,22 +6,23 @@ const CreditCard = ({
   holder,
   validThru,
   cardNumber,
+  ChipImage,
   theme = {
     bgColor: "bg-[#f8faff]",
     textPrimaryColor: "text-[#1a1f36]",
     textSecondaryColor: "text-[#1a1f36]",
-    logo: null,
+    creditProviderLogo: null,
   },
 }) => {
   const {
     bgColor,
     textPrimaryColor,
     textSecondaryColor,
-    logo,
+    creditProviderLogo,
   } = theme;
 
   return (
-    <Card className={`${bgColor} flex-1 rounded-2xl`}>
+    <Card className={`${bgColor} flex-1 rounded-2xl border-[#e6efff]`}>
       <CardContent className="p-6 h-[235px] flex flex-col">
         {/* Top Row - Balance and Chip */}
         <div className="flex-1 flex justify-between">
@@ -30,7 +31,7 @@ const CreditCard = ({
             <h2 className={`text-2xl font-bold ${textPrimaryColor}`}>${balance}</h2>
           </div>
           <div className="w-12 h-12">
-            <svg className="w-full h-full" />
+            <ChipImage />
           </div>
         </div>
 
@@ -46,10 +47,12 @@ const CreditCard = ({
           </div>
         </div>
 
-        {/* Bottom Row - Card Number and Logo */}
+        {/* Bottom Row - Card Number and creditProviderLogo */}
         <div className="flex-1 flex justify-between items-center">
-          <p className={`text-xl tracking-wider mb-4 ${textPrimaryColor}`}>{cardNumber}</p>
-          {logo}
+          <p className={`text-xl tracking-wider mb-4 ${textPrimaryColor}`}>
+            {cardNumber}
+          </p>
+          {creditProviderLogo}
         </div>
       </CardContent>
     </Card>

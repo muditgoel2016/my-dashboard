@@ -11,6 +11,7 @@ const ExpenseStatistics = ({ data }) => {
         outerRadius={120}
         dataKey="value"
         paddingAngle={2}
+        labelLine={false}
         label={({ cx, cy, midAngle, innerRadius, outerRadius, percent, name }) => {
           const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
           const x = cx + radius * Math.cos(-midAngle * Math.PI / 180);

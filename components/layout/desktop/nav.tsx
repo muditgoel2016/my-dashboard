@@ -6,7 +6,7 @@ import {
   CircleDollarSign,
 } from 'lucide-react';
 
-const Sidenav: React.FC = () => {
+const Nav: React.FC = () => {
   const menuItems = [
     { icon: <Home size={20} />, label: 'Dashboard', href: '/dashboard' },
     { icon: <CircleDollarSign size={20} />, label: 'Transactions', href: '/transactions' },
@@ -39,4 +39,4 @@ const Sidenav: React.FC = () => {
   );
 };
 
-export default Sidenav;
+export default Nav;
