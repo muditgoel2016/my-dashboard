@@ -418,18 +418,22 @@ const EMVChip = ({ className = "" }) => (
                       <XAxis 
                         dataKey="month" 
                         axisLine={false} 
-                        tickLine={false}
-                        tick={{ fill: '#6B7280', fontSize: 14 }}
+                        tickLine={true}
+                        tickSize={8}
+                        tick={{ fill: '#DFE5EE', fontSize: 14 }}
                         dy={10}
+                        stroke="#718EBF"
                       />
 
                       <YAxis 
                         axisLine={false} 
-                        tickLine={false}
-                        tick={{ fill: '#6B7280', fontSize: 14 }}
+                        tickLine={true}
+                        tickSize={8}
+                        tick={{ fill: '#DFE5EE', fontSize: 14 }}
                         tickCount={5}
                         domain={[0, 800]}
                         dx={-10}
+                        stroke="#718EBF"
                       />
 
                       <Line 
