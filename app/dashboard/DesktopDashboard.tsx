@@ -73,6 +73,59 @@ const EMVChip = ({ className = "" }) => (
       { name: 'Investment', value: 20, color: '#4F46E5' },
       { name: 'Others', value: 35, color: '#000000' }
     ];
+
+    const transactionsData = [
+      {
+        id: 1,
+        title: "Deposit from my Card",
+        date: "28 January 2021",
+        amount: "850",
+        type: "debit",
+        icon: {
+          bg: "#FFF7EA",
+          color: "#FFB545",
+          svg: (
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <rect x="2" y="4" width="20" height="16" rx="2"/>
+              <path d="M2 10h20"/>
+            </svg>
+          )
+        }
+      },
+      {
+        id: 2,
+        title: "Deposit Paypal",
+        date: "25 January 2021",
+        amount: "2,500",
+        type: "credit",
+        icon: {
+          bg: "#EFF4FF",
+          color: "#316FF6",
+          svg: (
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M20.5 6.5C20.5 7.5 19.1 11.1 18.4 13C17.7 14.9 16 16 14.1 16H12.5L11.4 22.7C11.3 23 11.1 23.2 10.8 23.2H7.5C7.2 23.2 7 22.9 7.1 22.6L8.2 16H5.9C5.6 16 5.4 15.7 5.5 15.4L8.5 1.8C8.6 1.5 8.8 1.3 9.1 1.3H15.5C18.4 1.3 20.5 3.6 20.5 6.5Z"/>
+            </svg>
+          )
+        }
+      },
+      {
+        id: 3,
+        title: "Jemi Wilson",
+        date: "21 January 2021",
+        amount: "5,400",
+        type: "credit",
+        icon: {
+          bg: "#E7FFF3",
+          color: "#35C28F",
+          svg: (
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M12 6v12m-6-6h12"/>
+            </svg>
+          )
+        }
+      }
+    ];
   
     return (
       <div className="min-h-screen bg-gray-50 flex">
@@ -159,44 +212,51 @@ const EMVChip = ({ className = "" }) => (
               </Card>
                   </div>
                 </div>
-                {/* Recent Transactions */}
-                <div className="flex flex-col basis-1/3 rounded-lg overflow-hidden">
-                  <div className="p-3 flex justify-between items-center bg-inherit">
-                    <h2 className="text-lg font-semibold">Recent Transactions</h2>
-                  </div>
-                  <Card className="flex-1 rounded-none">
-                    <CardContent className="h-[calc(100%-48px)]">
-                      <div className="space-y-4">
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 bg-yellow-50 rounded-full flex items-center justify-center">
-                              📄
-                            </div>
-                            <div>
-                              <p className="font-medium">Deposit from my Card</p>
-                              <p className="text-sm text-gray-500">28 January 2021</p>
-                            </div>
-                          </div>
-                          <span className="text-red-500 font-medium">-$850</span>
-                        </div>
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center">
-                              🅿️
-                            </div>
-                            <div>
-                              <p className="font-medium">Deposit Paypal</p>
-                              <p className="text-sm text-gray-500">25 January 2021</p>
-                            </div>
-                          </div>
-                          <span className="text-green-500 font-medium">+$2,500</span>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
+            {/* Recent Transactions */}
+            <div className="flex flex-col basis-1/3 rounded-lg overflow-hidden">
+                <div className="p-3 flex justify-between items-center bg-inherit">
+                  <h2 className="text-lg font-semibold">Recent Transactions</h2>
                 </div>
+                <Card className="flex-1 rounded-2xl bg-white">
+                  <CardContent className="p-6 h-[calc(100%-48px)] overflow-auto">
+                    <div className="flex flex-col gap-4">
+                      {transactionsData.map((transaction) => (
+                        <div key={transaction.id} className="flex items-center">
+                          {/* Icon Container */}
+                          <div className="flex-none w-12 h-12">
+                            <div 
+                              className="w-full h-full rounded-full flex items-center justify-center"
+                              style={{ backgroundColor: transaction.icon.bg }}
+                            >
+                              <div style={{ color: transaction.icon.color }}>
+                                {transaction.icon.svg}
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* Title and Date Container */}
+                          <div className="flex-1 ml-3">
+                            <p className="font-medium text-[#1A1F36]">{transaction.title}</p>
+                            <p className="text-sm text-[#718EBF]">{transaction.date}</p>
+                          </div>
+
+                          {/* Amount Container */}
+                          <div className="flex-none">
+                            <span 
+                              className={`font-medium ${
+                                transaction.type === 'credit' ? 'text-[#35C28F]' : 'text-[#F23838]'
+                              }`}
+                            >
+                              {transaction.type === 'credit' ? '+ ' : '- '}${transaction.amount}
+                            </span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
               </div>
-  
+              </div>
               {/* Second Row */}
               <div className="flex gap-6">
                 {/* Weekly Activity */}
