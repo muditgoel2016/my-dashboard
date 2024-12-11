@@ -359,12 +359,11 @@ const EMVChip = ({ className = "" }) => (
                         </div>
                       </div>
                     </div>
-
                     {/* Second Row - 1/3 of total height */}
                     <div className="h-1/3">
-                      <div className="flex flex-col gap-2">
-                        <label className="text-sm text-gray-500">Write Amount</label>
-                        <div className="flex overflow-hidden rounded-full bg-gray-100">
+                      <div className="flex items-center gap-4">
+                        <span className="text-gray-500 whitespace-nowrap">Write Amount</span>
+                        <div className="flex flex-1 overflow-hidden rounded-full bg-gray-100">
                           <Input 
                             defaultValue="$525.50"
                             className="flex-1 h-12 text-lg border-none bg-transparent focus:ring-0" 
