@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { LineChart, Line, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid } from 'recharts';
+import { LineChart, Line, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Area } from 'recharts';
 
 const EMVChip = ({ className = "" }) => (
   <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
@@ -388,27 +388,70 @@ const EMVChip = ({ className = "" }) => (
                   </CardContent>
                 </Card>
               </div>
-                {/* Balance History */}
-                <div className="flex flex-col basis-2/3 rounded-lg overflow-hidden">
-                  <div className="p-3 flex justify-between items-center bg-inherit">
-                    <h2 className="text-lg font-semibold">Balance History</h2>
-                  </div>
-                  <Card className="flex-1 rounded-none">
-                    <CardContent className="h-[calc(100%-48px)]">
-                      <LineChart width={500} height={300} data={balanceHistoryData}>
-                        <XAxis dataKey="month" axisLine={false} tickLine={false} />
-                        <YAxis axisLine={false} tickLine={false} />
-                        <Line 
-                          type="monotone" 
-                          dataKey="value" 
-                          stroke="#4F46E5" 
-                          strokeWidth={2}
-                          dot={false}
-                        />
-                      </LineChart>
-                    </CardContent>
-                  </Card>
+              {/* Balance History */}
+              <div className="flex flex-col basis-2/3 rounded-lg overflow-hidden">
+                <div className="p-3 flex justify-between items-center bg-inherit">
+                  <h2 className="text-lg font-semibold">Balance History</h2>
                 </div>
+                <Card className="flex-1 rounded-none">
+                  <CardContent className="h-[calc(100%-48px)]">
+                    <LineChart 
+                      width={800} 
+                      height={300} 
+                      data={balanceHistoryData}
+                      margin={{ top: 20, right: 30, left: 20, bottom: 10 }}
+                    >
+                      <defs>
+                        <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="5%" stopColor="#4F46E5" stopOpacity={0.1}/>
+                          <stop offset="95%" stopColor="#4F46E5" stopOpacity={0.01}/>
+                        </linearGradient>
+                      </defs>
+                      
+                      <CartesianGrid 
+                        strokeDasharray="3 3" 
+                        horizontal={true} 
+                        vertical={true}
+                        stroke="#E5E7EB"
+                      />
+
+                      <XAxis 
+                        dataKey="month" 
+                        axisLine={false} 
+                        tickLine={false}
+                        tick={{ fill: '#6B7280', fontSize: 14 }}
+                        dy={10}
+                      />
+
+                      <YAxis 
+                        axisLine={false} 
+                        tickLine={false}
+                        tick={{ fill: '#6B7280', fontSize: 14 }}
+                        tickCount={5}
+                        domain={[0, 800]}
+                        dx={-10}
+                      />
+
+                      <Line 
+                        type="monotone" 
+                        dataKey="value" 
+                        stroke="#4F46E5"
+                        strokeWidth={2.5}
+                        dot={false}
+                        activeDot={false}
+                      />
+
+                      <Area
+                        type="monotone"
+                        dataKey="value"
+                        stroke="false"
+                        fillOpacity={1}
+                        fill="url(#colorValue)"
+                      />
+                    </LineChart>
+                  </CardContent>
+                </Card>
+              </div>
               </div>
             </div>
           </main>
