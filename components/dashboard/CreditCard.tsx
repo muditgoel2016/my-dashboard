@@ -1,5 +1,19 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { Card, CardContent } from "@/components/ui/card";
+
+export interface CardTheme {
+  bgColor: string;
+  textPrimaryColor: string;
+  textSecondaryColor: string;
+  creditProviderLogo: ReactNode;
+}
+
+export const defaultCardTheme: CardTheme = {
+  bgColor: "bg-[#f8faff]",
+  textPrimaryColor: "text-[#1a1f36]",
+  textSecondaryColor: "text-[#1a1f36]",
+  creditProviderLogo: null
+};
 
 const CreditCard = ({
   balance,
@@ -7,12 +21,7 @@ const CreditCard = ({
   validThru,
   cardNumber,
   ChipImage,
-  theme = {
-    bgColor: "bg-[#f8faff]",
-    textPrimaryColor: "text-[#1a1f36]",
-    textSecondaryColor: "text-[#1a1f36]",
-    creditProviderLogo: null,
-  },
+  theme = defaultCardTheme,
 }) => {
   const {
     bgColor,
