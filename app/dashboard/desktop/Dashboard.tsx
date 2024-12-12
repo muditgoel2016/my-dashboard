@@ -185,17 +185,9 @@ import EMVChipBlack from '@/components/dashboard/EMVChipBlack';
               <div className="p-3 flex justify-between items-center bg-inherit">
                 <h2 className="text-lg font-semibold">Expense Statistics</h2>
               </div>
-              <Card className="flex-1 rounded-none">
-                <CardContent className="h-[calc(100%-48px)]">
+              <Card className="flex-1 rounded-[25px]">
+                <CardContent className="h-[400px] flex items-center justify-center">
                   <ExpenseStatistics data={expenseData} />
-                  <div className="flex flex-wrap gap-4 justify-center mt-4">
-                    {expenseData.map((item, index) => (
-                      <div key={index} className="flex items-center gap-2">
-                        <div className="w-3 h-3 rounded-full" style={{ backgroundColor: item.color }}></div>
-                        <span className="text-sm">{item.name} {item.value}%</span>
-                      </div>
-                    ))}
-                  </div>
                 </CardContent>
               </Card>
             </div>
