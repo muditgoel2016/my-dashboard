@@ -139,24 +139,24 @@ import EMVChipBlack from '@/components/dashboard/EMVChipBlack';
               <div className="flex gap-6">
                 {/* Cards Wrapper */}
                 <div className="flex flex-col basis-2/3 rounded-lg overflow-hidden">
-  <div className="p-3 flex justify-between items-center bg-inherit">
-    <h2 className="text-lg font-semibold">My Cards</h2>
-    <span className="text-lg font-semibold hover:underline cursor-pointer">See All</span>
-  </div>
-  <div className="flex gap-6 h-[calc(100%-48px)]">
-    {cardsData.map((card, index) => (
-      <CreditCard
-        key={index}
-        balance={card.balance}
-        holder={card.holder}
-        validThru={card.validThru}
-        cardNumber={card.cardNumber}
-        ChipImage={card.ChipImage}
-        theme={card.theme}
-      />
-    ))}
-  </div>
-</div>
+              <div className="p-3 flex justify-between items-center bg-inherit">
+                <h2 className="text-lg font-semibold">My Cards</h2>
+                <span className="text-lg font-semibold hover:underline cursor-pointer">See All</span>
+              </div>
+              <div className="flex gap-6 h-[calc(100%-48px)]">
+                {cardsData.map((card, index) => (
+                  <CreditCard
+                    key={index}
+                    balance={card.balance}
+                    holder={card.holder}
+                    validThru={card.validThru}
+                    cardNumber={card.cardNumber}
+                    ChipImage={card.ChipImage}
+                    theme={card.theme}
+                  />
+                ))}
+              </div>
+            </div>
             {/* Recent Transactions */}
             <div className="flex flex-col basis-1/3 rounded-lg overflow-hidden">
                 <div className="p-3 flex justify-between items-center bg-inherit">
@@ -172,7 +172,7 @@ import EMVChipBlack from '@/components/dashboard/EMVChipBlack';
               <div className="p-3 flex justify-between items-center bg-inherit">
                 <h2 className="text-lg font-semibold">Weekly Activity</h2>
               </div>
-              <Card className="flex-1 rounded-none">
+              <Card className="flex-1 rounded-[25px]">
                 <CardContent className="h-[calc(100%-48px)]">
                   <div className="pt-4">
                     <WeeklyActivity data={weeklyData} />
@@ -213,7 +213,7 @@ import EMVChipBlack from '@/components/dashboard/EMVChipBlack';
                 <div className="p-3 flex justify-between items-center bg-inherit">
                   <h2 className="text-lg font-semibold">Balance History</h2>
                 </div>
-                <Card className="flex-1 rounded-none">
+                <Card className="flex-1 rounded-[25px]">
                   <CardContent className="h-[calc(100%-48px)]">
                     <BalanceHistory data={balanceHistoryData} />
                   </CardContent>

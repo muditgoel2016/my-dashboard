@@ -3,7 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 
 const RecentTransactions = ({ transactions }) => {
   return (
-    <Card className="flex-1 rounded-2xl bg-white">
+    <Card className="flex-1 rounded-[25px] bg-white">
       <CardContent className="p-6 h-[calc(100%-48px)] overflow-auto">
         <div className="flex flex-col gap-4">
           {transactions.map((transaction) => (
