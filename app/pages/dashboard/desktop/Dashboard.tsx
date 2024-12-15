@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import dynamic from 'next/dynamic';
 import Sidenav from '@/app/components/shared/desktop/nav';
 import TopBar from '@/app/components/shared/desktop/top-bar';
 import { Card, CardContent } from "@/app/components/shared/common/card";
-import BalanceHistory from '@/app/components/dashboard/BalanceHistory';
-import ExpenseStatistics from '@/app/components/dashboard/ExpenseStatistics';
-import WeeklyActivity from '@/app/components/dashboard/WeeklyActivity';
 import QuickTransfer from "@/app/components/dashboard/QuickTransfer";
 import RecentTransactions from '@/app/components/dashboard/RecentTransactions';
 import CreditCard from '@/app/components/dashboard/CreditCard';
@@ -12,6 +10,9 @@ import MasterCardLogo from '@/app/components/dashboard/MasterCardLogo';
 import EMVChip from '@/app/components/dashboard/EMVChip';
 import EMVChipBlack from '@/app/components/dashboard/EMVChipBlack';
 import { dashboardEndpointService } from '@/services/endpointServices/dashboard/dashboardEndpointService';
+const BalanceHistory = dynamic(() => import('@/app/components/dashboard/BalanceHistory'), { ssr: false });
+const ExpenseStatistics = dynamic(() => import('@/app/components/dashboard/ExpenseStatistics'), { ssr: false });
+const WeeklyActivity = dynamic(() => import('@/app/components/dashboard/WeeklyActivity'), { ssr: false });
 
 export default function Dashboard() {
   const [weeklyData, setWeeklyData] = useState([]);
