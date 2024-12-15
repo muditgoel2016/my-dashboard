@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Sidenav from '@/app/components/shared/desktop/nav';
 import TopBar from '@/app/components/shared/desktop/top-bar';
 import { Card, CardContent } from "@/app/components/shared/common/card";
@@ -7,26 +7,33 @@ import { Button } from "@/app/components/shared/common/button";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/app/components/shared/common/tabs";
 import { ChevronDown } from "lucide-react";
 import ProfileImagePicker from '@/app/components/settings/ProfileImagePicker';
-
-const formFields = [
-  { label: "Your Name", defaultValue: "Charlene Reed", type: "text" },
-  { label: "User Name", defaultValue: "Charlene Reed", type: "text" },
-  { label: "Email", defaultValue: "charlenereed@gmail.com", type: "email" },
-  { label: "Password", defaultValue: "********", type: "password" },
-  { label: "Date of Birth", defaultValue: "25 January 1990", type: "text", hasDropdown: true },
-  { label: "Present Address", defaultValue: "San Jose, California, USA", type: "text" },
-  { label: "Permanent Address", defaultValue: "San Jose, California, USA", type: "text" },
-  { label: "City", defaultValue: "San Jose", type: "text" },
-  { label: "Postal Code", defaultValue: "45962", type: "text" },
-  { label: "Country", defaultValue: "USA", type: "text" },
-];
+import { settingsDataService } from '@/app/services/dataServices/settings/settingsDataService';
 
 export default function Settings() {
+  const [settingsData, setSettingsData] = useState(null);
+
+  useEffect(() => {
+    const fetchSettingsData = async () => {
+      try {
+        const data = await settingsDataService.getSettingsData();
+        setSettingsData(data);
+      } catch (error) {
+        console.error('Error fetching settings data:', error);
+      }
+    };
+
+    fetchSettingsData();
+  }, []);
+
+  if (!settingsData) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="min-h-screen bg-[#F7F9FC] flex">
       <Sidenav />
       <div className="ml-64 flex-1">
-        <TopBar title= "Settings"/>
+        <TopBar title="Settings"/>
         <main className="p-6">
           <Card className="mx-4 bg-white shadow-sm rounded-lg">
             <CardContent className="p-8">
@@ -56,11 +63,11 @@ export default function Settings() {
 
                 <TabsContent value="profile">
                   <div className="flex gap-8">
-                    <ProfileImagePicker />
+                    <ProfileImagePicker imageData={settingsData.profileImage} />
 
                     {/* Form Section */}
                     <form className="grid grid-cols-2 gap-x-8 gap-y-6 flex-1">
-                      {formFields.map((field, index) => (
+                      {settingsData.formFields.map((field, index) => (
                         <div key={index}>
                           <label className="block text-sm text-[#1A1F36] mb-2">
                             {field.label}

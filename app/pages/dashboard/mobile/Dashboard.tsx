@@ -10,7 +10,7 @@ import EMVChipBlack from '@/app/components/dashboard/EMVChipBlack';
 import QuickTransfer from "@/app/components/dashboard/QuickTransfer";
 import RecentTransactions from '@/app/components/dashboard/RecentTransactions';
 
-import { dashboardEndpointService } from '@/services/endpointServices/dashboard/dashboardEndpointService';
+import { dashboardDataService } from '@/app/services/dataServices/dashboard/dashboardDataService';
 
 // Dynamic imports with SSR disabled
 const WeeklyActivity = dynamic(() => import('@/app/components/dashboard/WeeklyActivity'), { ssr: false });
@@ -30,12 +30,12 @@ export default function MobileDashboard() {
     const fetchDashboardData = async () => {
       try {
         const [cards, transactions, weekly, expense, quickTransfer, balanceHistory] = await Promise.all([
-          dashboardEndpointService.getCardsData(),
-          dashboardEndpointService.getTransactionsData(),
-          dashboardEndpointService.getWeeklyActivityData(),
-          dashboardEndpointService.getExpenseStatisticsData(),
-          dashboardEndpointService.getQuickTransferUsersData(),
-          dashboardEndpointService.getBalanceHistoryData()
+          dashboardDataService.getCardsData(),
+          dashboardDataService.getTransactionsData(),
+          dashboardDataService.getWeeklyActivityData(),
+          dashboardDataService.getExpenseStatisticsData(),
+          dashboardDataService.getQuickTransferUsersData(),
+          dashboardDataService.getBalanceHistoryData()
         ]);
 
         setCardsData(cards);

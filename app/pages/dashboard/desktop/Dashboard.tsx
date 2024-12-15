@@ -9,7 +9,7 @@ import CreditCard from '@/app/components/dashboard/CreditCard';
 import MasterCardLogo from '@/app/components/dashboard/MasterCardLogo';
 import EMVChip from '@/app/components/dashboard/EMVChip';
 import EMVChipBlack from '@/app/components/dashboard/EMVChipBlack';
-import { dashboardEndpointService } from '@/services/endpointServices/dashboard/dashboardEndpointService';
+import { dashboardDataService } from '@/app/services/dataServices/dashboard/dashboardDataService';
 const BalanceHistory = dynamic(() => import('@/app/components/dashboard/BalanceHistory'), { ssr: false });
 const ExpenseStatistics = dynamic(() => import('@/app/components/dashboard/ExpenseStatistics'), { ssr: false });
 const WeeklyActivity = dynamic(() => import('@/app/components/dashboard/WeeklyActivity'), { ssr: false });
@@ -26,12 +26,12 @@ export default function Dashboard() {
     const fetchDashboardData = async () => {
       try {
         const [weekly, balanceHistory, expense, transactions, quickTransfer, cards] = await Promise.all([
-          dashboardEndpointService.getWeeklyActivityData(),
-          dashboardEndpointService.getBalanceHistoryData(),
-          dashboardEndpointService.getExpenseStatisticsData(),
-          dashboardEndpointService.getTransactionsData(),
-          dashboardEndpointService.getQuickTransferUsersData(),
-          dashboardEndpointService.getCardsData(),
+          dashboardDataService.getWeeklyActivityData(),
+          dashboardDataService.getBalanceHistoryData(),
+          dashboardDataService.getExpenseStatisticsData(),
+          dashboardDataService.getTransactionsData(),
+          dashboardDataService.getQuickTransferUsersData(),
+          dashboardDataService.getCardsData(),
         ]);
 
         setWeeklyData(weekly);

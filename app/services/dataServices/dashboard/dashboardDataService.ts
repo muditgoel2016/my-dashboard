@@ -1,4 +1,4 @@
-// app/services/endpointServices/dashboard/dashboardEndpointService.ts
+// app/services/dataServices/dashboard/dashboardDataService.ts
 
 async function fetchData(endpoint: string) {
   const response = await fetch(`/api/dashboard/${endpoint}`);
@@ -8,7 +8,7 @@ async function fetchData(endpoint: string) {
   return response.json();
 }
 
-export const dashboardEndpointService = {
+export const dashboardDataService = {
   getBalanceHistoryData: () => fetchData('balanceHistory'),
   getCardsData: () => fetchData('cards'),
   getExpenseStatisticsData: () => fetchData('expenseStatistics'),
