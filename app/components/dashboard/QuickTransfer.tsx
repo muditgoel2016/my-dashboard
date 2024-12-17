@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/app/components/shared/common/avatar";
 import { Input } from "@/app/components/shared/common/input";
 import { Button } from "@/app/components/shared/common/button";
@@ -21,6 +21,17 @@ export default function QuickTransfer({ users, defaultAmount = "525.50", onSend 
   const [amount, setAmount] = useState(defaultAmount);
   const [isSending, setIsSending] = useState(false);
   const { toast } = useToast();
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  const handleScroll = () => {
+    if (scrollContainerRef.current) {
+      const scrollAmount = 240; // This will scroll about 2 users worth
+      scrollContainerRef.current.scrollBy({
+        left: scrollAmount,
+        behavior: 'smooth'
+      });
+    }
+  };
 
   const validateAmount = (value: string) => {
     const cleanAmount = value.replace(/[$,\s]/g, '');
@@ -64,7 +75,10 @@ export default function QuickTransfer({ users, defaultAmount = "525.50", onSend 
     <div className="flex flex-col gap-8 p-5">
       {/* Profile Section */}
       <div className="flex items-center">
-        <div className="flex-1 overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100 hover:scrollbar-thumb-gray-400 w-72">
+        <div 
+          ref={scrollContainerRef}
+          className="flex-1 overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100 hover:scrollbar-thumb-gray-400 w-72"
+        >
           <div className="flex gap-6 min-w-max px-1">
             {users.map((user, index) => (
               <div key={index} className="flex flex-col items-center min-w-[120px]">
@@ -89,7 +103,10 @@ export default function QuickTransfer({ users, defaultAmount = "525.50", onSend 
 
         {/* Scroll Arrow */}
         <div className="ml-4 bg-white rounded-full w-[3.125rem] h-[3.125rem] flex items-center justify-center shadow-[4px_4px_18px_-2px_#E7E4E8CC]">
-          <button className="w-full h-full rounded-full bg-[#FFF] flex items-center justify-center hover:bg-[#F0F3F9] transition-colors">
+          <button 
+            onClick={handleScroll}
+            className="w-full h-full rounded-full bg-[#FFF] flex items-center justify-center hover:bg-[#F0F3F9] transition-colors"
+          >
             <svg
               width="20"
               height="20"
