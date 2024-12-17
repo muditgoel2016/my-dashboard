@@ -94,34 +94,42 @@ export default function MobileDashboard() {
         </div>
 
         {/* Weekly Activity */}
-        <div className="bg-white p-4 rounded-xl">
+        <div>
           <h2 className="text-lg font-semibold mb-4">Weekly Activity</h2>
-          <WeeklyActivity data={weeklyData} />
+          <div className="bg-white p-4 rounded-xl">
+            <WeeklyActivity data={weeklyData} />
+          </div>
         </div>
 
         {/* Expense Statistics */}
-        <div className="bg-white p-4 rounded-xl">
+        <div>
           <h2 className="text-lg font-semibold mb-4">Expense Statistics</h2>
-          <div className="flex flex-col items-center">
-            <ExpenseStatistics data={expenseData} />
+          <div className="bg-white p-4 rounded-xl">
+            <div className="flex flex-col items-center">
+              <ExpenseStatistics data={expenseData} />
+            </div>
           </div>
         </div>
 
         {/* Quick Transfer */}
-        <div className="bg-white p-4 rounded-xl">
+        <div>
           <h2 className="text-lg font-semibold mb-4">Quick Transfer</h2>
-          <QuickTransfer
-            users={quickTransferData}
-            defaultAmount="$25.50"
-          />
+          <div className="bg-white p-4 rounded-xl">
+            <QuickTransfer
+              users={quickTransferData}
+              defaultAmount="$25.50"
+            />
+          </div>
         </div>
 
         {/* Balance History */}
-        <div className="bg-white p-4 rounded-xl">
+        <div>
           <h2 className="text-lg font-semibold mb-4">Balance History</h2>
-          <div className="overflow-x-auto">
-            <div className="min-w-[340px]">
-              <BalanceHistory data={balanceHistoryData} />
+          <div className="bg-white p-4 rounded-xl">
+            <div className="overflow-x-auto">
+              <div className="min-w-[340px]">
+                <BalanceHistory data={balanceHistoryData} />
+              </div>
             </div>
           </div>
         </div>

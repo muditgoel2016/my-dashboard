@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
+import Link from 'next/link';
 import Sidenav from '@/app/components/shared/desktop/nav';
 import TopBar from '@/app/components/shared/desktop/top-bar';
 import { Card, CardContent } from "@/app/components/shared/common/card";
@@ -10,6 +11,7 @@ import MasterCardLogo from '@/app/components/dashboard/MasterCardLogo';
 import EMVChip from '@/app/components/dashboard/EMVChip';
 import EMVChipBlack from '@/app/components/dashboard/EMVChipBlack';
 import { dashboardDataService } from '@/app/services/dataServices/dashboard/dashboardDataService';
+
 const BalanceHistory = dynamic(() => import('@/app/components/dashboard/BalanceHistory'), { ssr: false });
 const ExpenseStatistics = dynamic(() => import('@/app/components/dashboard/ExpenseStatistics'), { ssr: false });
 const WeeklyActivity = dynamic(() => import('@/app/components/dashboard/WeeklyActivity'), { ssr: false });
@@ -42,7 +44,6 @@ export default function Dashboard() {
         setCardsData(cards);
       } catch (error) {
         console.error('Error fetching dashboard data:', error);
-        // Handle error (e.g., show error message to user)
       }
     };
 
@@ -61,8 +62,18 @@ export default function Dashboard() {
               {/* Cards Wrapper */}
               <div className="flex flex-col basis-2/3 rounded-lg overflow-hidden">
                 <div className="p-3 flex justify-between items-center bg-inherit">
-                  <h2 className="text-lg font-semibold">My Cards</h2>
-                  <span className="text-lg font-semibold hover:underline cursor-pointer">See All</span>
+                  <h2 className="text-[22px] font-semibold leading-[20.57px] text-[#343C6A]">
+                    My Cards
+                  </h2>
+                  <Link 
+                    href="/pages/creditCards" 
+                    className="text-[17px] font-semibold leading-[20.57px] text-[#343C6A] 
+                             hover:scale-105 active:scale-100
+                             hover:underline transition-all duration-200 
+                             cursor-pointer text-right underline-offset-2"
+                  >
+                    See All
+                  </Link>
                 </div>
                 <div className="flex gap-6 h-[calc(100%-48px)]">
                   {cardsData.map((card, index) => (
@@ -84,7 +95,9 @@ export default function Dashboard() {
               {/* Recent Transactions */}
               <div className="flex flex-col basis-1/3 rounded-lg overflow-hidden">
                 <div className="p-3 flex justify-between items-center bg-inherit">
-                  <h2 className="text-lg font-semibold">Recent Transactions</h2>
+                  <h2 className="text-[22px] font-semibold leading-[20.57px] text-[#343C6A]">
+                    Recent Transactions
+                  </h2>
                 </div>
                 <RecentTransactions transactions={transactionsData} />
               </div>
@@ -94,7 +107,9 @@ export default function Dashboard() {
               {/* Weekly Activity */}
               <div className="flex flex-col basis-2/3 rounded-lg overflow-hidden">
                 <div className="p-3 flex justify-between items-center bg-inherit">
-                  <h2 className="text-lg font-semibold">Weekly Activity</h2>
+                  <h2 className="text-[22px] font-semibold leading-[20.57px] text-[#343C6A]">
+                    Weekly Activity
+                  </h2>
                 </div>
                 <Card className="flex-1 rounded-[25px]">
                   <CardContent className="h-[calc(100%-48px)]">
@@ -107,7 +122,9 @@ export default function Dashboard() {
               {/* Expense Statistics */}
               <div className="flex flex-col basis-1/3 rounded-lg overflow-hidden">
                 <div className="p-3 flex justify-between items-center bg-inherit">
-                  <h2 className="text-lg font-semibold">Expense Statistics</h2>
+                  <h2 className="text-[22px] font-semibold leading-[20.57px] text-[#343C6A]">
+                    Expense Statistics
+                  </h2>
                 </div>
                 <Card className="flex-1 rounded-[25px]">
                   <CardContent className="h-[400px] flex items-center justify-center">
@@ -121,7 +138,9 @@ export default function Dashboard() {
               {/* Quick Transfer */}
               <div className="flex flex-col basis-1/3 rounded-lg overflow-hidden">
                 <div className="p-3 flex justify-between items-center bg-inherit">
-                  <h2 className="text-lg font-semibold">Quick Transfer</h2>
+                  <h2 className="text-[22px] font-semibold leading-[20.57px] text-[#343C6A]">
+                    Quick Transfer
+                  </h2>
                 </div>
                 <Card className="flex-1 rounded-[25px]">
                   <CardContent className="p-0 flex items-center justify-center h-full">
@@ -135,7 +154,9 @@ export default function Dashboard() {
               {/* Balance History */}
               <div className="flex flex-col basis-2/3 rounded-lg overflow-hidden">
                 <div className="p-3 flex justify-between items-center bg-inherit">
-                  <h2 className="text-lg font-semibold">Balance History</h2>
+                  <h2 className="text-[22px] font-semibold leading-[20.57px] text-[#343C6A]">
+                    Balance History
+                  </h2>
                 </div>
                 <Card className="flex-1 rounded-[25px]">
                   <CardContent className="h-[calc(100%-48px)]">

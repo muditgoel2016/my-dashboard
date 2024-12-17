@@ -26,16 +26,16 @@ export function getCardsData() {
     },
     {
       id: 2,
-      balance: "5,756",
-      holder: "Eddy Cusuma",
-      validThru: "12/22",
-      cardNumber: "3778 **** **** 5678",
+      balance: "3,210",
+      holder: "John Doe",
+      validThru: "11/23",
+      cardNumber: "1234 **** **** 5678",
       theme: {
         bgColor: "bg-[#f8faff]",
         textPrimaryColor: "text-[#1a1f36]",
       }
-    }
-  ]
+    },
+  ];
 }
 
 export function getExpenseStatisticsData() {
