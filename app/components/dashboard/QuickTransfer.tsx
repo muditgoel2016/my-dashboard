@@ -64,25 +64,27 @@ export default function QuickTransfer({ users, defaultAmount = "525.50", onSend 
     <div className="flex flex-col gap-8 p-5">
       {/* Profile Section */}
       <div className="flex items-center">
-        <div className="flex-1 grid grid-cols-3 gap-6">
-          {users.map((user, index) => (
-            <div key={index} className="flex flex-col items-center">
-              <Avatar className="w-[4.5rem] h-[4.5rem] mb-3 ring-4 ring-white">
-                <AvatarImage 
-                  src={user.avatarUrl} 
-                  alt={user.name}
-                  className="object-cover" 
-                />
-                <AvatarFallback>{user.name[0]}</AvatarFallback>
-              </Avatar>
-              <span className="text-sm font-semibold text-[#1A1F36] mb-1">
-                {user.name}
-              </span>
-              <span className="text-xs text-[#718EBF]">
-                {user.title}
-              </span>
-            </div>
-          ))}
+        <div className="flex-1 overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100 hover:scrollbar-thumb-gray-400 w-72">
+          <div className="flex gap-6 min-w-max px-1">
+            {users.map((user, index) => (
+              <div key={index} className="flex flex-col items-center min-w-[120px]">
+                <Avatar className="w-[4.5rem] h-[4.5rem] mb-3 ring-4 ring-white">
+                  <AvatarImage 
+                    src={user.avatarUrl} 
+                    alt={user.name}
+                    className="object-cover" 
+                  />
+                  <AvatarFallback>{user.name[0]}</AvatarFallback>
+                </Avatar>
+                <span className="text-sm font-semibold text-[#1A1F36] mb-1">
+                  {user.name}
+                </span>
+                <span className="text-xs text-[#718EBF]">
+                  {user.title}
+                </span>
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* Scroll Arrow */}
