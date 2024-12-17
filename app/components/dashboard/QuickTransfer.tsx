@@ -61,7 +61,7 @@ export default function QuickTransfer({ users, defaultAmount = "525.50", onSend 
   };
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-8 p-5">
       {/* Profile Section */}
       <div className="flex items-center">
         <div className="flex-1 grid grid-cols-3 gap-6">
