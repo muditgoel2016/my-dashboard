@@ -1,10 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/app/components/shared/common/avatar";
 import { Input } from "@/app/components/shared/common/input";
 import { Button } from "@/app/components/shared/common/button";
-import { Send } from "lucide-react"; // Added this import
-
-const DEFAULT_AVATAR_URL = "https://avatar.iran.liara.run/public";
+import { Send, Loader2 } from "lucide-react";
+import { useToast } from '@/services/otherServices/useToast';
 
 interface User {
   name: string;
@@ -15,12 +14,54 @@ interface User {
 interface QuickTransferProps {
   users: User[];
   defaultAmount?: string;
+  onSend?: (amount: string) => void;
 }
 
-// Update QuickTransfer component to be more fluid:
-export default function QuickTransfer({ users, defaultAmount = "525.50" }: QuickTransferProps) {
+export default function QuickTransfer({ users, defaultAmount = "525.50", onSend }: QuickTransferProps) {
+  const [amount, setAmount] = useState(defaultAmount);
+  const [isSending, setIsSending] = useState(false);
+  const { toast } = useToast();
+
+  const validateAmount = (value: string) => {
+    const cleanAmount = value.replace(/[$,\s]/g, '');
+    const isValid = /^\d+(\.\d{0,2})?$/.test(cleanAmount) && parseFloat(cleanAmount) > 0;
+    return { isValid, cleanAmount };
+  };
+
+  const handleSend = async () => {
+    const { isValid, cleanAmount } = validateAmount(amount);
+
+    if (!isValid) {
+      toast({
+        title: "Invalid Amount",
+        description: "Please enter a valid positive number with up to 2 decimal places",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsSending(true);
+    try {
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      toast({
+        title: "Transfer Initiated",
+        description: `$${cleanAmount} has been successfully submitted`,
+        variant: 'success',
+      });
+      onSend?.(cleanAmount);
+    } catch (error) {
+      toast({
+        title: "Transfer Failed",
+        description: "Something went wrong. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSending(false);
+    }
+  };
+
   return (
-    <div className="w-full max-w-[445px] flex flex-col gap-8 bg-white rounded-tl-[25px] p-6">
+    <div className="flex flex-col gap-8">
       {/* Profile Section */}
       <div className="flex items-center">
         <div className="flex-1 grid grid-cols-3 gap-6">
@@ -71,13 +112,30 @@ export default function QuickTransfer({ users, defaultAmount = "525.50" }: Quick
             <div className="flex-1 relative flex items-center">
               <span className="absolute left-5 text-[#1A1F36] text-lg">$</span>
               <Input
-                defaultValue={defaultAmount}
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+                disabled={isSending}
                 className="border-0 h-full pl-10 text-base bg-transparent focus:ring-0 text-[#718EBF]"
               />
             </div>
-            <Button className="h-[3.125rem] px-6 bg-[#1A1F36] hover:bg-[#1A1F36]/90 text-white rounded-full flex items-center">
-              Send
-              <Send size={20} className="ml-2" />
+            <Button
+              onClick={handleSend}
+              disabled={isSending}
+              className="h-[3.125rem] px-6 bg-[#1A1F36] hover:bg-[#1A1F36]/90 
+                       text-white rounded-full flex items-center gap-2
+                       disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isSending ? (
+                <>
+                  <Loader2 className="w-5 h-5 animate-spin" />
+                  Sending...
+                </>
+              ) : (
+                <>
+                  Send
+                  <Send size={20} />
+                </>
+              )}
             </Button>
           </div>
         </div>
