@@ -59,7 +59,7 @@ export default function Dashboard() {
           <div className="flex flex-col space-y-6">
             {/* First Row */}
             <div className="flex gap-6">
-              {/* Cards Wrapper */}
+            {/* Cards Wrapper */}
               <div className="flex flex-col basis-2/3 rounded-lg overflow-hidden">
                 <div className="p-3 flex justify-between items-center bg-inherit">
                   <h2 className="text-[22px] font-semibold leading-[20.57px] text-[#343C6A]">
@@ -68,28 +68,31 @@ export default function Dashboard() {
                   <Link 
                     href="/pages/creditCards" 
                     className="text-[17px] font-semibold leading-[20.57px] text-[#343C6A] 
-                             hover:scale-105 active:scale-100
-                             hover:underline transition-all duration-200 
-                             cursor-pointer text-right underline-offset-2"
+                            hover:scale-105 active:scale-100
+                            hover:underline transition-all duration-200 
+                            cursor-pointer text-right underline-offset-2"
                   >
                     See All
                   </Link>
                 </div>
-                <div className="flex gap-6 h-[calc(100%-48px)]">
-                  {cardsData.map((card, index) => (
-                    <CreditCard
-                      key={index}
-                      balance={card.balance}
-                      holder={card.holder}
-                      validThru={card.validThru}
-                      cardNumber={card.cardNumber}
-                      ChipImage={card.theme.bgColor === "bg-[#31304D]" ? EMVChip : EMVChipBlack}
-                      theme={{
-                        ...card.theme,
-                        creditProviderLogo: <MasterCardLogo fillColor={card.theme.bgColor === "bg-[#31304D]" ? "white" : "#1a1f36"} />
-                      }}
-                    />
-                  ))}
+                <div className="relative overflow-x-auto">
+                  <div className="flex gap-6 snap-x snap-mandatory pb-4">
+                    {cardsData.map((card, index) => (
+                      <div key={index} className="snap-center shrink-0 first:pl-4 last:pr-4">
+                        <CreditCard
+                          balance={card.balance}
+                          holder={card.holder}
+                          validThru={card.validThru}
+                          cardNumber={card.cardNumber}
+                          ChipImage={card.theme.bgColor === "bg-[#31304D]" ? EMVChip : EMVChipBlack}
+                          theme={{
+                            ...card.theme,
+                            creditProviderLogo: <MasterCardLogo fillColor={card.theme.bgColor === "bg-[#31304D]" ? "white" : "#1a1f36"} />
+                          }}
+                        />
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
               {/* Recent Transactions */}
