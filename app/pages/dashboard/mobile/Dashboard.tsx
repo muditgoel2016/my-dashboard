@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import TopBar from '@/app/components/shared/mobile/top-bar';
 import MobileNav from '@/app/components/shared/mobile/nav';
-import { Button } from "@/app/components/shared/common/button";
+import Link from 'next/link';
 import CreditCard from '@/app/components/dashboard/CreditCard';
 import EMVChip from '@/app/components/dashboard/EMVChip';
 import MasterCardLogo from '@/app/components/dashboard/MasterCardLogo';
@@ -59,16 +59,26 @@ export default function MobileDashboard() {
       <main className="px-4 py-6 pb-24 space-y-6">
         {/* My Cards Section */}
         <div>
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-lg font-semibold">My Cards</h2>
-            <Button variant="link" className="text-indigo-600">See All</Button>
+          <div className="p-3 flex justify-between items-center bg-inherit">
+            <h2 className="text-[16px] font-semibold leading-[20.57px] text-[#343C6A]">
+              My Cards
+            </h2>
+            <Link 
+              href="/pages/creditCards" 
+              className="text-[14px] font-semibold leading-[20.57px] text-[#343C6A] 
+                       hover:scale-105 active:scale-100
+                       hover:underline transition-all duration-200 
+                       cursor-pointer text-right underline-offset-2"
+            >
+              See All
+            </Link>
           </div>
           <div className="relative overflow-x-auto pb-4">
             <div className="flex gap-4 snap-x snap-mandatory">
               {cardsData.map((card, index) => (
                 <div key={index} className="snap-center shrink-0 first:pl-4 last:pr-4">
                   <div className="w-72">
-                  <CreditCard
+                    <CreditCard
                       key={index}
                       balance={card.balance}
                       holder={card.holder}
@@ -89,13 +99,21 @@ export default function MobileDashboard() {
 
         {/* Recent Transaction */}
         <div>
-          <h2 className="text-lg font-semibold mb-4">Recent Transaction</h2>
+          <div className="p-3 flex justify-between items-center bg-inherit">
+            <h2 className="text-[16px] font-semibold leading-[20.57px] text-[#343C6A]">
+              Recent Transaction
+            </h2>
+          </div>
           <RecentTransactions transactions={transactionsData} />
         </div>
 
         {/* Weekly Activity */}
         <div>
-          <h2 className="text-lg font-semibold mb-4">Weekly Activity</h2>
+          <div className="p-3 flex justify-between items-center bg-inherit">
+            <h2 className="text-[16px] font-semibold leading-[20.57px] text-[#343C6A]">
+              Weekly Activity
+            </h2>
+          </div>
           <div className="bg-white p-4 rounded-xl">
             <WeeklyActivity data={weeklyData} />
           </div>
@@ -103,7 +121,11 @@ export default function MobileDashboard() {
 
         {/* Expense Statistics */}
         <div>
-          <h2 className="text-lg font-semibold mb-4">Expense Statistics</h2>
+          <div className="p-3 flex justify-between items-center bg-inherit">
+            <h2 className="text-[16px] font-semibold leading-[20.57px] text-[#343C6A]">
+              Expense Statistics
+            </h2>
+          </div>
           <div className="bg-white p-4 rounded-xl">
             <div className="flex flex-col items-center">
               <ExpenseStatistics data={expenseData} />
@@ -113,7 +135,11 @@ export default function MobileDashboard() {
 
         {/* Quick Transfer */}
         <div>
-          <h2 className="text-lg font-semibold mb-4">Quick Transfer</h2>
+          <div className="p-3 flex justify-between items-center bg-inherit">
+            <h2 className="text-[16px] font-semibold leading-[20.57px] text-[#343C6A]">
+              Quick Transfer
+            </h2>
+          </div>
           <div className="bg-white p-4 rounded-xl">
             <QuickTransfer
               users={quickTransferData}
@@ -124,7 +150,11 @@ export default function MobileDashboard() {
 
         {/* Balance History */}
         <div>
-          <h2 className="text-lg font-semibold mb-4">Balance History</h2>
+          <div className="p-3 flex justify-between items-center bg-inherit">
+            <h2 className="text-[16px] font-semibold leading-[20.57px] text-[#343C6A]">
+              Balance History
+            </h2>
+          </div>
           <div className="bg-white p-4 rounded-xl">
             <div className="overflow-x-auto">
               <div className="min-w-[340px]">
