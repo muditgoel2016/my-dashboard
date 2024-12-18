@@ -59,7 +59,7 @@ export default function Dashboard() {
           <div className="flex flex-col space-y-6">
             {/* First Row */}
             <div className="flex gap-6">
-            {/* Cards Wrapper */}
+              {/* Cards Wrapper */}
               <div className="flex flex-col basis-2/3 rounded-lg overflow-hidden">
                 <div className="p-3 flex justify-between items-center bg-inherit">
                   <h2 className="text-[22px] font-semibold leading-[20.57px] text-[#343C6A]">
@@ -75,7 +75,7 @@ export default function Dashboard() {
                     See All
                   </Link>
                 </div>
-                <div className="relative overflow-x-auto">
+                <div className="relative overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100 hover:scrollbar-thumb-gray-400">
                   <div className="flex gap-6 snap-x snap-mandatory pb-4">
                     {cardsData.map((card, index) => (
                       <div key={index} className="snap-center shrink-0 first:pl-4 last:pr-4">
@@ -149,7 +149,7 @@ export default function Dashboard() {
                   <CardContent className="p-0 flex items-center justify-center h-full">
                     <QuickTransfer 
                       users={quickTransferUserData}
-                      defaultAmount="$525.50"
+                      defaultAmount="525.50"
                     />
                   </CardContent>
                 </Card>

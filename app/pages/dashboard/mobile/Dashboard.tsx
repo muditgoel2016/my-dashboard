@@ -73,7 +73,7 @@ export default function MobileDashboard() {
               See All
             </Link>
           </div>
-          <div className="relative overflow-x-auto pb-4">
+          <div className="relative overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100 hover:scrollbar-thumb-gray-400 pb-4">
             <div className="flex gap-4 snap-x snap-mandatory">
               {cardsData.map((card, index) => (
                 <div key={index} className="snap-center shrink-0 first:pl-4 last:pr-4">
@@ -96,7 +96,6 @@ export default function MobileDashboard() {
             </div>
           </div>
         </div>
-
         {/* Recent Transaction */}
         <div>
           <div className="p-3 flex justify-between items-center bg-inherit">
@@ -143,7 +142,7 @@ export default function MobileDashboard() {
           <div className="bg-white p-4 rounded-xl">
             <QuickTransfer
               users={quickTransferData}
-              defaultAmount="$25.50"
+              defaultAmount="525.50"
             />
           </div>
         </div>
