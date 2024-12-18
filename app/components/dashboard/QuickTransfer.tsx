@@ -67,7 +67,7 @@ export default function QuickTransfer({ users, defaultAmount = '525.50', onSend 
         description: `$${cleanAmount} has been successfully submitted`,
         variant: 'success',
       });
-      onSend?.(cleanAmount);
+      onSend(cleanAmount);
     } catch (error) {
       toast({
         title: 'Transfer Failed',

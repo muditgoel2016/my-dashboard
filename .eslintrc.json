@@ -11,7 +11,9 @@
     "sourceType": "module",
     "ecmaFeatures": {
       "jsx": true
-    }
+    },
+    "project": "./tsconfig.json", // Add this line
+    "tsconfigRootDir": "./" // Ensures correct path resolution
   },
   "plugins": [
     "@typescript-eslint",
@@ -67,14 +69,47 @@
     /*
      * Disabled Rules
      */
-    "@typescript-eslint/no-unused-vars": "off",
-    "@typescript-eslint/no-explicit-any": "off",
-    "react/prop-types": "off",
-    "react/jsx-uses-react": "off",
-    "react/react-in-jsx-scope": "off",
-    "@next/next/no-html-link-for-pages": "off",
-    "@next/next/no-img-element": "off",
-    "@next/next/no-css-tags": "off",
+     "@typescript-eslint/no-unused-vars": "off",
+     "@typescript-eslint/no-explicit-any": "off",
+     "react/prop-types": "off",
+     "react/jsx-uses-react": "off",
+     "react/react-in-jsx-scope": "off",
+     "@next/next/no-html-link-for-pages": "off",
+     "@next/next/no-img-element": "off",
+     "@next/next/no-css-tags": "off",
+ 
+     /*
+      * TypeScript Rules
+      */
+     "@typescript-eslint/explicit-function-return-type": [
+       "warn",
+       {
+         "allowExpressions": true,
+         "allowTypedFunctionExpressions": true
+       }
+     ],
+     "@typescript-eslint/explicit-module-boundary-types": "warn",
+     "@typescript-eslint/no-floating-promises": "error",
+     "@typescript-eslint/no-misused-promises": "error",
+     "@typescript-eslint/no-unused-expressions": "error",
+     "@typescript-eslint/no-unnecessary-type-assertion": "warn",
+     "@typescript-eslint/no-non-null-asserted-optional-chain": "warn",
+     "@typescript-eslint/consistent-type-imports": [
+       "warn",
+       {
+         "prefer": "type-imports",
+         "fixStyle": "separate-type-imports"
+       }
+     ],
+     "@typescript-eslint/consistent-type-definitions": ["warn", "interface"],
+     "@typescript-eslint/prefer-as-const": "warn",
+     "@typescript-eslint/prefer-for-of": "warn",
+     "@typescript-eslint/prefer-optional-chain": "warn",
+     "@typescript-eslint/require-await": "warn",
+     "@typescript-eslint/no-shadow": ["error"],
+     "@typescript-eslint/no-unnecessary-condition": "warn",
+     "@typescript-eslint/prefer-readonly": "warn",
+     "@typescript-eslint/prefer-nullish-coalescing": "warn",
 
     /*
      * Accessibility (a11y) Rules

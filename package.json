@@ -31,8 +31,10 @@
   },
   "devDependencies": {
     "@types/node": "^20",
-    "@types/react": "^19",
+    "@types/react": "^19.0.2",
     "@types/react-dom": "^19",
+    "@typescript-eslint/eslint-plugin": "^8.18.1",
+    "@typescript-eslint/parser": "^8.18.1",
     "eslint": "^8",
     "eslint-config-next": "15.0.4",
     "eslint-plugin-formatjs": "^5.2.8",
