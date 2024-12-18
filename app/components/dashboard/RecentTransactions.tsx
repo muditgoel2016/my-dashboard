@@ -4,7 +4,7 @@ import { Card, CardContent } from "@/app/components/shared/common/card";
 const RecentTransactions = ({ transactions }) => {
   return (
     <Card className="flex-1 rounded-[25px] bg-white">
-      <CardContent className="p-6 h-[calc(100%-48px)] overflow-auto">
+      <CardContent className="p-6 h-[282px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100 hover:scrollbar-thumb-gray-400">
         <div className="flex flex-col gap-4">
           {transactions.map((transaction) => (
             <div key={transaction.id} className="flex items-center">
