@@ -1,5 +1,9 @@
 // app/services/dataServices/settings/settingsDataService.ts
 
+/**
+ *
+ * @param endpoint
+ */
 async function fetchData(endpoint: string) {
   const response = await fetch(`/api/settings/${endpoint}`);
   if (!response.ok) {

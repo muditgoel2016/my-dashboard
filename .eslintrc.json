@@ -2,11 +2,12 @@
   "root": true,
   "env": {
     "browser": true,
-    "node": true
+    "node": true,
+    "es2021": true
   },
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "ecmaVersion": 2020,
+    "ecmaVersion": "latest",
     "sourceType": "module",
     "ecmaFeatures": {
       "jsx": true
@@ -15,14 +16,57 @@
   "plugins": [
     "@typescript-eslint",
     "react",
-    "react-hooks"
+    "react-hooks",
+    "jsx-a11y",
+    "formatjs",
+    "security",
+    "jest",
+    "jsdoc",
+    "optimize-regex",
+    "react-perf",
+    "import"
   ],
   "extends": [
     "next/core-web-vitals",
-    "next/typescript"
+    "next/typescript",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:jsx-a11y/recommended",
+    "plugin:jest/recommended",
+    "plugin:testing-library/react",
+    "plugin:jsdoc/recommended",
+    "plugin:security/recommended-legacy",
+    "plugin:optimize-regex/recommended",
+    "plugin:react-perf/recommended"
+  ],
+  "globals": {
+    "I18n": "readonly",
+    "ga": "readonly"
+  },
+  "overrides": [
+    {
+      "files": ["./cypress/**/*.js"],
+      "rules": { "no-undef": "off" }
+    },
+    {
+      "files": ["*styles.js"],
+      "rules": {
+        "object-curly-newline": [
+          "error",
+          {
+            "ObjectExpression": { "multiline": true, "minProperties": 5 },
+            "ObjectPattern": { "multiline": true, "minProperties": 5 },
+            "ImportDeclaration": { "multiline": true, "minProperties": 5 },
+            "ExportDeclaration": { "multiline": true, "minProperties": 5 }
+          }
+        ]
+      }
+    }
   ],
   "rules": {
-    // Disable all rules
+    /*
+     * Disabled Rules
+     */
     "@typescript-eslint/no-unused-vars": "off",
     "@typescript-eslint/no-explicit-any": "off",
     "react/prop-types": "off",
@@ -31,6 +75,83 @@
     "@next/next/no-html-link-for-pages": "off",
     "@next/next/no-img-element": "off",
     "@next/next/no-css-tags": "off",
-    // Add any other rules you want to disable
+
+    /*
+     * Accessibility (a11y) Rules
+     */
+    "jsx-a11y/alt-text": ["error"],
+    "jsx-a11y/label-has-associated-control": ["error", { "assert": "either" }],
+    "jsx-a11y/no-autofocus": ["error"],
+    "jsx-a11y/no-redundant-roles": "error",
+    "jsx-a11y/aria-role": ["error", { "ignoreNonDOM": true }],
+    "jsx-a11y/aria-props": "error",
+    "jsx-a11y/aria-proptypes": "error",
+    "jsx-a11y/aria-unsupported-elements": "error",
+    "jsx-a11y/anchor-is-valid": [
+      "error",
+      {
+        "components": ["Link"],
+        "aspects": ["invalidHref"]
+      }
+    ],
+    "jsx-a11y/click-events-have-key-events": "warn",
+
+    /*
+     * Internationalization (i18n)
+     */
+    "formatjs/no-offset": "error",
+    "formatjs/enforce-description": ["error", "literal"],
+    "formatjs/no-literal-string-in-jsx": "warn",
+    "no-restricted-syntax": [
+      "warn",
+      {
+        "selector": "JSXAttribute[name.name=/^(placeholder|title|alt|label|summary|description|value)$/] > Literal[value=/^[A-Za-z\\s]{2,}/]",
+        "message": "Cannot have untranslated text in JSX"
+      }
+    ],
+
+    /*
+     * Performance Rules
+     */
+    "react-perf/jsx-no-new-object-as-prop": "error",
+    "react-perf/jsx-no-new-array-as-prop": "error",
+    "react-perf/jsx-no-jsx-as-prop": "error",
+
+    /*
+     * Security Rules
+     */
+    "security/detect-object-injection": "warn",
+    "security/detect-non-literal-fs-filename": "warn",
+    "no-alert": "warn",
+    "react/no-danger": "error",
+
+    /*
+     * Code Quality Rules
+     */
+    "import/order": [
+      "error",
+      {
+        "newlines-between": "always",
+        "groups": ["builtin", "external", "internal", "parent", "sibling", "index"],
+        "alphabetize": { "order": "asc", "caseInsensitive": true }
+      }
+    ],
+    "no-console": ["warn", { "allow": ["warn", "error"] }],
+    "curly": ["error", "all"],
+    "eqeqeq": ["error", "always"],
+    "quotes": ["error", "single"],
+    "jsx-quotes": ["error", "prefer-single"],
+    "react/jsx-closing-bracket-location": ["error", "after-props"],
+    "react/jsx-filename-extension": ["error", { "extensions": [".jsx", ".js", ".tsx", ".ts"] }],
+    "react/jsx-props-no-spreading": "off",
+    "react-hooks/exhaustive-deps": "warn",
+    "react-hooks/rules-of-hooks": "error",
+    "react/function-component-definition": [
+      "error",
+      {
+        "namedComponents": "arrow-function",
+        "unnamedComponents": "arrow-function"
+      }
+    ]
   }
 }

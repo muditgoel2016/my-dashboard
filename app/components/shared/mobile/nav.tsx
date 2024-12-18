@@ -18,16 +18,15 @@ const MobileNav = () => {
   ]
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-white border-t">
-      <nav className="flex justify-around items-center px-2 py-3">
+    <div className='fixed bottom-0 left-0 right-0 bg-white border-t'>
+      <nav className='flex justify-around items-center px-2 py-3'>
         {navItems.map((item) => (
           <Link 
             key={item.href}
             href={item.href}
-            className="flex flex-col items-center gap-1"
-          >
-            <span className="text-gray-600">{item.icon}</span>
-            <span className="text-xs text-gray-600">{item.label}</span>
+            className='flex flex-col items-center gap-1'>
+            <span className='text-gray-600'>{item.icon}</span>
+            <span className='text-xs text-gray-600'>{item.label}</span>
           </Link>
         ))}
       </nav>

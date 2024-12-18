@@ -1,5 +1,5 @@
-import React from "react";
-import { PieChart, Pie, Cell } from "recharts";
+import React from 'react';
+import { PieChart, Pie, Cell } from 'recharts';
 
 const ExpenseStatistics = ({ data }) => {
   const RADIAN = Math.PI / 180;
@@ -21,23 +21,20 @@ const ExpenseStatistics = ({ data }) => {
       <text 
         x={x} 
         y={y} 
-        fill="white" 
-        textAnchor="middle" 
-        dominantBaseline="middle"
-      >
+        fill='white' 
+        textAnchor='middle' 
+        dominantBaseline='middle'>
         <tspan 
           x={x} 
           y={y - 10} 
-          fontSize="20" 
-          fontWeight="600"
-        >
+          fontSize='20' 
+          fontWeight='600'>
           {`${(percent * 100).toFixed(0)}%`}
         </tspan>
         <tspan 
           x={x} 
           y={y + 10} 
-          fontSize="14"
-        >
+          fontSize='14'>
           {name}
         </tspan>
       </text>
@@ -45,26 +42,24 @@ const ExpenseStatistics = ({ data }) => {
   };
 
   return (
-    <div className="w-full h-full flex items-center justify-center">
+    <div className='w-full h-full flex items-center justify-center'>
       <PieChart width={400} height={300}>
         <Pie
           data={data}
-          cx="50%"
-          cy="50%"
+          cx='50%'
+          cy='50%'
           outerRadius={140}
           innerRadius={0}
-          dataKey="value"
+          dataKey='value'
           paddingAngle={5}
           labelLine={false}
           label={renderCustomizedLabel}
           strokeWidth={3}
-          stroke="#fff"
-        >
+          stroke='#fff'>
           {data.map((entry, index) => (
             <Cell 
               key={`cell-${index}`} 
-              fill={entry.color}
-            />
+              fill={entry.color}/>
           ))}
         </Pie>
       </PieChart>

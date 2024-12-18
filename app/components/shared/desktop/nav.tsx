@@ -1,5 +1,3 @@
-import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
 import {
   Home,
   CircleDollarSign,
@@ -12,6 +10,8 @@ import {
   Settings,
   CheckSquare
 } from 'lucide-react';
+import Link from 'next/link';
+import React, { useState, useEffect } from 'react';
 
 interface MenuItem {
   icon: React.ReactNode;
@@ -43,15 +43,15 @@ const Nav: React.FC = () => {
   ];
 
   return (
-    <div className="w-64 bg-white border-r h-screen fixed left-0 top-0">
-      <div className="flex items-center gap-3 px-6 py-6">
-        <div className="w-8 h-8 bg-indigo-600 rounded flex items-center justify-center">
-          <CheckSquare className="w-5 h-5 text-white" />
+    <div className='w-64 bg-white border-r h-screen fixed left-0 top-0'>
+      <div className='flex items-center gap-3 px-6 py-6'>
+        <div className='w-8 h-8 bg-indigo-600 rounded flex items-center justify-center'>
+          <CheckSquare className='w-5 h-5 text-white' />
         </div>
-        <span className="text-xl font-semibold text-gray-900">Soar Task</span>
+        <span className='text-xl font-semibold text-gray-900'>Soar Task</span>
       </div>
 
-      <nav className="px-3 py-2">
+      <nav className='px-3 py-2'>
         {menuItems.map((item) => {
           const isActive = mounted && activePath === item.href;
           
@@ -64,10 +64,9 @@ const Nav: React.FC = () => {
                   ? 'text-gray-900 font-medium hover:bg-gray-50' 
                   : 'text-gray-400 hover:bg-gray-50 hover:text-gray-600'
                 }`}
-              onClick={() => setActivePath(item.href)}
-            >
+              onClick={() => setActivePath(item.href)}>
               {isActive && (
-                <div className="absolute left-0 top-0 h-full w-1 bg-gray-900 rounded-r" />
+                <div className='absolute left-0 top-0 h-full w-1 bg-gray-900 rounded-r' />
               )}
               <span className={isActive ? 'text-gray-900' : 'text-gray-400'}>
                 {item.icon}

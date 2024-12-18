@@ -1,5 +1,9 @@
 // app/services/dataServices/dashboard/dashboardDataService.ts
 
+/**
+ *
+ * @param endpoint
+ */
 async function fetchData(endpoint: string) {
   const response = await fetch(`/api/dashboard/${endpoint}`);
   if (!response.ok) {

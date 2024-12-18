@@ -1,6 +1,7 @@
-import * as React from "react";
-import * as TabsPrimitive from "@radix-ui/react-tabs";
-import { cn } from "@/app/services/otherServices/utils";
+import * as TabsPrimitive from '@radix-ui/react-tabs';
+import * as React from 'react';
+
+import { cn } from '@/app/services/otherServices/utils';
 
 const Tabs = TabsPrimitive.Root;
 
@@ -11,11 +12,10 @@ const TabsList = React.forwardRef<
   <TabsPrimitive.List
     ref={ref}
     className={cn(
-      "inline-flex h-12 items-center justify-start border-b border-gray-300 space-x-12", // Added consistent border height
+      'inline-flex h-12 items-center justify-start border-b border-gray-300 space-x-12', // Added consistent border height
       className
     )}
-    {...props}
-  />
+    {...props}/>
 ));
 TabsList.displayName = TabsPrimitive.List.displayName;
 
@@ -26,11 +26,10 @@ const TabsTrigger = React.forwardRef<
   <TabsPrimitive.Trigger
     ref={ref}
     className={cn(
-      "relative px-0 pb-3 text-lg font-medium text-gray-400 hover:text-gray-600 focus-visible:outline-none data-[state=active]:text-gray-900 data-[state=active]:after:content-[''] data-[state=active]:after:absolute data-[state=active]:after:bottom-0 data-[state=active]:after:left-0 data-[state=active]:after:right-0 data-[state=active]:after:h-[2px] data-[state=active]:after:bg-[#4F46E5]", // Adjusted padding and positioning
+      'relative px-0 pb-3 text-lg font-medium text-gray-400 hover:text-gray-600 focus-visible:outline-none data-[state=active]:text-gray-900 data-[state=active]:after:content-[\'\'] data-[state=active]:after:absolute data-[state=active]:after:bottom-0 data-[state=active]:after:left-0 data-[state=active]:after:right-0 data-[state=active]:after:h-[2px] data-[state=active]:after:bg-[#4F46E5]', // Adjusted padding and positioning
       className
     )}
-    {...props}
-  />
+    {...props}/>
 ));
 TabsTrigger.displayName = TabsPrimitive.Trigger.displayName;
 
@@ -41,11 +40,10 @@ const TabsContent = React.forwardRef<
   <TabsPrimitive.Content
     ref={ref}
     className={cn(
-      "mt-4 focus-visible:outline-none",
+      'mt-4 focus-visible:outline-none',
       className
     )}
-    {...props}
-  />
+    {...props}/>
 ));
 TabsContent.displayName = TabsPrimitive.Content.displayName;
 
