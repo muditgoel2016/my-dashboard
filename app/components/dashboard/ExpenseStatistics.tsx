@@ -1,10 +1,30 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { PieChart, Pie, Cell } from 'recharts';
 
-const ExpenseStatistics = ({ data }) => {
-  const RADIAN = Math.PI / 180;
-  
-  const renderCustomizedLabel = ({
+interface ExpenseData {
+  name: string;
+  value: number;
+  color: string;
+}
+
+interface CustomizedLabelProps {
+  cx: number;
+  cy: number;
+  midAngle: number;
+  innerRadius: number;
+  outerRadius: number;
+  percent: number;
+  name: string;
+}
+
+interface ExpenseStatisticsProps {
+  data: ExpenseData[];
+}
+
+const RADIAN = Math.PI / 180;
+
+const ExpenseStatistics: React.FC<ExpenseStatisticsProps> = ({ data }) => {
+  const renderCustomizedLabel = useCallback(({
     cx,
     cy,
     midAngle,
@@ -12,7 +32,7 @@ const ExpenseStatistics = ({ data }) => {
     outerRadius,
     percent,
     name,
-  }) => {
+  }: CustomizedLabelProps) => {
     const radius = innerRadius + (outerRadius - innerRadius) * 0.6;
     const x = cx + radius * Math.cos(-midAngle * RADIAN);
     const y = cy + radius * Math.sin(-midAngle * RADIAN);
@@ -39,7 +59,7 @@ const ExpenseStatistics = ({ data }) => {
         </tspan>
       </text>
     );
-  };
+  }, []);
 
   return (
     <div className='w-full h-full flex items-center justify-center'>

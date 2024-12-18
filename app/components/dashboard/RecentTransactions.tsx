@@ -1,8 +1,37 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import { Card, CardContent } from '@/app/components/shared/common/card';
 
-const RecentTransactions = ({ transactions }) => {
+interface TransactionIcon {
+  bg: string;
+  color: string;
+  svg: React.ReactNode;
+}
+
+interface Transaction {
+  id: string | number;
+  icon: TransactionIcon;
+  title: string;
+  date: string;
+  type: 'credit' | 'debit';
+  amount: number | string;
+}
+
+interface RecentTransactionsProps {
+  transactions: Transaction[];
+}
+
+const RecentTransactions: React.FC<RecentTransactionsProps> = ({ transactions }) => {
+  const getIconStyles = useMemo(() => {
+    return transactions.reduce((styles, transaction) => ({
+      ...styles,
+      [transaction.id]: {
+        container: { backgroundColor: transaction.icon.bg },
+        icon: { color: transaction.icon.color }
+      }
+    }), {});
+  }, [transactions]);
+
   return (
     <Card className='flex-1 rounded-[25px] bg-white'>
       <CardContent className='p-6 h-[282px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100 hover:scrollbar-thumb-gray-400'>
@@ -13,8 +42,8 @@ const RecentTransactions = ({ transactions }) => {
               <div className='flex-none w-12 h-12'>
                 <div 
                   className='w-full h-full rounded-full flex items-center justify-center'
-                  style={{ backgroundColor: transaction.icon.bg }}>
-                  <div style={{ color: transaction.icon.color }}>
+                  style={getIconStyles[transaction.id].container}>
+                  <div style={getIconStyles[transaction.id].icon}>
                     {transaction.icon.svg}
                   </div>
                 </div>
