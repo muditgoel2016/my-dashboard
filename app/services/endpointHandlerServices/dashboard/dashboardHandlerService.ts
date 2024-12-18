@@ -35,6 +35,39 @@ export function getCardsData() {
         textPrimaryColor: "text-[#1a1f36]",
       }
     },
+    {
+      id: 3,
+      balance: "8,924",
+      holder: "Jane Smith",
+      validThru: "09/24",
+      cardNumber: "4321 **** **** 8765",
+      theme: {
+        bgColor: "bg-[#FFFAE6]",
+        textPrimaryColor: "text-[#D97706]",
+      }
+    },
+    {
+      id: 4,
+      balance: "4,564",
+      holder: "Alice Brown",
+      validThru: "01/25",
+      cardNumber: "8765 **** **** 4321",
+      theme: {
+        bgColor: "bg-[#E6FFFA]",
+        textPrimaryColor: "text-[#059669]",
+      }
+    },
+    {
+      id: 5,
+      balance: "7,832",
+      holder: "Bob Martin",
+      validThru: "06/26",
+      cardNumber: "5678 **** **** 9012",
+      theme: {
+        bgColor: "bg-[#E0E7FF]",
+        textPrimaryColor: "text-[#4338CA]",
+      }
+    }
   ];
 }
 
@@ -51,11 +84,20 @@ export function getExpenseStatisticsData() {
   return [
     { name: 'Livia Bator', title: 'CEO', initial: 'L', avatarUrl: 'https://picsum.photos/id/64/96/96' },
     { name: 'Randy Press', title: 'Director', initial: 'R' },
-    { name: 'Workman', title: 'Designer', initial: 'W', avatarUrl: 'https://picsum.photos/id/64/96/96' }
+    { name: 'Workman', title: 'Designer', initial: 'W', avatarUrl: 'https://picsum.photos/id/64/96/96' },
+    { name: 'Sarah Chen', title: 'Tech Lead', initial: 'S', avatarUrl: 'https://picsum.photos/id/65/96/96' },
+    { name: 'Mike Johnson', title: 'Developer', initial: 'M', avatarUrl: 'https://picsum.photos/id/66/96/96' },
+    { name: 'Diana Park', title: 'Product Manager', initial: 'D' },
+    { name: 'Alex Rodriguez', title: 'UX Designer', initial: 'A', avatarUrl: 'https://picsum.photos/id/67/96/96' },
+    { name: 'Emma Wilson', title: 'Marketing', initial: 'E', avatarUrl: 'https://picsum.photos/id/68/96/96' },
+    { name: 'Tom Anderson', title: 'Sales Lead', initial: 'T' },
+    { name: 'Nina Patel', title: 'CFO', initial: 'N', avatarUrl: 'https://picsum.photos/id/69/96/96' },
+    { name: 'James Lee', title: 'CTO', initial: 'J', avatarUrl: 'https://picsum.photos/id/70/96/96' },
+    { name: 'Maria Garcia', title: 'HR Manager', initial: 'M' }
   ]
- }
+}
 
- export function getTransactionsData() {
+export function getTransactionsData() {
   return [
     {
       id: 1,
@@ -89,9 +131,141 @@ export function getExpenseStatisticsData() {
         bg: "#E7FFF3",
         color: "#35C28F"
       }
+    },
+    {
+      id: 4,
+      title: "Netflix Subscription",
+      date: "20 January 2021",
+      amount: "14.99",
+      type: "debit",
+      icon: {
+        bg: "#FFE7E7",
+        color: "#F23838"
+      }
+    },
+    {
+      id: 5,
+      title: "Salary Deposit",
+      date: "19 January 2021",
+      amount: "4,750",
+      type: "credit",
+      icon: {
+        bg: "#E7FFF3",
+        color: "#35C28F"
+      }
+    },
+    {
+      id: 6,
+      title: "Amazon Purchase",
+      date: "18 January 2021",
+      amount: "239.50",
+      type: "debit",
+      icon: {
+        bg: "#FFF7EA",
+        color: "#FFB545"
+      }
+    },
+    {
+      id: 7,
+      title: "Client Payment",
+      date: "17 January 2021",
+      amount: "1,200",
+      type: "credit",
+      icon: {
+        bg: "#EFF4FF",
+        color: "#316FF6"
+      }
+    },
+    {
+      id: 8,
+      title: "Grocery Shopping",
+      date: "15 January 2021",
+      amount: "156.85",
+      type: "debit",
+      icon: {
+        bg: "#FFE7E7",
+        color: "#F23838"
+      }
+    },
+    {
+      id: 9,
+      title: "Freelance Payment",
+      date: "14 January 2021",
+      amount: "980",
+      type: "credit",
+      icon: {
+        bg: "#E7FFF3",
+        color: "#35C28F"
+      }
+    },
+    {
+      id: 10,
+      title: "Uber Rides",
+      date: "13 January 2021",
+      amount: "42.50",
+      type: "debit",
+      icon: {
+        bg: "#FFF7EA",
+        color: "#FFB545"
+      }
+    },
+    {
+      id: 11,
+      title: "Investment Return",
+      date: "12 January 2021",
+      amount: "3,200",
+      type: "credit",
+      icon: {
+        bg: "#EFF4FF",
+        color: "#316FF6"
+      }
+    },
+    {
+      id: 12,
+      title: "Phone Bill",
+      date: "10 January 2021",
+      amount: "89.99",
+      type: "debit",
+      icon: {
+        bg: "#FFE7E7",
+        color: "#F23838"
+      }
+    },
+    {
+      id: 13,
+      title: "Consulting Fee",
+      date: "08 January 2021",
+      amount: "2,800",
+      type: "credit",
+      icon: {
+        bg: "#E7FFF3",
+        color: "#35C28F"
+      }
+    },
+    {
+      id: 14,
+      title: "Gym Membership",
+      date: "05 January 2021",
+      amount: "75",
+      type: "debit",
+      icon: {
+        bg: "#FFE7E7",
+        color: "#F23838"
+      }
+    },
+    {
+      id: 15,
+      title: "Bonus Payment",
+      date: "03 January 2021",
+      amount: "1,500",
+      type: "credit",
+      icon: {
+        bg: "#E7FFF3",
+        color: "#35C28F"
+      }
     }
-  ]
- }
+  ];
+}
 
  export function getWeeklyActivityData() {
   return [
