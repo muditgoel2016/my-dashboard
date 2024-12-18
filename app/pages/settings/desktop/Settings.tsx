@@ -7,7 +7,6 @@ import { Card, CardContent } from "@/app/components/shared/common/card";
 import { Input } from "@/app/components/shared/common/input";
 import { Button } from "@/app/components/shared/common/button";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/app/components/shared/common/tabs";
-import { ChevronDown } from "lucide-react";
 import ProfileImagePicker from "@/app/components/settings/ProfileImagePicker";
 
 // Service Imports
@@ -40,10 +39,9 @@ export default function Settings() {
     fetchSettingsData();
   }, []);
 
-  // =============== Form Validation ===============
   const validateField = (name, value) => {
     let error = "";
-    
+  
     // Validation rules for specific fields
     switch (name) {
       case "email":
@@ -53,7 +51,7 @@ export default function Settings() {
           error = "Invalid email format.";
         }
         break;
-        
+  
       case "password":
         if (!value) {
           error = "Password is required.";
@@ -61,7 +59,7 @@ export default function Settings() {
           error = "Password must be at least 8 characters.";
         }
         break;
-        
+  
       case "postalCode":
         if (!value) {
           error = "Postal code is required.";
@@ -69,13 +67,26 @@ export default function Settings() {
           error = "Postal code must be 5 digits.";
         }
         break;
-        
+  
+      case "dateOfBirth":
+        if (!value) {
+          error = "Date of Birth is required.";
+        } else {
+          const selectedDate = new Date(value);
+          const today = new Date();
+  
+          if (selectedDate > today) {
+            error = "Date of Birth cannot be in the future.";
+          }
+        }
+        break;
+  
       default:
         if (!value) {
           error = `${name} is required.`;
         }
     }
-    
+  
     setFormErrors((prev) => ({ ...prev, [name]: error }));
     return error;
   };
@@ -183,9 +194,6 @@ export default function Settings() {
                               onChange={(e) => handleInputChange(field.name, e.target.value)}
                               onBlur={() => validateField(field.name, formValues[field.name])}
                             />
-                            {field.hasDropdown && (
-                              <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-[#718EBF]" size={16} />
-                            )}
                           </div>
                           {/* Error Messages */}
                           {formErrors[field.name] && (
