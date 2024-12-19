@@ -1,6 +1,7 @@
 import { Inter } from 'next/font/google';
 import React from 'react';
 
+import type { CardTheme } from '@/app/components/dashboard/CreditCard';
 import CreditCard from '@/app/components/dashboard/CreditCard';
 import EMVChip from '@/app/components/dashboard/EMVChip';
 import EMVChipBlack from '@/app/components/dashboard/EMVChipBlack';
@@ -12,11 +13,16 @@ import { dashboardDataService } from '@/app/services/dataServices/dashboard/dash
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
-/**
- *
- */
-export default function CreditCards() {
-  const [cardsData, setCardsData] = React.useState([]);
+interface CardData {
+  balance: number;
+  holder: string;
+  validThru: string;
+  cardNumber: string;
+  theme: CardTheme;
+}
+
+const CreditCards: React.FC = () => {
+  const [cardsData, setCardsData] = React.useState<CardData[]>([]);
 
   React.useEffect(() => {
     const fetchCards = async () => {
@@ -28,7 +34,8 @@ export default function CreditCards() {
       }
     };
 
-    fetchCards();
+    // Use void to mark as fire-and-forget
+    void fetchCards();
   }, []);
 
   return (
@@ -49,21 +56,26 @@ export default function CreditCards() {
             <CardContent>
               {/* Flex Container for 3-column grid */}
               <div className='flex flex-wrap gap-6 p-6'>
-                {cardsData.map((card, index) => (
-                  <div key={index} className='basis-[calc(33.333%-1rem)] flex-grow'>
-                    <CreditCard
-                      balance={card.balance}
-                      holder={card.holder}
-                      validThru={card.validThru}
-                      cardNumber={card.cardNumber}
-                      ChipImage={card.theme.bgColor === 'bg-[#31304D]' ? EMVChip : EMVChipBlack}
-                      theme={{
-                        ...card.theme,
-                        creditProviderLogo: <MasterCardLogo 
-                          fillColor={card.theme.bgColor === 'bg-[#31304D]' ? 'white' : '#1a1f36'}/>
-                      }}/>
-                  </div>
-                ))}
+                {cardsData.map((card, index) => {
+                  // Extract logic outside JSX
+                  const chipImage = card.theme.bgColor === 'bg-[#31304D]' ? EMVChip : EMVChipBlack;
+                  const creditProviderLogo = (
+                    <MasterCardLogo
+                      fillColor={card.theme.bgColor === 'bg-[#31304D]' ? 'white' : '#1a1f36'}/>
+                  );
+
+                  return (
+                    <div key={index} className='basis-[calc(33.333%-1rem)] flex-grow'>
+                      <CreditCard
+                        balance={card.balance}
+                        holder={card.holder}
+                        validThru={card.validThru}
+                        cardNumber={card.cardNumber}
+                        ChipImage={chipImage}
+                        theme={{ ...card.theme, creditProviderLogo }}/>
+                    </div>
+                  );
+                })}
               </div>
             </CardContent>
           </Card>
@@ -71,4 +83,6 @@ export default function CreditCards() {
       </div>
     </div>
   );
-}
+};
+
+export default CreditCards;

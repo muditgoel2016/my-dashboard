@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 
-// UI Component Imports
 import ProfileImagePicker from '@/app/components/settings/ProfileImagePicker';
 import { Button } from '@/app/components/shared/common/button';
 import { Card, CardContent } from '@/app/components/shared/common/card';
@@ -8,44 +7,58 @@ import { Input } from '@/app/components/shared/common/input';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/app/components/shared/common/tabs';
 import Sidenav from '@/app/components/shared/desktop/nav';
 import TopBar from '@/app/components/shared/desktop/top-bar';
-
-// Service Imports
 import { settingsDataService } from '@/app/services/dataServices/settings/settingsDataService';
 
-/**
- *
- */
-export default function Settings() {
+interface FormField {
+  name: string;
+  label: string;
+  type: string;
+  defaultValue?: string;
+}
+
+interface SettingsData {
+  formFields: FormField[];
+  profileImage: {
+    url: string;
+    alt: string;
+  };
+}
+
+interface FormValues {
+  [key: string]: string;
+}
+
+interface FormErrors {
+  [key: string]: string;
+}
+
+const Settings: React.FC = () => {
   // =============== State Management ===============
-  const [formValues, setFormValues] = useState({});     // Stores current form values
-  const [formErrors, setFormErrors] = useState({});     // Stores validation errors
-  const [settingsData, setSettingsData] = useState(null);  // Stores API response data
+  const [formValues, setFormValues] = useState<FormValues>({});     
+  const [formErrors, setFormErrors] = useState<FormErrors>({});     
+  const [settingsData, setSettingsData] = useState<SettingsData | null>(null);  
 
   // =============== Data Fetching ===============
   useEffect(() => {
-    const fetchSettingsData = async () => {
+    void (async () => {
       try {
         const data = await settingsDataService.getSettingsData();
         setSettingsData(data);
         
-        // Initialize form with default values from API
-        const initialValues = data.formFields.reduce((acc, field) => {
+        const initialValues = data.formFields.reduce((acc: FormValues, field) => {
           acc[field.name] = field.defaultValue || '';
           return acc;
-        }, {});
+        }, {} as FormValues);
         setFormValues(initialValues);
       } catch (error) {
         console.error('Error fetching settings data:', error);
       }
-    };
-
-    fetchSettingsData();
+    })();
   }, []);
 
-  const validateField = (name, value) => {
+  const validateField = (name: string, value: string): string => {
     let error = '';
   
-    // Validation rules for specific fields
     switch (name) {
       case 'email':
         if (!value) {
@@ -94,9 +107,10 @@ export default function Settings() {
     return error;
   };
 
-  // Validates entire form before submission
-  const validateForm = () => {
-    const errors = {};
+  const validateForm = (): boolean => {
+    if (!settingsData) {return false;}
+    
+    const errors: FormErrors = {};
     let valid = true;
 
     settingsData.formFields.forEach((field) => {
@@ -110,18 +124,16 @@ export default function Settings() {
   };
 
   // =============== Event Handlers ===============
-  const handleInputChange = (name, value) => {
+  const handleInputChange = (name: string, value: string): void => {
     setFormValues((prev) => ({ ...prev, [name]: value }));
-    validateField(name, value); // Real-time validation
+    validateField(name, value);
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: React.FormEvent): Promise<void> => {
     event.preventDefault();
     
     if (validateForm()) {
       try {
-        // TODO: Implement API update
-        // await settingsDataService.updateSettings(formValues);
         console.log('Form submitted successfully:', formValues);
         alert('Form submitted successfully!');
       } catch (error) {
@@ -133,22 +145,17 @@ export default function Settings() {
     }
   };
 
-  // Show loading state while fetching data
   if (!settingsData) {return <div>Loading...</div>;}
 
-  // =============== Component Render ===============
   return (
     <div className='min-h-screen bg-[#F7F9FC] flex'>
-      {/* Layout Components */}
       <Sidenav />
       <div className='ml-64 flex-1'>
         <TopBar title='Settings' />
         
-        {/* Main Content */}
         <main className='p-6'>
           <Card className='mx-4 bg-white shadow-sm rounded-lg'>
             <CardContent className='p-8'>
-              {/* Tab Navigation */}
               <Tabs defaultValue='profile' className='w-full'>
                 <div className='border-b border-gray-200 mb-8'>
                   <TabsList className='space-x-8 border-0'>
@@ -170,15 +177,16 @@ export default function Settings() {
                   </TabsList>
                 </div>
 
-                {/* Profile Tab Content */}
                 <TabsContent value='profile'>
                   <div className='flex gap-8'>
-                    {/* Profile Image Section */}
                     <ProfileImagePicker imageData={settingsData.profileImage} />
 
-                    {/* Form Section */}
-                    <form className='grid grid-cols-2 gap-x-8 gap-y-6 flex-1' onSubmit={handleSubmit} noValidate>
-                      {/* Form Fields */}
+                    <form 
+                      className='grid grid-cols-2 gap-x-8 gap-y-6 flex-1' 
+                      onSubmit={(e) => {
+                        void handleSubmit(e);
+                      }} 
+                      noValidate>
                       {settingsData.formFields.map((field, index) => (
                         <div key={index}>
                           <label className='block text-sm text-[#1A1F36] mb-2'>
@@ -194,14 +202,12 @@ export default function Settings() {
                               onChange={(e) => handleInputChange(field.name, e.target.value)}
                               onBlur={() => validateField(field.name, formValues[field.name])}/>
                           </div>
-                          {/* Error Messages */}
                           {formErrors[field.name] && (
                             <p className='text-red-500 text-xs mt-1'>{formErrors[field.name]}</p>
                           )}
                         </div>
                       ))}
 
-                      {/* Submit Button */}
                       <div className='col-span-2 flex justify-end mt-6'>
                         <Button
                           type='submit'
@@ -219,4 +225,6 @@ export default function Settings() {
       </div>
     </div>
   );
-}
+};
+
+export default Settings;

@@ -18,9 +18,10 @@ const ExpenseStatistics = dynamic(() => import('@/app/components/dashboard/Expen
 const WeeklyActivity = dynamic(() => import('@/app/components/dashboard/WeeklyActivity'), { ssr: false });
 
 /**
+ * Displays the dashboard, including credit cards, transactions, and various activity sections.
  *
  */
-export default function Dashboard() {
+const Dashboard: React.FC = () => {
   const [weeklyData, setWeeklyData] = useState([]);
   const [balanceHistoryData, setBalanceHistoryData] = useState([]);
   const [expenseData, setExpenseData] = useState([]);
@@ -29,7 +30,7 @@ export default function Dashboard() {
   const [cardsData, setCardsData] = useState([]);
 
   useEffect(() => {
-    const fetchDashboardData = async () => {
+    const fetchDashboardData = async (): Promise<void> => {
       try {
         const [weekly, balanceHistory, expense, transactions, quickTransfer, cards] = await Promise.all([
           dashboardDataService.getWeeklyActivityData(),
@@ -51,7 +52,8 @@ export default function Dashboard() {
       }
     };
 
-    fetchDashboardData();
+    // Use `void` to mark as fire-and-forget
+    void fetchDashboardData();
   }, []);
 
   return (
@@ -66,43 +68,40 @@ export default function Dashboard() {
               {/* Cards Wrapper */}
               <div className='flex flex-col basis-2/3 rounded-lg overflow-hidden'>
                 <div className='p-3 flex justify-between items-center bg-inherit'>
-                  <h2 className='text-[22px] font-semibold leading-[20.57px] text-[#343C6A]'>
-                    My Cards
-                  </h2>
-                  <Link 
-                    href='/pages/creditCards' 
-                    className='text-[17px] font-semibold leading-[20.57px] text-[#343C6A] 
-                            hover:scale-105 active:scale-100
-                            hover:underline transition-all duration-200 
-                            cursor-pointer text-right underline-offset-2'>
+                  <h2 className='text-[22px] font-semibold leading-[20.57px] text-[#343C6A]'>My Cards</h2>
+                  <Link
+                    href='/pages/creditCards'
+                    className='text-[17px] font-semibold leading-[20.57px] text-[#343C6A] hover:scale-105 active:scale-100 hover:underline transition-all duration-200 cursor-pointer text-right underline-offset-2'>
                     See All
                   </Link>
                 </div>
                 <div className='relative overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100 hover:scrollbar-thumb-gray-400'>
                   <div className='flex gap-6 snap-x snap-mandatory pb-4'>
-                    {cardsData.map((card, index) => (
-                      <div key={index} className='snap-center shrink-0 first:pl-4 last:pr-4'>
-                        <CreditCard
-                          balance={card.balance}
-                          holder={card.holder}
-                          validThru={card.validThru}
-                          cardNumber={card.cardNumber}
-                          ChipImage={card.theme.bgColor === 'bg-[#31304D]' ? EMVChip : EMVChipBlack}
-                          theme={{
-                            ...card.theme,
-                            creditProviderLogo: <MasterCardLogo fillColor={card.theme.bgColor === 'bg-[#31304D]' ? 'white' : '#1a1f36'} />
-                          }}/>
-                      </div>
-                    ))}
+                    {cardsData.map((card, index) => {
+                      const ChipImage = card.theme.bgColor === 'bg-[#31304D]' ? EMVChip : EMVChipBlack;
+                      const creditProviderLogo = (
+                        <MasterCardLogo fillColor={card.theme.bgColor === 'bg-[#31304D]' ? 'white' : '#1a1f36'} />
+                      );
+
+                      return (
+                        <div key={index} className='snap-center shrink-0 first:pl-4 last:pr-4'>
+                          <CreditCard
+                            balance={card.balance}
+                            holder={card.holder}
+                            validThru={card.validThru}
+                            cardNumber={card.cardNumber}
+                            ChipImage={ChipImage}
+                            theme={{ ...card.theme, creditProviderLogo }}/>
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               </div>
               {/* Recent Transactions */}
               <div className='flex flex-col basis-1/3 rounded-lg overflow-hidden'>
                 <div className='p-3 flex justify-between items-center bg-inherit'>
-                  <h2 className='text-[22px] font-semibold leading-[20.57px] text-[#343C6A]'>
-                    Recent Transactions
-                  </h2>
+                  <h2 className='text-[22px] font-semibold leading-[20.57px] text-[#343C6A]'>Recent Transactions</h2>
                 </div>
                 <RecentTransactions transactions={transactionsData} />
               </div>
@@ -112,9 +111,7 @@ export default function Dashboard() {
               {/* Weekly Activity */}
               <div className='flex flex-col basis-2/3 rounded-lg overflow-hidden'>
                 <div className='p-3 flex justify-between items-center bg-inherit'>
-                  <h2 className='text-[22px] font-semibold leading-[20.57px] text-[#343C6A]'>
-                    Weekly Activity
-                  </h2>
+                  <h2 className='text-[22px] font-semibold leading-[20.57px] text-[#343C6A]'>Weekly Activity</h2>
                 </div>
                 <Card className='flex-1 rounded-[25px]'>
                   <CardContent className='h-[calc(100%-48px)]'>
@@ -127,9 +124,7 @@ export default function Dashboard() {
               {/* Expense Statistics */}
               <div className='flex flex-col basis-1/3 rounded-lg overflow-hidden'>
                 <div className='p-3 flex justify-between items-center bg-inherit'>
-                  <h2 className='text-[22px] font-semibold leading-[20.57px] text-[#343C6A]'>
-                    Expense Statistics
-                  </h2>
+                  <h2 className='text-[22px] font-semibold leading-[20.57px] text-[#343C6A]'>Expense Statistics</h2>
                 </div>
                 <Card className='flex-1 rounded-[25px]'>
                   <CardContent className='h-[400px] flex items-center justify-center'>
@@ -143,24 +138,18 @@ export default function Dashboard() {
               {/* Quick Transfer */}
               <div className='flex flex-col basis-1/3 rounded-lg overflow-hidden'>
                 <div className='p-3 flex justify-between items-center bg-inherit'>
-                  <h2 className='text-[22px] font-semibold leading-[20.57px] text-[#343C6A]'>
-                    Quick Transfer
-                  </h2>
+                  <h2 className='text-[22px] font-semibold leading-[20.57px] text-[#343C6A]'>Quick Transfer</h2>
                 </div>
                 <Card className='flex-1 rounded-[25px]'>
                   <CardContent className='p-0 flex items-center justify-center h-full'>
-                    <QuickTransfer 
-                      users={quickTransferUserData}
-                      defaultAmount='525.50'/>
+                    <QuickTransfer users={quickTransferUserData} defaultAmount='525.50' />
                   </CardContent>
                 </Card>
               </div>
               {/* Balance History */}
               <div className='flex flex-col basis-2/3 rounded-lg overflow-hidden'>
                 <div className='p-3 flex justify-between items-center bg-inherit'>
-                  <h2 className='text-[22px] font-semibold leading-[20.57px] text-[#343C6A]'>
-                    Balance History
-                  </h2>
+                  <h2 className='text-[22px] font-semibold leading-[20.57px] text-[#343C6A]'>Balance History</h2>
                 </div>
                 <Card className='flex-1 rounded-[25px]'>
                   <CardContent className='h-[calc(100%-48px)]'>
@@ -174,4 +163,6 @@ export default function Dashboard() {
       </div>
     </div>
   );
-}
+};
+
+export default Dashboard;

@@ -1,4 +1,5 @@
 'use client';
+
 import { ChevronDown } from 'lucide-react';
 import React, { useState, useEffect } from 'react';
 
@@ -8,42 +9,59 @@ import { Input } from '@/app/components/shared/common/input';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/app/components/shared/common/tabs';
 import MobileNav from '@/app/components/shared/mobile/nav';
 import TopBar from '@/app/components/shared/mobile/top-bar';
-
-// Service Imports
 import { settingsDataService } from '@/app/services/dataServices/settings/settingsDataService';
 
-/**
- *
- */
-export default function Settings() {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [formValues, setFormValues] = useState({});
-  const [formErrors, setFormErrors] = useState({});
-  const [settingsData, setSettingsData] = useState(null);
+interface FormField {
+  name: string;
+  label: string;
+  type: string;
+  hasDropdown?: boolean;
+  defaultValue?: string;
+}
+
+interface SettingsData {
+  formFields: FormField[];
+  profileImage?: {
+    url: string;
+    alt: string;
+  };
+}
+
+interface FormValues {
+  [key: string]: string;
+}
+
+interface FormErrors {
+  [key: string]: string;
+}
+
+const Settings = () => {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
+  const [formValues, setFormValues] = useState<FormValues>({});
+  const [formErrors, setFormErrors] = useState<FormErrors>({});
+  const [settingsData, setSettingsData] = useState<SettingsData | null>(null);
 
   // =============== Data Fetching ===============
   useEffect(() => {
-    const fetchSettingsData = async () => {
+    void (async () => {
       try {
         const data = await settingsDataService.getSettingsData();
         setSettingsData(data);
 
         // Initialize form with default values
-        const initialValues = data.formFields.reduce((acc, field) => {
+        const initialValues = data.formFields.reduce((acc: FormValues, field) => {
           acc[field.name] = field.defaultValue || '';
           return acc;
-        }, {});
+        }, {} as FormValues);
         setFormValues(initialValues);
       } catch (error) {
         console.error('Error fetching settings data:', error);
       }
-    };
-
-    fetchSettingsData();
+    })();
   }, []);
 
   // =============== Form Validation ===============
-  const validateField = (name, value) => {
+  const validateField = (name: string, value: string): string => {
     let error = '';
 
     switch (name) {
@@ -85,8 +103,10 @@ export default function Settings() {
     return error;
   };
 
-  const validateForm = () => {
-    const errors = {};
+  const validateForm = (): boolean => {
+    if (!settingsData) {return false;}
+
+    const errors: FormErrors = {};
     let valid = true;
 
     settingsData.formFields.forEach((field) => {
@@ -100,12 +120,12 @@ export default function Settings() {
   };
 
   // =============== Event Handlers ===============
-  const handleInputChange = (name, value) => {
+  const handleInputChange = (name: string, value: string): void => {
     setFormValues((prev) => ({ ...prev, [name]: value }));
-    validateField(name, value); // Real-time validation
+    validateField(name, value);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: React.FormEvent): void => {
     event.preventDefault();
 
     if (validateForm()) {
@@ -121,7 +141,9 @@ export default function Settings() {
   // =============== Component Render ===============
   return (
     <div className='min-h-screen bg-[#f6f7fa]'>
-      <TopBar title='Settings' onMenuClick={() => setIsMobileMenuOpen(true)} />
+      <TopBar 
+        title='Settings' 
+        onMenuClick={(): void => setIsMobileMenuOpen(true)}/>
       <main className='pb-24'>
         <div
           className='bg-white rounded-[15px] shadow-md mx-auto mt-6'
@@ -149,17 +171,22 @@ export default function Settings() {
             {/* Tab Content */}
             <TabsContent value='profile'>
               <div className='flex justify-center mb-6'>
-                <ProfileImagePicker />
+                <ProfileImagePicker imageData={settingsData.profileImage} />
               </div>
 
-              <form className='space-y-4' onSubmit={handleSubmit} noValidate>
+              <form 
+                className='space-y-4' 
+                onSubmit={(e) => {
+                  void handleSubmit(e);
+                }} 
+                noValidate>
                 {settingsData.formFields.map((field, index) => (
                   <div key={index}>
                     <label className='block text-sm text-[#1A1F36] mb-2'>{field.label}</label>
                     <div className='relative'>
                       <Input
                         value={formValues[field.name] || ''}
-                        type={field.type} // Includes "date" type for dateOfBirth
+                        type={field.type}
                         className={`border-gray-200 rounded-lg h-11 px-3 text-sm text-[#718EBF] focus:border-[#4F46E5] focus:ring-0 w-full bg-white ${
                           formErrors[field.name] ? 'border-red-500' : ''
                         }`}
@@ -175,7 +202,9 @@ export default function Settings() {
                   </div>
                 ))}
 
-                <Button type='submit' className='w-full bg-[#1A1F36] h-[50px] rounded-[15px] mt-6 text-white'>
+                <Button 
+                  type='submit' 
+                  className='w-full bg-[#1A1F36] h-[50px] rounded-[15px] mt-6 text-white'>
                   Save
                 </Button>
               </form>
@@ -186,4 +215,6 @@ export default function Settings() {
       <MobileNav />
     </div>
   );
-}
+};
+
+export default Settings;

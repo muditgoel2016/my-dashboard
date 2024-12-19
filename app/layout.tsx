@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 
 import { Toaster } from '@/components/shared/common/toaster';
-
 import './globals.css';
 
 const geistSans = localFont({
@@ -10,6 +9,7 @@ const geistSans = localFont({
   variable: '--font-geist-sans',
   weight: '100 900',
 });
+
 const geistMono = localFont({
   src: './fonts/GeistMonoVF.woff',
   variable: '--font-geist-mono',
@@ -22,15 +22,16 @@ export const metadata: Metadata = {
 };
 
 /**
- *
- * @param root0
- * @param root0.children
+ * Root layout component that wraps the entire application.
+ * @param {object} props - Component properties
+ * @param {React.ReactNode} props.children - Child elements to be rendered within the layout
+ * @returns {JSX.Element} The root layout structure with proper font configuration
  */
-export default function RootLayout({
+const RootLayout = ({ 
   children,
 }: Readonly<{
   children: React.ReactNode;
-}>) {
+}>) => {
   return (
     <html lang='en'>
       <body
@@ -40,4 +41,6 @@ export default function RootLayout({
       </body>
     </html>
   );
-}
+};
+
+export default RootLayout;

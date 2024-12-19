@@ -10,21 +10,30 @@ export interface CardTheme {
   creditProviderLogo: ReactNode;
 }
 
+export interface CreditCardProps {
+  balance: number;
+  holder: string;
+  validThru: string;
+  cardNumber: string;
+  ChipImage: React.ComponentType;
+  theme?: CardTheme;
+}
+
 export const defaultCardTheme: CardTheme = {
   bgColor: 'bg-[#f8faff]',
   textPrimaryColor: 'text-[#1a1f36]',
   textSecondaryColor: 'text-[#1a1f36]',
-  creditProviderLogo: null
+  creditProviderLogo: null,
 };
 
-const CreditCard = ({
+const CreditCard: React.FC<CreditCardProps> = React.memo(({
   balance,
   holder,
   validThru,
   cardNumber,
   ChipImage,
   theme = defaultCardTheme,
-}) => {
+}: CreditCardProps) => {
   const {
     bgColor,
     textPrimaryColor,
@@ -32,13 +41,17 @@ const CreditCard = ({
     creditProviderLogo,
   } = theme;
 
+  const cardClassName = `${bgColor} flex-1 rounded-2xl border-[#e6efff]`;
+  const textPrimaryClass = `text-sm ${textPrimaryColor}`;
+  const textSecondaryClass = `text-xs ${textSecondaryColor}`;
+
   return (
-    <Card className={`${bgColor} flex-1 rounded-2xl border-[#e6efff]`}>
+    <Card className={cardClassName}>
       <CardContent className='p-6 h-[235px] flex flex-col'>
         {/* Top Row - Balance and Chip */}
         <div className='flex-1 flex justify-between'>
           <div>
-            <p className={`text-sm ${textPrimaryColor}`}>Balance</p>
+            <p className={textPrimaryClass}>Balance</p>
             <h2 className={`text-2xl font-bold ${textPrimaryColor}`}>${balance}</h2>
           </div>
           <div className='w-12 h-12'>
@@ -49,11 +62,11 @@ const CreditCard = ({
         {/* Middle Row - Card Holder and Valid Info */}
         <div className='flex-[2] flex justify-between items-center'>
           <div>
-            <p className={`text-xs ${textSecondaryColor}`}>CARD HOLDER</p>
+            <p className={textSecondaryClass}>CARD HOLDER</p>
             <p className={`font-medium ${textSecondaryColor}`}>{holder}</p>
           </div>
           <div>
-            <p className={`text-xs ${textSecondaryColor}`}>VALID THRU</p>
+            <p className={textSecondaryClass}>VALID THRU</p>
             <p className={`font-medium ${textSecondaryColor}`}>{validThru}</p>
           </div>
         </div>
@@ -68,6 +81,8 @@ const CreditCard = ({
       </CardContent>
     </Card>
   );
-};
+});
+
+CreditCard.displayName = 'CreditCard';
 
 export default CreditCard;
