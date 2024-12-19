@@ -1,7 +1,40 @@
+interface ProfileImage {
+  type: 'image';
+  defaultValue: string;
+  label: string;
+}
+
+interface FormField {
+  label: string;
+  defaultValue: string;
+  type: 'text' | 'email' | 'password' | 'date';
+  name: keyof FormFieldNames;
+}
+
+interface SettingsData {
+  profileImage: ProfileImage;
+  formFields: FormField[];
+}
+
+// Type safety for form field names
+interface FormFieldNames {
+  yourName: string;
+  userName: string;
+  email: string;
+  password: string;
+  dateOfBirth: string;
+  presentAddress: string;
+  permanentAddress: string;
+  city: string;
+  postalCode: string;
+  country: string;
+}
+
 /**
- *
+ * Retrieves settings data including profile image and form fields
+ * @returns {SettingsData} Object containing profile image and form fields configuration
  */
-export function getSettingsData() {
+export function getSettingsData(): SettingsData {
   return {
     profileImage: {
       type: 'image',

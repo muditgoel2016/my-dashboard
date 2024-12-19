@@ -8,13 +8,17 @@ import type {
 const TOAST_LIMIT = 1;
 const TOAST_REMOVE_DELAY = 1000000;
 
+// Core types
 type ToasterToast = ToastProps & {
   id: string;
   title?: React.ReactNode;
   description?: React.ReactNode;
   action?: ToastActionElement;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 };
 
+// Action types
 const actionTypes = {
   ADD_TOAST: 'ADD_TOAST',
   UPDATE_TOAST: 'UPDATE_TOAST',
@@ -22,18 +26,9 @@ const actionTypes = {
   REMOVE_TOAST: 'REMOVE_TOAST',
 } as const;
 
-let count = 0;
-
-/**
- *
- */
-function genId(): string {
-  count = (count + 1) % Number.MAX_VALUE;
-  return count.toString();
-}
-
 type ActionType = typeof actionTypes;
 
+// Discriminated union type for actions
 type Action =
   | {
       type: ActionType['ADD_TOAST'];
@@ -56,8 +51,34 @@ interface State {
   toasts: ToasterToast[];
 }
 
+interface ToastReturn {
+  id: string;
+  dismiss: () => void;
+  update: (props: ToasterToast) => void;
+}
+
+interface UseToastReturn extends State {
+  toast: (options: ToastOptions) => ToastReturn;
+  dismiss: (toastId?: string) => void;
+}
+
+let count = 0;
+
+/**
+ * Generates a unique ID for each toast
+ * @returns A string representation of an incremental number
+ */
+function genId(): string {
+  count = (count + 1) % Number.MAX_VALUE;
+  return count.toString();
+}
+
 const toastTimeouts = new Map<string, ReturnType<typeof setTimeout>>();
 
+/**
+ * Adds a toast to the removal queue
+ * @param toastId - The ID of the toast to be removed
+ */
 const addToRemoveQueue = (toastId: string): void => {
   if (toastTimeouts.has(toastId)) {
     return;
@@ -74,6 +95,12 @@ const addToRemoveQueue = (toastId: string): void => {
   toastTimeouts.set(toastId, timeout);
 };
 
+/**
+ * Reducer function to handle toast state updates
+ * @param state - Current toast state
+ * @param action - Action to be performed
+ * @returns Updated state
+ */
 export const reducer = (state: State, action: Action): State => {
   switch (action.type) {
     case 'ADD_TOAST':
@@ -93,8 +120,6 @@ export const reducer = (state: State, action: Action): State => {
     case 'DISMISS_TOAST': {
       const { toastId } = action;
 
-      // ! Side effects ! - This could be extracted into a dismissToast() action,
-      // but I'll keep it here for simplicity
       if (toastId) {
         addToRemoveQueue(toastId);
       } else {
@@ -134,8 +159,8 @@ const listeners: Array<(state: State) => void> = [];
 let memoryState: State = { toasts: [] };
 
 /**
- *
- * @param action
+ * Dispatches an action to update toast state
+ * @param action - Action to dispatch
  */
 function dispatch(action: Action): void {
   memoryState = reducer(memoryState, action);
@@ -147,10 +172,11 @@ function dispatch(action: Action): void {
 type ToastOptions = Omit<ToasterToast, 'id'>;
 
 /**
- *
- * @param options
+ * Creates a new toast
+ * @param options - Toast options excluding ID
+ * @returns Object containing toast ID and control functions
  */
-function createToast(options: ToastOptions) {
+function createToast(options: ToastOptions): ToastReturn {
   const id = genId();
 
   const update = (props: ToasterToast) =>
@@ -167,7 +193,7 @@ function createToast(options: ToastOptions) {
       ...options,
       id,
       open: true,
-      onOpenChange: (open) => {
+      onOpenChange: (open: boolean) => {
         if (!open) {
           dismiss();
         }
@@ -183,9 +209,10 @@ function createToast(options: ToastOptions) {
 }
 
 /**
- *
+ * Hook for managing toasts
+ * @returns Toast state and control functions
  */
-function useToast() {
+function useToast(): UseToastReturn {
   const [state, setState] = React.useState<State>(memoryState);
 
   React.useEffect(() => {

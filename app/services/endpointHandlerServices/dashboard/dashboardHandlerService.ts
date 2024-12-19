@@ -1,7 +1,61 @@
+// Types and Interfaces
+interface BalanceHistoryItem {
+  month: string;
+  value: number;
+}
+
+interface CardTheme {
+  bgColor: string;
+  textPrimaryColor: string;
+}
+
+interface Card {
+  id: number;
+  balance: string;
+  holder: string;
+  validThru: string;
+  cardNumber: string;
+  theme: CardTheme;
+}
+
+interface ExpenseStatistic {
+  name: string;
+  value: number;
+  color: string;
+}
+
+interface QuickTransferUser {
+  name: string;
+  title: string;
+  initial: string;
+  avatarUrl?: string;
+}
+
+interface TransactionIcon {
+  bg: string;
+  color: string;
+}
+
+interface Transaction {
+  id: number;
+  title: string;
+  date: string;
+  amount: string;
+  type: 'credit' | 'debit';
+  icon: TransactionIcon;
+}
+
+interface WeeklyActivity {
+  name: string;
+  deposit: number;
+  withdraw: number;
+}
+
 /**
- *
+ * Retrieves balance history data
+ * @returns Array of balance history items with month and value
  */
-export function getBalanceHistoryData() {
+export function getBalanceHistoryData(): BalanceHistoryItem[] {
   return [
     { month: 'Jul', value: 200 },
     { month: 'Aug', value: 400 },
@@ -10,14 +64,14 @@ export function getBalanceHistoryData() {
     { month: 'Nov', value: 500 },
     { month: 'Dec', value: 200 },
     { month: 'Jan', value: 400 },
-  ]
+  ];
 }
 
-
 /**
- *
+ * Retrieves credit cards data
+ * @returns Array of card objects with their details and themes
  */
-export function getCardsData() {
+export function getCardsData(): Card[] {
   return [
     {
       id: 1,
@@ -78,21 +132,23 @@ export function getCardsData() {
 }
 
 /**
- *
+ * Retrieves expense statistics data
+ * @returns Array of expense statistics with category name, value and color
  */
-export function getExpenseStatisticsData() {
+export function getExpenseStatisticsData(): ExpenseStatistic[] {
   return [
     { name: 'Entertainment', value: 30, color: '#312E81' },
     { name: 'Bill Expense', value: 15, color: '#F97316' },
     { name: 'Investment', value: 20, color: '#4F46E5' },
     { name: 'Others', value: 35, color: '#000000' }
-  ]
- }
+  ];
+}
 
- /**
-  *
-  */
- export function getQuickTransferUsersData() {
+/**
+ * Retrieves quick transfer users data
+ * @returns Array of user objects with their details
+ */
+export function getQuickTransferUsersData(): QuickTransferUser[] {
   return [
     { name: 'Livia Bator', title: 'CEO', initial: 'L', avatarUrl: 'https://picsum.photos/id/64/96/96' },
     { name: 'Randy Press', title: 'Director', initial: 'R' },
@@ -110,9 +166,10 @@ export function getExpenseStatisticsData() {
 }
 
 /**
- *
+ * Retrieves transaction history data
+ * @returns Array of transaction objects with their details
  */
-export function getTransactionsData() {
+export function getTransactionsData(): Transaction[] {
   return [
     {
       id: 1,
@@ -282,10 +339,11 @@ export function getTransactionsData() {
   ];
 }
 
- /**
-  *
-  */
- export function getWeeklyActivityData() {
+/**
+ * Retrieves weekly activity data
+ * @returns Array of weekly activity items with deposits and withdrawals
+ */
+export function getWeeklyActivityData(): WeeklyActivity[] {
   return [
     { name: 'Sat', deposit: 200, withdraw: 400 },
     { name: 'Sun', deposit: 100, withdraw: 300 },
@@ -294,9 +352,5 @@ export function getTransactionsData() {
     { name: 'Wed', deposit: 250, withdraw: 150 },
     { name: 'Thu', deposit: 230, withdraw: 400 },
     { name: 'Fri', deposit: 320, withdraw: 400 },
-  ]
- }
- 
- 
- 
- 
+  ];
+}
