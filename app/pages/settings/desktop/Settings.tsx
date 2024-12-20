@@ -75,7 +75,7 @@ const Settings: React.FC = () => {
 
                 <TabsContent value='profile'>
                   <div className='flex gap-8'>
-                    <ProfileImagePicker imageData={settingsData.profileImage} />
+                    <ProfileImagePicker imageData={settingsData?.profileImage} />
 
                     <form 
                       className='grid grid-cols-2 gap-x-8 gap-y-6 flex-1' 
@@ -83,7 +83,7 @@ const Settings: React.FC = () => {
                         void handleSubmit(e);
                       }} 
                       noValidate>
-                      {settingsData.formFields.map((field, index) => (
+                      {settingsData?.formFields.map((field, index) => (
                         <div key={index}>
                           <label className='block text-sm text-[#1A1F36] mb-2'>
                             {field.label}

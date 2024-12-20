@@ -72,7 +72,7 @@ const Settings: React.FC = () => {
             {/* Tab Content */}
             <TabsContent value='profile'>
               <div className='flex justify-center mb-6'>
-                <ProfileImagePicker imageData={settingsData.profileImage} />
+                <ProfileImagePicker imageData={settingsData?.profileImage} />
               </div>
 
               <form 
@@ -81,7 +81,7 @@ const Settings: React.FC = () => {
                   void handleSubmit(e);
                 }} 
                 noValidate>
-                {settingsData.formFields.map((field, index) => (
+                {settingsData?.formFields.map((field, index) => (
                   <div key={index}>
                     <label className='block text-sm text-[#1A1F36] mb-2'>{field.label}</label>
                     <div className='relative'>

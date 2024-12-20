@@ -1,5 +1,3 @@
-// app/services/otherServices/useSettings.ts
-
 import { useState, useEffect } from 'react';
 
 import { settingsDataService } from '@/app/services/dataServices/settings/settingsDataService';
@@ -35,7 +33,7 @@ export const useSettings = () => {
   const [settingsData, setSettingsData] = useState<SettingsData | null>(null);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchData = async (): Promise<void> => {
       try {
         const data = await settingsDataService.getSettingsData();
         setSettingsData(data);
@@ -50,7 +48,8 @@ export const useSettings = () => {
       }
     };
 
-    fetchData();
+    // Correctly handle the Promise to suppress eslint warnings
+    void fetchData();
   }, []);
 
   const validateField = (name: string, value: string): string => {
@@ -60,14 +59,18 @@ export const useSettings = () => {
   };
 
   const validateForm = (): boolean => {
-    if (!settingsData) {return false;}
+    if (!settingsData) {
+      return false;
+    }
 
     const errors: FormErrors = {};
     let isValid = true;
 
     settingsData.formFields.forEach((field) => {
       const error = validateField(field.name, formValues[field.name]);
-      if (error) {isValid = false;}
+      if (error) {
+        isValid = false;
+      }
       errors[field.name] = error;
     });
 
