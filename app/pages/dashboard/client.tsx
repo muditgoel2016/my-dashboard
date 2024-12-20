@@ -1,6 +1,7 @@
 'use client';
 
 import useMediaQuery from '@/app/services/otherServices/useMediaQuery';
+
 import DesktopDashboard from './desktop/Dashboard';
 import MobileDashboard from './mobile/Dashboard';
 
@@ -30,9 +31,12 @@ interface Props {
 
 /**
  * Renders either mobile or desktop dashboard based on viewport size
+ * @param initialIsMobile.initialIsMobile
  * @param initialIsMobile - Initial mobile state from server
  * @param initialDashboardData - Pre-fetched data from server
  * @param ssrConfig - Configuration for SSR-enabled data services
+ * @param initialIsMobile.initialDashboardData
+ * @param initialIsMobile.ssrConfig
  */
 const ClientDashboard = ({ 
   initialIsMobile, 
@@ -46,8 +50,7 @@ const ClientDashboard = ({
   return (
     <DashboardComponent 
       initialData={initialDashboardData} 
-      ssrConfig={ssrConfig} 
-    />
+      ssrConfig={ssrConfig}/>
   );
 };
 

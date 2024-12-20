@@ -75,7 +75,7 @@ const Settings: React.FC<{ initialSettingsData: any }> = ({ initialSettingsData 
 
                 <TabsContent value='profile'>
                   <div className='flex gap-8'>
-                    <ProfileImagePicker imageData={settingsData.profileImage} />
+                    <ProfileImagePicker imageData={settingsData?.profileImage} />
 
                     <form 
                       className='grid grid-cols-2 gap-x-8 gap-y-6 flex-1' 

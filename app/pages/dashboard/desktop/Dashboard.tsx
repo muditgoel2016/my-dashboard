@@ -8,11 +8,11 @@ import EMVChip from '@/app/components/dashboard/EMVChip';
 import EMVChipBlack from '@/app/components/dashboard/EMVChipBlack';
 import MasterCardLogo from '@/app/components/dashboard/MasterCardLogo';
 import QuickTransfer from '@/app/components/dashboard/QuickTransfer';
+import RecentTransactions from '@/app/components/dashboard/RecentTransactions';
 import { Card, CardContent } from '@/app/components/shared/common/card';
 import Sidenav from '@/app/components/shared/desktop/nav';
 import TopBar from '@/app/components/shared/desktop/top-bar';
 import { useDashboardData } from '@/pages/dashboard/useDashboardData';
-import RecentTransactions from '@/app/components/dashboard/RecentTransactions';
 
 // Error fallback elements
 const cardsErrorFallback = <div>Error loading cards section</div>;
@@ -119,6 +119,9 @@ const CardSection = React.memo(function CardSection({
 /**
  * Dashboard Component
  * Displays the dashboard, including credit cards, transactions, and various activity sections.
+ * @param root0
+ * @param root0.initialData
+ * @param root0.ssrConfig
  */
 const Dashboard: React.FC<DashboardProps> = ({ initialData, ssrConfig }) => {
   const { dashboardData, loadingState, errors } = useDashboardData({
@@ -216,8 +219,7 @@ const Dashboard: React.FC<DashboardProps> = ({ initialData, ssrConfig }) => {
                       {!loadingState.quickTransfer && dashboardData.quickTransferUserData && (
                         <QuickTransfer 
                           users={dashboardData.quickTransferUserData} 
-                          defaultAmount='525.50'
-                        />
+                          defaultAmount='525.50'/>
                       )}
                     </CardContent>
                   </Card>

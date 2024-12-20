@@ -8,10 +8,10 @@ import EMVChip from '@/app/components/dashboard/EMVChip';
 import EMVChipBlack from '@/app/components/dashboard/EMVChipBlack';
 import MasterCardLogo from '@/app/components/dashboard/MasterCardLogo';
 import QuickTransfer from '@/app/components/dashboard/QuickTransfer';
+import RecentTransactions from '@/app/components/dashboard/RecentTransactions';
 import MobileNav from '@/app/components/shared/mobile/nav';
 import TopBar from '@/app/components/shared/mobile/top-bar';
 import { useDashboardData } from '@/pages/dashboard/useDashboardData';
-import RecentTransactions from '@/app/components/dashboard/RecentTransactions';
 
 // Keep dynamic imports as is
 const WeeklyActivity = dynamic(() => import('@/app/components/dashboard/WeeklyActivity'), { ssr: false });
@@ -51,6 +51,9 @@ interface MobileDashboardProps {
 
 /**
  * Renders the mobile dashboard layout with progressive loading
+ * @param root0
+ * @param root0.initialData
+ * @param root0.ssrConfig
  */
 const MobileDashboard: React.FC<MobileDashboardProps> = ({ initialData, ssrConfig }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);

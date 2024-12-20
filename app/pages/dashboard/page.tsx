@@ -1,7 +1,9 @@
 import { type NextPage } from 'next';
 import { headers } from 'next/headers';
+
 import { isMobileUserAgent } from '@/app/services/otherServices/utils';
 import { dashboardDataService } from '@/services/dataServices/dashboard/dashboardDataService';
+
 import ClientDashboard from './client';
 
 interface DashboardData {
@@ -25,22 +27,22 @@ const CONFIG = {
 
 /**
  * Server Component for the Dashboard page.
- * @returns {Promise<JSX.Element>} Dashboard page component with appropriate mobile/desktop view.
+ * @returns {Promise<any>} Dashboard page component with appropriate mobile/desktop view.
  */
-const DashboardPage: NextPage = async (): Promise<JSX.Element> => {
+const DashboardPage: NextPage = async (): Promise<any> => {
   const headersList = await headers();
   const userAgent = headersList.get('user-agent') || '';
   const initialIsMobile = isMobileUserAgent(userAgent);
 
   // Initialize dashboard data
-  let preFetchedData: DashboardData = {};
+  const preFetchedData: DashboardData = {};
 
   try {
     // Fetch cards data if SSR enabled
     if (CONFIG.CARDS_SSR_ENABLED) {
       try {
         const cards = await dashboardDataService.getCardsData(true);
-        if (cards) preFetchedData.cardsData = cards;
+        if (cards) {preFetchedData.cardsData = cards;}
       } catch (error) {
         console.error('Failed to fetch cards data:', error);
       }
@@ -50,7 +52,7 @@ const DashboardPage: NextPage = async (): Promise<JSX.Element> => {
     if (CONFIG.TRANSACTIONS_SSR_ENABLED) {
       try {
         const transactions = await dashboardDataService.getTransactionsData(true);
-        if (transactions) preFetchedData.transactionsData = transactions;
+        if (transactions) {preFetchedData.transactionsData = transactions;}
       } catch (error) {
         console.error('Failed to fetch transactions data:', error);
       }
@@ -60,7 +62,7 @@ const DashboardPage: NextPage = async (): Promise<JSX.Element> => {
     if (CONFIG.WEEKLY_SSR_ENABLED) {
       try {
         const weekly = await dashboardDataService.getWeeklyActivityData(true);
-        if (weekly) preFetchedData.weeklyData = weekly;
+        if (weekly) {preFetchedData.weeklyData = weekly;}
       } catch (error) {
         console.error('Failed to fetch weekly activity data:', error);
       }
@@ -70,7 +72,7 @@ const DashboardPage: NextPage = async (): Promise<JSX.Element> => {
     if (CONFIG.EXPENSE_SSR_ENABLED) {
       try {
         const expense = await dashboardDataService.getExpenseStatisticsData(true);
-        if (expense) preFetchedData.expenseData = expense;
+        if (expense) {preFetchedData.expenseData = expense;}
       } catch (error) {
         console.error('Failed to fetch expense statistics data:', error);
       }
@@ -80,7 +82,7 @@ const DashboardPage: NextPage = async (): Promise<JSX.Element> => {
     if (CONFIG.QUICK_TRANSFER_SSR_ENABLED) {
       try {
         const quickTransfer = await dashboardDataService.getQuickTransferUsersData(true);
-        if (quickTransfer) preFetchedData.quickTransferUserData = quickTransfer;
+        if (quickTransfer) {preFetchedData.quickTransferUserData = quickTransfer;}
       } catch (error) {
         console.error('Failed to fetch quick transfer data:', error);
       }
@@ -90,7 +92,7 @@ const DashboardPage: NextPage = async (): Promise<JSX.Element> => {
     if (CONFIG.BALANCE_HISTORY_SSR_ENABLED) {
       try {
         const balanceHistory = await dashboardDataService.getBalanceHistoryData(true);
-        if (balanceHistory) preFetchedData.balanceHistoryData = balanceHistory;
+        if (balanceHistory) {preFetchedData.balanceHistoryData = balanceHistory;}
       } catch (error) {
         console.error('Failed to fetch balance history data:', error);
       }
@@ -105,8 +107,7 @@ const DashboardPage: NextPage = async (): Promise<JSX.Element> => {
     <ClientDashboard
       initialIsMobile={initialIsMobile}
       initialDashboardData={preFetchedData}
-      ssrConfig={CONFIG}
-    />
+      ssrConfig={CONFIG}/>
   );
 };
 

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+
 import { dashboardDataService } from '@/services/dataServices/dashboard/dashboardDataService';
 
 interface SSRConfig {
