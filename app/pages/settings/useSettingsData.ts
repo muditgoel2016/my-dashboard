@@ -32,31 +32,26 @@ export const useSettingsData = (initialSettingsData = null) => {
   const [formErrors, setFormErrors] = useState<FormErrors>({});
   const [settingsData, setSettingsData] = useState<SettingsData | null>(initialSettingsData);
 
+  // Utility function to initialize form values
+  const initializeFormValues = (data: SettingsData): FormValues => {
+    return data.formFields.reduce((acc, field) => {
+      acc[field.name] = field.defaultValue || '';
+      return acc;
+    }, {});
+  };
+
   useEffect(() => {
-    if (!initialSettingsData) {
-      const fetchData = async (): Promise<void>  => {
-        try {
-          const data = await settingsDataService.getSettingsData();
-          setSettingsData(data);
+    const fetchData = async (): Promise<void> => {
+      try {
+        const data = initialSettingsData || await settingsDataService.getSettingsData();
+        setSettingsData(data);
+        setFormValues(initializeFormValues(data));
+      } catch (error) {
+        console.error('Error fetching settings data:', error);
+      }
+    };
 
-          const initialValues = data.formFields.reduce((acc, field) => {
-            acc[field.name] = field.defaultValue || '';
-            return acc;
-          }, {});
-          setFormValues(initialValues);
-        } catch (error) {
-          console.error('Error fetching settings data:', error);
-        }
-      };
-
-      void fetchData();
-    } else {
-      const initialValues = initialSettingsData.formFields.reduce((acc, field) => {
-        acc[field.name] = field.defaultValue || '';
-        return acc;
-      }, {});
-      setFormValues(initialValues);
-    }
+    void fetchData();
   }, [initialSettingsData]);
 
   const validateField = (name: string, value: string): string => {
