@@ -27,30 +27,37 @@ export interface FormErrors {
   [key: string]: string;
 }
 
-export const useSettingsData = () => {
+export const useSettingsData = (initialSettingsData = null) => {
   const [formValues, setFormValues] = useState<FormValues>({});
   const [formErrors, setFormErrors] = useState<FormErrors>({});
-  const [settingsData, setSettingsData] = useState<SettingsData | null>(null);
+  const [settingsData, setSettingsData] = useState<SettingsData | null>(initialSettingsData);
 
   useEffect(() => {
-    const fetchData = async (): Promise<void> => {
-      try {
-        const data = await settingsDataService.getSettingsData();
-        setSettingsData(data);
+    if (!initialSettingsData) {
+      const fetchData = async (): Promise<void>  => {
+        try {
+          const data = await settingsDataService.getSettingsData();
+          setSettingsData(data);
 
-        const initialValues = data.formFields.reduce((acc: FormValues, field) => {
-          acc[field.name] = field.defaultValue || '';
-          return acc;
-        }, {});
-        setFormValues(initialValues);
-      } catch (error) {
-        console.error('Error fetching settings data:', error);
-      }
-    };
+          const initialValues = data.formFields.reduce((acc, field) => {
+            acc[field.name] = field.defaultValue || '';
+            return acc;
+          }, {});
+          setFormValues(initialValues);
+        } catch (error) {
+          console.error('Error fetching settings data:', error);
+        }
+      };
 
-    // Correctly handle the Promise to suppress eslint warnings
-    void fetchData();
-  }, []);
+      void fetchData();
+    } else {
+      const initialValues = initialSettingsData.formFields.reduce((acc, field) => {
+        acc[field.name] = field.defaultValue || '';
+        return acc;
+      }, {});
+      setFormValues(initialValues);
+    }
+  }, [initialSettingsData]);
 
   const validateField = (name: string, value: string): string => {
     const error = validateFieldExternal(name, value);

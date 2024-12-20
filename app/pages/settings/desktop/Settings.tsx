@@ -11,7 +11,7 @@ import Sidenav from '@/app/components/shared/desktop/nav';
 import TopBar from '@/app/components/shared/desktop/top-bar';
 import { useSettingsData } from '@/pages/settings/useSettingsData';
 
-const Settings: React.FC = () => {
+const Settings: React.FC<{ initialSettingsData: any }> = ({ initialSettingsData }) => {
   const {
     formValues,
     formErrors,
@@ -19,7 +19,7 @@ const Settings: React.FC = () => {
     setFormValues,
     validateField,
     validateForm,
-  } = useSettingsData();
+  } = useSettingsData(initialSettingsData);
 
   // =============== Event Handlers ===============
   const handleInputChange = (name: string, value: string): void => {

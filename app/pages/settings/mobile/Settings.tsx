@@ -11,7 +11,7 @@ import MobileNav from '@/app/components/shared/mobile/nav';
 import TopBar from '@/app/components/shared/mobile/top-bar';
 import { useSettingsData } from '@/pages/settings/useSettingsData';
 
-const Settings: React.FC = () => {
+const Settings: React.FC<{ initialSettingsData: any }> = ({ initialSettingsData }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
   const {
     formValues,
@@ -20,7 +20,7 @@ const Settings: React.FC = () => {
     setFormValues,
     validateField,
     validateForm,
-  } = useSettingsData();
+  } = useSettingsData(initialSettingsData);
 
   // =============== Event Handlers ===============
   const handleInputChange = (name: string, value: string): void => {
