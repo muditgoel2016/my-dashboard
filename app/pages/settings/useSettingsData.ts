@@ -66,7 +66,7 @@ export const useSettingsData = () => {
     const errors: FormErrors = {};
     let isValid = true;
 
-    settingsData.formFields.forEach((field) => {
+    settingsData?.formFields.forEach((field) => {
       const error = validateField(field.name, formValues[field.name]);
       if (error) {
         isValid = false;

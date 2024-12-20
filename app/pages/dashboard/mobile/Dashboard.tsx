@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { useState, Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 
-import { useDashboardData } from '@/pages/dashboard/useDashboardData';
 import CreditCard from '@/app/components/dashboard/CreditCard';
 import EMVChip from '@/app/components/dashboard/EMVChip';
 import EMVChipBlack from '@/app/components/dashboard/EMVChipBlack';
@@ -11,6 +10,7 @@ import MasterCardLogo from '@/app/components/dashboard/MasterCardLogo';
 import QuickTransfer from '@/app/components/dashboard/QuickTransfer';
 import MobileNav from '@/app/components/shared/mobile/nav';
 import TopBar from '@/app/components/shared/mobile/top-bar';
+import { useDashboardData } from '@/pages/dashboard/useDashboardData';
 
 // Dynamic imports with SSR disabled
 const WeeklyActivity = dynamic(() => import('@/app/components/dashboard/WeeklyActivity'), { ssr: false });

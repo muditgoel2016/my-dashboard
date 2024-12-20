@@ -3,7 +3,6 @@ import Link from 'next/link';
 import React, { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 
-import { useDashboardData } from '@/pages/dashboard/useDashboardData';
 import CreditCard from '@/app/components/dashboard/CreditCard';
 import EMVChip from '@/app/components/dashboard/EMVChip';
 import EMVChipBlack from '@/app/components/dashboard/EMVChipBlack';
@@ -12,6 +11,7 @@ import QuickTransfer from '@/app/components/dashboard/QuickTransfer';
 import { Card, CardContent } from '@/app/components/shared/common/card';
 import Sidenav from '@/app/components/shared/desktop/nav';
 import TopBar from '@/app/components/shared/desktop/top-bar';
+import { useDashboardData } from '@/pages/dashboard/useDashboardData';
 
 // Error fallback elements
 const cardsErrorFallback = <div>Error loading cards section</div>;
