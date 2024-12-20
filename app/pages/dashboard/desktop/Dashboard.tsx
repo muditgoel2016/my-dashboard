@@ -1,8 +1,9 @@
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import React, { useState, useEffect, Suspense } from 'react';
+import React, { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 
+import { useDashboardData } from '@/pages/dashboard/useDashboardData';
 import CreditCard from '@/app/components/dashboard/CreditCard';
 import EMVChip from '@/app/components/dashboard/EMVChip';
 import EMVChipBlack from '@/app/components/dashboard/EMVChipBlack';
@@ -11,7 +12,6 @@ import QuickTransfer from '@/app/components/dashboard/QuickTransfer';
 import { Card, CardContent } from '@/app/components/shared/common/card';
 import Sidenav from '@/app/components/shared/desktop/nav';
 import TopBar from '@/app/components/shared/desktop/top-bar';
-import { dashboardDataService } from '@/app/services/dataServices/dashboard/dashboardDataService';
 
 // Error fallback elements
 const cardsErrorFallback = <div>Error loading cards section</div>;
@@ -130,39 +130,7 @@ const DashboardSkeleton = () => (
  * Displays the dashboard, including credit cards, transactions, and various activity sections.
  */
 const Dashboard: React.FC = () => {
-  const [dashboardData, setDashboardData] = useState<DashboardData | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
-
-  useEffect(() => {
-    const fetchDashboardData = async (): Promise<void> => {
-      try {
-        const [weekly, balanceHistory, expense, transactions, quickTransfer, cards] = await Promise.all([
-          dashboardDataService.getWeeklyActivityData(),
-          dashboardDataService.getBalanceHistoryData(),
-          dashboardDataService.getExpenseStatisticsData(),
-          dashboardDataService.getTransactionsData(),
-          dashboardDataService.getQuickTransferUsersData(),
-          dashboardDataService.getCardsData(),
-        ]);
-
-        setDashboardData({
-          weeklyData: weekly,
-          balanceHistoryData: balanceHistory,
-          expenseData: expense,
-          transactionsData: transactions,
-          quickTransferUserData: quickTransfer,
-          cardsData: cards,
-        });
-      } catch (err) {
-        setError(err instanceof Error ? err : new Error('Failed to fetch dashboard data'));
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    void fetchDashboardData();
-  }, []);
+  const { dashboardData, isLoading, error } = useDashboardData();
 
   if (isLoading || !dashboardData) {
     return <DashboardSkeleton />;

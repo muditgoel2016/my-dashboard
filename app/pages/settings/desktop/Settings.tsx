@@ -9,7 +9,7 @@ import { Input } from '@/app/components/shared/common/input';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/app/components/shared/common/tabs';
 import Sidenav from '@/app/components/shared/desktop/nav';
 import TopBar from '@/app/components/shared/desktop/top-bar';
-import { useSettings } from '@/pages/settings/useSettings';
+import { useSettingsData } from '@/pages/settings/useSettingsData';
 
 const Settings: React.FC = () => {
   const {
@@ -19,7 +19,7 @@ const Settings: React.FC = () => {
     setFormValues,
     validateField,
     validateForm,
-  } = useSettings();
+  } = useSettingsData();
 
   // =============== Event Handlers ===============
   const handleInputChange = (name: string, value: string): void => {

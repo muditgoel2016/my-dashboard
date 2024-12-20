@@ -1,8 +1,9 @@
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import { useState, useEffect, Suspense } from 'react';
+import { useState, Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 
+import { useDashboardData } from '@/pages/dashboard/useDashboardData';
 import CreditCard from '@/app/components/dashboard/CreditCard';
 import EMVChip from '@/app/components/dashboard/EMVChip';
 import EMVChipBlack from '@/app/components/dashboard/EMVChipBlack';
@@ -10,7 +11,6 @@ import MasterCardLogo from '@/app/components/dashboard/MasterCardLogo';
 import QuickTransfer from '@/app/components/dashboard/QuickTransfer';
 import MobileNav from '@/app/components/shared/mobile/nav';
 import TopBar from '@/app/components/shared/mobile/top-bar';
-import { dashboardDataService } from '@/services/dataServices/dashboard/dashboardDataService';
 
 // Dynamic imports with SSR disabled
 const WeeklyActivity = dynamic(() => import('@/app/components/dashboard/WeeklyActivity'), { ssr: false });
@@ -28,44 +28,36 @@ const errorFallback = (section: string) => (
   <div className='text-red-500'>Error loading {section}</div>
 );
 
+// Loading Skeleton
+const DashboardSkeleton = () => (
+  <div className='min-h-screen bg-gray-50'>
+    <TopBar onMenuClick={() => {}} />
+    <main className='px-4 py-6 pb-24 space-y-6'>
+      <div className='animate-pulse h-[200px] bg-gray-100 rounded-lg' />
+      <div className='animate-pulse h-[200px] bg-gray-100 rounded-lg' />
+      <div className='animate-pulse h-[200px] bg-gray-100 rounded-lg' />
+    </main>
+  </div>
+);
+
 /**
  * Renders the mobile dashboard layout with cards, recent transactions, and other activities.
  */
 const MobileDashboard: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
-  const [cardsData, setCardsData] = useState([]);
-  const [transactionsData, setTransactionsData] = useState([]);
-  const [weeklyData, setWeeklyData] = useState([]);
-  const [expenseData, setExpenseData] = useState([]);
-  const [quickTransferData, setQuickTransferData] = useState([]);
-  const [balanceHistoryData, setBalanceHistoryData] = useState([]);
+  const { dashboardData, isLoading, error } = useDashboardData();
 
-  useEffect(() => {
-    const fetchDashboardData = async (): Promise<void> => {
-      try {
-        const [cards, transactions, weekly, expense, quickTransfer, balanceHistory] = await Promise.all([
-          dashboardDataService.getCardsData(),
-          dashboardDataService.getTransactionsData(),
-          dashboardDataService.getWeeklyActivityData(),
-          dashboardDataService.getExpenseStatisticsData(),
-          dashboardDataService.getQuickTransferUsersData(),
-          dashboardDataService.getBalanceHistoryData(),
-        ]);
+  if (isLoading || !dashboardData) {
+    return <DashboardSkeleton />;
+  }
 
-        setCardsData(cards);
-        setTransactionsData(transactions);
-        setWeeklyData(weekly);
-        setExpenseData(expense);
-        setQuickTransferData(quickTransfer);
-        setBalanceHistoryData(balanceHistory);
-      } catch (error) {
-        console.error('Error fetching dashboard data:', error);
-      }
-    };
-
-    // Use `void` to mark as fire-and-forget
-    void fetchDashboardData();
-  }, []);
+  if (error) {
+    return (
+      <div className='min-h-screen flex items-center justify-center'>
+        <div className='text-red-500'>Error loading dashboard: {error.message}</div>
+      </div>
+    );
+  }
 
   return (
     <div className='min-h-screen bg-gray-50'>
@@ -83,7 +75,7 @@ const MobileDashboard: React.FC = () => {
           </div>
           <div className='relative overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 pb-4'>
             <div className='flex gap-4 snap-x snap-mandatory'>
-              {cardsData.map((card, index) => {
+              {dashboardData.cardsData.map((card, index) => {
                 const ChipImage = card.theme.bgColor === 'bg-[#31304D]' ? EMVChip : EMVChipBlack;
                 const creditProviderLogo = (
                   <MasterCardLogo
@@ -115,7 +107,7 @@ const MobileDashboard: React.FC = () => {
               <h2 className='text-[16px] font-semibold leading-[20.57px] text-[#343C6A]'>Recent Transactions</h2>
             </div>
             <Suspense fallback={loadingFallback}>
-              <RecentTransactions transactions={transactionsData} />
+              <RecentTransactions transactions={dashboardData.transactionsData} />
             </Suspense>
           </div>
         </ErrorBoundary>
@@ -128,7 +120,7 @@ const MobileDashboard: React.FC = () => {
             </div>
             <div className='bg-white p-4 rounded-xl'>
               <Suspense fallback={loadingFallback}>
-                <WeeklyActivity data={weeklyData} />
+                <WeeklyActivity data={dashboardData.weeklyData} />
               </Suspense>
             </div>
           </div>
@@ -142,7 +134,7 @@ const MobileDashboard: React.FC = () => {
             </div>
             <div className='bg-white p-4 rounded-xl'>
               <Suspense fallback={loadingFallback}>
-                <ExpenseStatistics data={expenseData} />
+                <ExpenseStatistics data={dashboardData.expenseData} />
               </Suspense>
             </div>
           </div>
@@ -156,7 +148,7 @@ const MobileDashboard: React.FC = () => {
             </div>
             <div className='bg-white p-4 rounded-xl'>
               <Suspense fallback={loadingFallback}>
-                <QuickTransfer users={quickTransferData} defaultAmount='525.50' />
+                <QuickTransfer users={dashboardData.quickTransferUserData} defaultAmount='525.50' />
               </Suspense>
             </div>
           </div>
@@ -170,7 +162,7 @@ const MobileDashboard: React.FC = () => {
             </div>
             <div className='bg-white p-4 rounded-xl'>
               <Suspense fallback={loadingFallback}>
-                <BalanceHistory data={balanceHistoryData} />
+                <BalanceHistory data={dashboardData.balanceHistoryData} />
               </Suspense>
             </div>
           </div>

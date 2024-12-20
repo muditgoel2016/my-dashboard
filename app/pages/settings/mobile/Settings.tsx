@@ -9,7 +9,7 @@ import { Input } from '@/app/components/shared/common/input';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/app/components/shared/common/tabs';
 import MobileNav from '@/app/components/shared/mobile/nav';
 import TopBar from '@/app/components/shared/mobile/top-bar';
-import { useSettings } from '@/pages/settings/useSettings';
+import { useSettingsData } from '@/pages/settings/useSettingsData';
 
 const Settings: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
@@ -20,7 +20,7 @@ const Settings: React.FC = () => {
     setFormValues,
     validateField,
     validateForm,
-  } = useSettings();
+  } = useSettingsData();
 
   // =============== Event Handlers ===============
   const handleInputChange = (name: string, value: string): void => {

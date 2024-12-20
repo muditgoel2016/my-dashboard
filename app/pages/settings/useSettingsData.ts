@@ -27,7 +27,7 @@ export interface FormErrors {
   [key: string]: string;
 }
 
-export const useSettings = () => {
+export const useSettingsData = () => {
   const [formValues, setFormValues] = useState<FormValues>({});
   const [formErrors, setFormErrors] = useState<FormErrors>({});
   const [settingsData, setSettingsData] = useState<SettingsData | null>(null);
