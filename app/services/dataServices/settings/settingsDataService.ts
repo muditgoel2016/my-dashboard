@@ -44,6 +44,7 @@ class SettingsAPIError extends Error {
 
 /**
  * Fetches data from the settings API
+ * @param serverSideCall
  * @param endpoint - API endpoint to fetch from
  * @returns Promise with the typed response data
  * @throws SettingsAPIError if the request fails

@@ -76,8 +76,7 @@ const CreditCards: React.FC = () => {
                   const chipImage = card.theme.bgColor === 'bg-[#31304D]' ? EMVChip : EMVChipBlack;
                   const creditProviderLogo = (
                     <MasterCardLogo
-                      fillColor={card.theme.bgColor === 'bg-[#31304D]' ? 'white' : '#1a1f36'}
-                    />
+                      fillColor={card.theme.bgColor === 'bg-[#31304D]' ? 'white' : '#1a1f36'}/>
                   );
 
                   return (
@@ -88,8 +87,7 @@ const CreditCards: React.FC = () => {
                         validThru={card.validThru}
                         cardNumber={card.cardNumber}
                         ChipImage={chipImage}
-                        theme={{ ...card.theme, creditProviderLogo }}
-                      />
+                        theme={{ ...card.theme, creditProviderLogo }}/>
                     </div>
                   );
                 })}

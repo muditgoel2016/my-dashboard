@@ -1,5 +1,6 @@
 // hooks/useCardsData.ts
 import { useState, useEffect } from 'react';
+
 import type { CardTheme } from '@/app/components/dashboard/CreditCard';
 import { dashboardDataService } from '@/app/services/dataServices/dashboard/dashboardDataService';
 

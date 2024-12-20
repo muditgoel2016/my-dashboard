@@ -1,7 +1,9 @@
 import { type NextPage } from 'next';
 import { headers } from 'next/headers';
-import { isMobileUserAgent } from '@/app/services/otherServices/utils';
+
 import { settingsDataService } from '@/app/services/dataServices/settings/settingsDataService';
+import { isMobileUserAgent } from '@/app/services/otherServices/utils';
+
 import ClientSettings from './client';
 
 const SSR_ENABLED = true; // Configurable flag
@@ -22,8 +24,7 @@ const SettingsPage: NextPage = async (): Promise<any> => {
   return (
     <ClientSettings
       initialIsMobile={initialIsMobile}
-      initialSettingsData={SSR_ENABLED ? preFetchedData : null}
-    />
+      initialSettingsData={SSR_ENABLED ? preFetchedData : null}/>
   );
 };
 

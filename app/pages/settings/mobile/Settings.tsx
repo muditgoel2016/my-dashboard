@@ -72,7 +72,7 @@ const Settings: React.FC<{ initialSettingsData: any }> = ({ initialSettingsData 
             {/* Tab Content */}
             <TabsContent value='profile'>
               <div className='flex justify-center mb-6'>
-                <ProfileImagePicker imageData={settingsData?.profileImage} />
+                <ProfileImagePicker imageData={settingsData.profileImage} />
               </div>
 
               <form 
