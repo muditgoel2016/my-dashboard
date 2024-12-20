@@ -1,7 +1,6 @@
 import { Inter } from 'next/font/google';
 import React, { useState } from 'react';
 
-import type { CardTheme } from '@/app/components/dashboard/CreditCard';
 import CreditCard from '@/app/components/dashboard/CreditCard';
 import EMVChip from '@/app/components/dashboard/EMVChip';
 import EMVChipBlack from '@/app/components/dashboard/EMVChipBlack';
