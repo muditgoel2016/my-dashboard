@@ -1,18 +1,20 @@
-'use client';
+import { type NextPage } from 'next';
+import { headers } from 'next/headers';
 
-import useMediaQuery from '@/app/services/otherServices/useMediaQuery';
+import { isMobileUserAgent } from '@/app/services/otherServices/utils';
 
-import DesktopCreditCards from './desktop/CreditCards';
-import MobileCreditCards from './mobile/CreditCards';
+import ClientCCList from './client';
 
 /**
- * Determines whether to render mobile or desktop view of CreditCards based on screen size.
- * @returns {JSX.Element} The appropriate CreditCards component based on screen size.
+ * Server Component for the CreditCards page.
+ * @returns {Promise<any>} CreditCards page component with appropriate mobile/desktop view.
  */
-const CreditCards: React.FC = () => {
-  const isMobile = useMediaQuery('(max-width: 768px)');
+const CreditCards: NextPage = async (): Promise<any> => {
+  const headersList = await headers();
+  const userAgent = headersList.get('user-agent') || '';
+  const initialIsMobile = isMobileUserAgent(userAgent);
 
-  return isMobile ? <MobileCreditCards /> : <DesktopCreditCards />;
+  return <ClientCCList initialIsMobile={initialIsMobile} />;
 };
 
 export default CreditCards;

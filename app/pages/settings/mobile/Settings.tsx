@@ -10,6 +10,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/app/components/share
 import MobileNav from '@/app/components/shared/mobile/nav';
 import TopBar from '@/app/components/shared/mobile/top-bar';
 import { settingsDataService } from '@/app/services/dataServices/settings/settingsDataService';
+import { validateFieldExternal } from '@/services/otherServices/formValidationUtil';
 
 interface FormField {
   name: string;
@@ -35,7 +36,7 @@ interface FormErrors {
   [key: string]: string;
 }
 
-const Settings = () => {
+const Settings: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
   const [formValues, setFormValues] = useState<FormValues>({});
   const [formErrors, setFormErrors] = useState<FormErrors>({});
@@ -64,40 +65,7 @@ const Settings = () => {
   const validateField = (name: string, value: string): string => {
     let error = '';
 
-    switch (name) {
-      case 'email':
-        if (!value) {
-          error = 'Email is required.';
-        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
-          error = 'Invalid email format.';
-        }
-        break;
-
-      case 'password':
-        if (!value) {
-          error = 'Password is required.';
-        } else if (value.length < 8) {
-          error = 'Password must be at least 8 characters.';
-        }
-        break;
-
-      case 'dateOfBirth':
-        if (!value) {
-          error = 'Date of Birth is required.';
-        } else {
-          const selectedDate = new Date(value);
-          const today = new Date();
-          if (selectedDate > today) {
-            error = 'Date of Birth cannot be in the future.';
-          }
-        }
-        break;
-
-      default:
-        if (!value) {
-          error = `${name} is required.`;
-        }
-    }
+    error = validateFieldExternal(name, value);
 
     setFormErrors((prev) => ({ ...prev, [name]: error }));
     return error;

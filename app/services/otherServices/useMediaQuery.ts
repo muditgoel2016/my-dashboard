@@ -3,9 +3,10 @@ import { useEffect, useState } from 'react';
 /**
  *
  * @param query
+ * @param initialValue
  */
-export default function useMediaQuery(query) {
-  const [matches, setMatches] = useState(false);
+export default function useMediaQuery(query: string, initialValue: boolean): boolean {
+  const [matches, setMatches] = useState(initialValue || false);
 
   useEffect(() => {
     const media = window.matchMedia(query);

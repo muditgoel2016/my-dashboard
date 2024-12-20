@@ -1,13 +1,13 @@
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
 
 import CreditCard from '@/app/components/dashboard/CreditCard';
 import EMVChip from '@/app/components/dashboard/EMVChip';
 import EMVChipBlack from '@/app/components/dashboard/EMVChipBlack';
 import MasterCardLogo from '@/app/components/dashboard/MasterCardLogo';
 import QuickTransfer from '@/app/components/dashboard/QuickTransfer';
-import RecentTransactions from '@/app/components/dashboard/RecentTransactions';
 import MobileNav from '@/app/components/shared/mobile/nav';
 import TopBar from '@/app/components/shared/mobile/top-bar';
 import { dashboardDataService } from '@/services/dataServices/dashboard/dashboardDataService';
@@ -16,6 +16,17 @@ import { dashboardDataService } from '@/services/dataServices/dashboard/dashboar
 const WeeklyActivity = dynamic(() => import('@/app/components/dashboard/WeeklyActivity'), { ssr: false });
 const ExpenseStatistics = dynamic(() => import('@/app/components/dashboard/ExpenseStatistics'), { ssr: false });
 const BalanceHistory = dynamic(() => import('@/app/components/dashboard/BalanceHistory'), { ssr: false });
+const RecentTransactions = dynamic(() => import('@/app/components/dashboard/RecentTransactions'), { ssr: false });
+
+// Skeleton loader fallback
+const loadingFallback = (
+  <div className='animate-pulse h-[200px] w-full bg-gray-200 rounded-lg'></div>
+);
+
+// Error fallback
+const errorFallback = (section: string) => (
+  <div className='text-red-500'>Error loading {section}</div>
+);
 
 /**
  * Renders the mobile dashboard layout with cards, recent transactions, and other activities.
@@ -49,7 +60,6 @@ const MobileDashboard: React.FC = () => {
         setBalanceHistoryData(balanceHistory);
       } catch (error) {
         console.error('Error fetching dashboard data:', error);
-        // Handle error (e.g., show error message to user)
       }
     };
 
@@ -63,15 +73,15 @@ const MobileDashboard: React.FC = () => {
       <main className='px-4 py-6 pb-24 space-y-6'>
         {/* My Cards Section */}
         <div>
-          <div className='p-3 flex justify-between items-center bg-inherit'>
+          <div className='p-3 flex justify-between items-center'>
             <h2 className='text-[16px] font-semibold leading-[20.57px] text-[#343C6A]'>My Cards</h2>
             <Link
               href='/pages/creditCards'
-              className='text-[14px] font-semibold leading-[20.57px] text-[#343C6A] hover:scale-105 active:scale-100 hover:underline transition-all duration-200 cursor-pointer text-right underline-offset-2'>
+              className='text-[14px] font-semibold text-[#343C6A] hover:underline'>
               See All
             </Link>
           </div>
-          <div className='relative overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100 hover:scrollbar-thumb-gray-400 pb-4'>
+          <div className='relative overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 pb-4'>
             <div className='flex gap-4 snap-x snap-mandatory'>
               {cardsData.map((card, index) => {
                 const ChipImage = card.theme.bgColor === 'bg-[#31304D]' ? EMVChip : EMVChipBlack;
@@ -99,58 +109,72 @@ const MobileDashboard: React.FC = () => {
         </div>
 
         {/* Recent Transactions */}
-        <div>
-          <div className='p-3 flex justify-between items-center bg-inherit'>
-            <h2 className='text-[16px] font-semibold leading-[20.57px] text-[#343C6A]'>Recent Transaction</h2>
+        <ErrorBoundary fallback={errorFallback('Recent Transactions')}>
+          <div>
+            <div className='p-3'>
+              <h2 className='text-[16px] font-semibold leading-[20.57px] text-[#343C6A]'>Recent Transactions</h2>
+            </div>
+            <Suspense fallback={loadingFallback}>
+              <RecentTransactions transactions={transactionsData} />
+            </Suspense>
           </div>
-          <RecentTransactions transactions={transactionsData} />
-        </div>
+        </ErrorBoundary>
 
         {/* Weekly Activity */}
-        <div>
-          <div className='p-3 flex justify-between items-center bg-inherit'>
-            <h2 className='text-[16px] font-semibold leading-[20.57px] text-[#343C6A]'>Weekly Activity</h2>
+        <ErrorBoundary fallback={errorFallback('Weekly Activity')}>
+          <div>
+            <div className='p-3'>
+              <h2 className='text-[16px] font-semibold leading-[20.57px] text-[#343C6A]'>Weekly Activity</h2>
+            </div>
+            <div className='bg-white p-4 rounded-xl'>
+              <Suspense fallback={loadingFallback}>
+                <WeeklyActivity data={weeklyData} />
+              </Suspense>
+            </div>
           </div>
-          <div className='bg-white p-4 rounded-xl'>
-            <WeeklyActivity data={weeklyData} />
-          </div>
-        </div>
+        </ErrorBoundary>
 
         {/* Expense Statistics */}
-        <div>
-          <div className='p-3 flex justify-between items-center bg-inherit'>
-            <h2 className='text-[16px] font-semibold leading-[20.57px] text-[#343C6A]'>Expense Statistics</h2>
-          </div>
-          <div className='bg-white p-4 rounded-xl'>
-            <div className='flex flex-col items-center'>
-              <ExpenseStatistics data={expenseData} />
+        <ErrorBoundary fallback={errorFallback('Expense Statistics')}>
+          <div>
+            <div className='p-3'>
+              <h2 className='text-[16px] font-semibold leading-[20.57px] text-[#343C6A]'>Expense Statistics</h2>
+            </div>
+            <div className='bg-white p-4 rounded-xl'>
+              <Suspense fallback={loadingFallback}>
+                <ExpenseStatistics data={expenseData} />
+              </Suspense>
             </div>
           </div>
-        </div>
+        </ErrorBoundary>
 
         {/* Quick Transfer */}
-        <div>
-          <div className='p-3 flex justify-between items-center bg-inherit'>
-            <h2 className='text-[16px] font-semibold leading-[20.57px] text-[#343C6A]'>Quick Transfer</h2>
-          </div>
-          <div className='bg-white p-4 rounded-xl'>
-            <QuickTransfer users={quickTransferData} defaultAmount='525.50' />
-          </div>
-        </div>
-
-        {/* Balance History */}
-        <div>
-          <div className='p-3 flex justify-between items-center bg-inherit'>
-            <h2 className='text-[16px] font-semibold leading-[20.57px] text-[#343C6A]'>Balance History</h2>
-          </div>
-          <div className='bg-white p-4 rounded-xl'>
-            <div className='overflow-x-auto'>
-              <div className='min-w-[340px]'>
-                <BalanceHistory data={balanceHistoryData} />
-              </div>
+        <ErrorBoundary fallback={errorFallback('Quick Transfer')}>
+          <div>
+            <div className='p-3'>
+              <h2 className='text-[16px] font-semibold leading-[20.57px] text-[#343C6A]'>Quick Transfer</h2>
+            </div>
+            <div className='bg-white p-4 rounded-xl'>
+              <Suspense fallback={loadingFallback}>
+                <QuickTransfer users={quickTransferData} defaultAmount='525.50' />
+              </Suspense>
             </div>
           </div>
-        </div>
+        </ErrorBoundary>
+
+        {/* Balance History */}
+        <ErrorBoundary fallback={errorFallback('Balance History')}>
+          <div>
+            <div className='p-3'>
+              <h2 className='text-[16px] font-semibold leading-[20.57px] text-[#343C6A]'>Balance History</h2>
+            </div>
+            <div className='bg-white p-4 rounded-xl'>
+              <Suspense fallback={loadingFallback}>
+                <BalanceHistory data={balanceHistoryData} />
+              </Suspense>
+            </div>
+          </div>
+        </ErrorBoundary>
       </main>
       <MobileNav isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)} />
     </div>

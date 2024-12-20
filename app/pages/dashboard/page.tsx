@@ -1,18 +1,20 @@
-'use client';
+import { type NextPage } from 'next';
+import { headers } from 'next/headers';
 
-import useMediaQuery from '@/app/services/otherServices/useMediaQuery';
+import { isMobileUserAgent } from '@/app/services/otherServices/utils';
 
-import DesktopDashboard from './desktop/Dashboard';
-import MobileDashboard from './mobile/Dashboard';
+import ClientDashboard from './client';
 
 /**
- * Renders the dashboard page, showing a mobile or desktop version based on the viewport size.
- *
+ * Server Component for the Dashboard page.
+ * @returns {Promise<any>} Dashboard page component with appropriate mobile/desktop view.
  */
-const DashboardPage: React.FC = () => {
-  const isMobile = useMediaQuery('(max-width: 768px)');
+const DashboardPage: NextPage = async (): Promise<any> => {
+  const headersList = await headers();
+  const userAgent = headersList.get('user-agent') || '';
+  const initialIsMobile = isMobileUserAgent(userAgent);
 
-  return isMobile ? <MobileDashboard /> : <DesktopDashboard />;
+  return <ClientDashboard initialIsMobile={initialIsMobile} />;
 };
 
 export default DashboardPage;

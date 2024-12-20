@@ -1,14 +1,20 @@
-'use client';
+import { type NextPage } from 'next';
+import { headers } from 'next/headers';
 
-import useMediaQuery from '@/app/services/otherServices/useMediaQuery';
+import { isMobileUserAgent } from '@/app/services/otherServices/utils';
 
-import DesktopSettings from './desktop/Settings';
-import MobileSettings from './mobile/Settings';
+import ClientSettings from './client';
 
-const SettingsPage = () => {
-  const isMobile = useMediaQuery('(max-width: 768px)');
-  
-  return isMobile ? <MobileSettings /> : <DesktopSettings />;
+/**
+ * SettingsPage component to render user settings.
+ * @returns {Promise<any>} Settings page component with appropriate mobile/desktop view.
+ */
+const SettingsPage: NextPage = async (): Promise<any> => {
+  const headersList = await headers();
+  const userAgent = headersList.get('user-agent') || '';
+  const initialIsMobile = isMobileUserAgent(userAgent);
+
+  return <ClientSettings initialIsMobile={initialIsMobile} />;
 };
 
 export default SettingsPage;

@@ -8,6 +8,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/app/components/share
 import Sidenav from '@/app/components/shared/desktop/nav';
 import TopBar from '@/app/components/shared/desktop/top-bar';
 import { settingsDataService } from '@/app/services/dataServices/settings/settingsDataService';
+import { validateFieldExternal } from '@/services/otherServices/formValidationUtil';
 
 interface FormField {
   name: string;
@@ -58,51 +59,7 @@ const Settings: React.FC = () => {
 
   const validateField = (name: string, value: string): string => {
     let error = '';
-  
-    switch (name) {
-      case 'email':
-        if (!value) {
-          error = 'Email is required.';
-        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
-          error = 'Invalid email format.';
-        }
-        break;
-  
-      case 'password':
-        if (!value) {
-          error = 'Password is required.';
-        } else if (value.length < 8) {
-          error = 'Password must be at least 8 characters.';
-        }
-        break;
-  
-      case 'postalCode':
-        if (!value) {
-          error = 'Postal code is required.';
-        } else if (!/^\d{5}$/.test(value)) {
-          error = 'Postal code must be 5 digits.';
-        }
-        break;
-  
-      case 'dateOfBirth':
-        if (!value) {
-          error = 'Date of Birth is required.';
-        } else {
-          const selectedDate = new Date(value);
-          const today = new Date();
-  
-          if (selectedDate > today) {
-            error = 'Date of Birth cannot be in the future.';
-          }
-        }
-        break;
-  
-      default:
-        if (!value) {
-          error = `${name} is required.`;
-        }
-    }
-  
+    error = validateFieldExternal(name, value);
     setFormErrors((prev) => ({ ...prev, [name]: error }));
     return error;
   };
