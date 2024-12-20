@@ -35,10 +35,10 @@ interface SettingsData {
 }
 
 /**
-* API route handler for fetching settings data
-* @param request - Incoming HTTP request
-* @returns NextResponse containing the settings configuration data
-*/
+ * API route handler for fetching settings data
+ * @param request - Incoming HTTP request
+ * @returns NextResponse containing the settings configuration data
+ */
 export async function GET(request: NextRequest): Promise<NextResponse> {
  try {
    const settingsData: SettingsData = getSettingsData();

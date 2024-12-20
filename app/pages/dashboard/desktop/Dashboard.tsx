@@ -18,7 +18,7 @@ const BalanceHistory = dynamic(
   () => import('@/app/components/dashboard/BalanceHistory'),
   {
     ssr: false,
-    loading: () => <div className="animate-pulse h-[400px] bg-gray-100 rounded-[25px]" />
+    loading: () => <div className='animate-pulse h-[400px] bg-gray-100 rounded-[25px]' />
   }
 );
 
@@ -26,7 +26,7 @@ const ExpenseStatistics = dynamic(
   () => import('@/app/components/dashboard/ExpenseStatistics'),
   {
     ssr: false,
-    loading: () => <div className="animate-pulse h-[400px] bg-gray-100 rounded-[25px]" />
+    loading: () => <div className='animate-pulse h-[400px] bg-gray-100 rounded-[25px]' />
   }
 );
 
@@ -34,14 +34,14 @@ const WeeklyActivity = dynamic(
   () => import('@/app/components/dashboard/WeeklyActivity'),
   {
     ssr: false,
-    loading: () => <div className="animate-pulse h-[400px] bg-gray-100 rounded-[25px]" />
+    loading: () => <div className='animate-pulse h-[400px] bg-gray-100 rounded-[25px]' />
   }
 );
 
 const RecentTransactions = dynamic(
   () => import('@/app/components/dashboard/RecentTransactions'),
   {
-    loading: () => <div className="animate-pulse h-[400px] bg-gray-100 rounded-[25px]" />
+    loading: () => <div className='animate-pulse h-[400px] bg-gray-100 rounded-[25px]' />
   }
 );
 
@@ -159,8 +159,8 @@ const Dashboard: React.FC = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-red-500">Error loading dashboard: {error.message}</div>
+      <div className='min-h-screen flex items-center justify-center'>
+        <div className='text-red-500'>Error loading dashboard: {error.message}</div>
       </div>
     );
   }
@@ -185,7 +185,7 @@ const Dashboard: React.FC = () => {
                       Recent Transactions
                     </h2>
                   </div>
-                  <Suspense fallback={<div className="animate-pulse h-[400px] bg-gray-100 rounded-lg" />}>
+                  <Suspense fallback={<div className='animate-pulse h-[400px] bg-gray-100 rounded-lg' />}>
                     <RecentTransactions transactions={dashboardData.transactionsData} />
                   </Suspense>
                 </div>
@@ -203,7 +203,7 @@ const Dashboard: React.FC = () => {
                   </div>
                   <Card className='flex-1 rounded-[25px]'>
                     <CardContent className='h-[calc(100%-48px)]'>
-                      <Suspense fallback={<div className="animate-pulse h-[400px] bg-gray-100 rounded-lg" />}>
+                      <Suspense fallback={<div className='animate-pulse h-[400px] bg-gray-100 rounded-lg' />}>
                         <div className='pt-4'>
                           <WeeklyActivity data={dashboardData.weeklyData} />
                         </div>
@@ -222,7 +222,7 @@ const Dashboard: React.FC = () => {
                   </div>
                   <Card className='flex-1 rounded-[25px]'>
                     <CardContent className='h-[400px] flex items-center justify-center'>
-                      <Suspense fallback={<div className="animate-pulse h-[400px] bg-gray-100 rounded-lg" />}>
+                      <Suspense fallback={<div className='animate-pulse h-[400px] bg-gray-100 rounded-lg' />}>
                         <ExpenseStatistics data={dashboardData.expenseData} />
                       </Suspense>
                     </CardContent>
@@ -244,8 +244,7 @@ const Dashboard: React.FC = () => {
                     <CardContent className='p-0 flex items-center justify-center h-full'>
                       <QuickTransfer 
                         users={dashboardData.quickTransferUserData} 
-                        defaultAmount='525.50' 
-                      />
+                        defaultAmount='525.50'/>
                     </CardContent>
                   </Card>
                 </div>
@@ -260,7 +259,7 @@ const Dashboard: React.FC = () => {
                   </div>
                   <Card className='flex-1 rounded-[25px]'>
                     <CardContent className='h-[calc(100%-48px)]'>
-                      <Suspense fallback={<div className="animate-pulse h-[400px] bg-gray-100 rounded-lg" />}>
+                      <Suspense fallback={<div className='animate-pulse h-[400px] bg-gray-100 rounded-lg' />}>
                         <BalanceHistory data={dashboardData.balanceHistoryData} />
                       </Suspense>
                     </CardContent>
