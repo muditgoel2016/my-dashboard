@@ -38,8 +38,18 @@ const CardsSkeleton = () => (
   </div>
 );
 
-const CreditCards: React.FC = () => {
-  const { cardsData, isLoading, error } = useCardsData();
+interface CreditCardsProps {
+  initialCardsData: any[] | null;
+  ssrConfig: {
+    CARDS_SSR_ENABLED: boolean;
+  };
+}
+
+const CreditCards: React.FC<CreditCardsProps> = ({ initialCardsData, ssrConfig }) => {
+  const { cardsData, isLoading, error } = useCardsData({
+    initialData: initialCardsData,
+    ssrConfig
+  });
 
   if (isLoading) {
     return <CardsSkeleton />;

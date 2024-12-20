@@ -11,8 +11,8 @@ import { useCardsData } from '@/pages/creditCards/useCardsData';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
-// Loading Skeleton
-const CardsSkeleton = () => (
+// Loading Skeleton Component
+const CardsSkeleton: React.FC = () => (
   <div className={`${inter.variable} font-sans min-h-screen bg-gray-50`}>
     <TopBar onMenuClick={() => {}} />
     <main className='px-4 py-6'>
@@ -28,20 +28,57 @@ const CardsSkeleton = () => (
   </div>
 );
 
-const MobileCreditCards: React.FC = () => {
+// Error Display Component
+const ErrorDisplay: React.FC<{ message: string }> = ({ message }) => (
+  <div className='min-h-screen flex items-center justify-center'>
+    <div className='text-red-500'>Error loading cards: {message}</div>
+  </div>
+);
+
+// Credit Card Item Component
+const CreditCardItem: React.FC<{ card: any }> = ({ card }) => {
+  const ChipImage = card.theme.bgColor === 'bg-[#31304D]' ? EMVChip : EMVChipBlack;
+  const creditProviderLogo = (
+    <MasterCardLogo
+      fillColor={card.theme.bgColor === 'bg-[#31304D]' ? 'white' : '#1a1f36'}
+    />
+  );
+
+  return (
+    <div>
+      <CreditCard
+        balance={card.balance}
+        holder={card.holder}
+        validThru={card.validThru}
+        cardNumber={card.cardNumber}
+        ChipImage={ChipImage}
+        theme={{ ...card.theme, creditProviderLogo }}
+      />
+    </div>
+  );
+};
+
+interface MobileCreditCardsProps {
+  initialCardsData: CardData[] | null;
+  ssrConfig: SSRConfig;
+}
+
+const MobileCreditCards: React.FC<MobileCreditCardsProps> = ({
+  initialCardsData,
+  ssrConfig
+}) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
-  const { cardsData, isLoading, error } = useCardsData();
+  const { cardsData, isLoading, error } = useCardsData({
+    initialData: initialCardsData,
+    ssrConfig
+  });
 
   if (isLoading) {
     return <CardsSkeleton />;
   }
 
   if (error) {
-    return (
-      <div className='min-h-screen flex items-center justify-center'>
-        <div className='text-red-500'>Error loading cards: {error.message}</div>
-      </div>
-    );
+    return <ErrorDisplay message={error.message} />;
   }
 
   return (
@@ -57,28 +94,15 @@ const MobileCreditCards: React.FC = () => {
 
         {/* Cards Grid */}
         <div className='space-y-4'>
-          {cardsData.map((card, index) => {
-            const chipImage = card.theme.bgColor === 'bg-[#31304D]' ? EMVChip : EMVChipBlack;
-            const creditProviderLogo = (
-              <MasterCardLogo
-                fillColor={card.theme.bgColor === 'bg-[#31304D]' ? 'white' : '#1a1f36'}/>
-            );
-
-            return (
-              <div key={index}>
-                <CreditCard
-                  balance={card.balance}
-                  holder={card.holder}
-                  validThru={card.validThru}
-                  cardNumber={card.cardNumber}
-                  ChipImage={chipImage}
-                  theme={{ ...card.theme, creditProviderLogo }}/>
-              </div>
-            );
-          })}
+          {cardsData.map(card => (
+            <CreditCardItem key={card.id} card={card} />
+          ))}
         </div>
       </main>
-      <MobileNav isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)} />
+      <MobileNav 
+        isOpen={isMobileMenuOpen} 
+        onClose={() => setIsMobileMenuOpen(false)} 
+      />
     </div>
   );
 };
