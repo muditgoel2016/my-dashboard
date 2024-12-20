@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react';
+'use client';
+
+import React from 'react';
 
 import ProfileImagePicker from '@/app/components/settings/ProfileImagePicker';
 import { Button } from '@/app/components/shared/common/button';
@@ -7,78 +9,17 @@ import { Input } from '@/app/components/shared/common/input';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/app/components/shared/common/tabs';
 import Sidenav from '@/app/components/shared/desktop/nav';
 import TopBar from '@/app/components/shared/desktop/top-bar';
-import { settingsDataService } from '@/app/services/dataServices/settings/settingsDataService';
-import { validateFieldExternal } from '@/services/otherServices/formValidationUtil';
-
-interface FormField {
-  name: string;
-  label: string;
-  type: string;
-  defaultValue?: string;
-}
-
-interface SettingsData {
-  formFields: FormField[];
-  profileImage: {
-    url: string;
-    alt: string;
-  };
-}
-
-interface FormValues {
-  [key: string]: string;
-}
-
-interface FormErrors {
-  [key: string]: string;
-}
+import { useSettings } from '@/pages/settings/useSettings';
 
 const Settings: React.FC = () => {
-  // =============== State Management ===============
-  const [formValues, setFormValues] = useState<FormValues>({});     
-  const [formErrors, setFormErrors] = useState<FormErrors>({});     
-  const [settingsData, setSettingsData] = useState<SettingsData | null>(null);  
-
-  // =============== Data Fetching ===============
-  useEffect(() => {
-    void (async () => {
-      try {
-        const data = await settingsDataService.getSettingsData();
-        setSettingsData(data);
-        
-        const initialValues = data.formFields.reduce((acc: FormValues, field) => {
-          acc[field.name] = field.defaultValue || '';
-          return acc;
-        }, {} as FormValues);
-        setFormValues(initialValues);
-      } catch (error) {
-        console.error('Error fetching settings data:', error);
-      }
-    })();
-  }, []);
-
-  const validateField = (name: string, value: string): string => {
-    let error = '';
-    error = validateFieldExternal(name, value);
-    setFormErrors((prev) => ({ ...prev, [name]: error }));
-    return error;
-  };
-
-  const validateForm = (): boolean => {
-    if (!settingsData) {return false;}
-    
-    const errors: FormErrors = {};
-    let valid = true;
-
-    settingsData.formFields.forEach((field) => {
-      const error = validateField(field.name, formValues[field.name]);
-      if (error) {valid = false;}
-      errors[field.name] = error;
-    });
-
-    setFormErrors(errors);
-    return valid;
-  };
+  const {
+    formValues,
+    formErrors,
+    settingsData,
+    setFormValues,
+    validateField,
+    validateForm,
+  } = useSettings();
 
   // =============== Event Handlers ===============
   const handleInputChange = (name: string, value: string): void => {
@@ -101,8 +42,6 @@ const Settings: React.FC = () => {
       console.log('Validation failed.');
     }
   };
-
-  if (!settingsData) {return <div>Loading...</div>;}
 
   return (
     <div className='min-h-screen bg-[#F7F9FC] flex'>

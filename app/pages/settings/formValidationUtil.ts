@@ -1,5 +1,3 @@
-// services/otherServices/formValidationUtil.ts
-
 export const validateEmail = (value: string): string => {
   if (!value) {return 'Email is required.';}
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {return 'Invalid email format.';}
