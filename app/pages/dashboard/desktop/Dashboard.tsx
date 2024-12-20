@@ -13,12 +13,23 @@ import Sidenav from '@/app/components/shared/desktop/nav';
 import TopBar from '@/app/components/shared/desktop/top-bar';
 import { dashboardDataService } from '@/app/services/dataServices/dashboard/dashboardDataService';
 
+// Error fallback elements
+const cardsErrorFallback = <div>Error loading cards section</div>;
+const transactionsErrorFallback = <div>Error loading transactions</div>;
+const weeklyActivityErrorFallback = <div>Error loading weekly activity</div>;
+const expenseStatisticsErrorFallback = <div>Error loading expense statistics</div>;
+const quickTransferErrorFallback = <div>Error loading quick transfer</div>;
+const balanceHistoryErrorFallback = <div>Error loading balance history</div>;
+
+// Loading fallback elements
+const loadingFallback = <div className='animate-pulse h-[400px] bg-gray-100 rounded-[25px]' />;
+
 // Lazy loaded components
 const BalanceHistory = dynamic(
   () => import('@/app/components/dashboard/BalanceHistory'),
   {
     ssr: false,
-    loading: () => <div className='animate-pulse h-[400px] bg-gray-100 rounded-[25px]' />
+    loading: () => loadingFallback
   }
 );
 
@@ -26,7 +37,7 @@ const ExpenseStatistics = dynamic(
   () => import('@/app/components/dashboard/ExpenseStatistics'),
   {
     ssr: false,
-    loading: () => <div className='animate-pulse h-[400px] bg-gray-100 rounded-[25px]' />
+    loading: () => loadingFallback
   }
 );
 
@@ -34,14 +45,14 @@ const WeeklyActivity = dynamic(
   () => import('@/app/components/dashboard/WeeklyActivity'),
   {
     ssr: false,
-    loading: () => <div className='animate-pulse h-[400px] bg-gray-100 rounded-[25px]' />
+    loading: () => loadingFallback
   }
 );
 
 const RecentTransactions = dynamic(
   () => import('@/app/components/dashboard/RecentTransactions'),
   {
-    loading: () => <div className='animate-pulse h-[400px] bg-gray-100 rounded-[25px]' />
+    loading: () => loadingFallback
   }
 );
 
@@ -143,8 +154,8 @@ const Dashboard: React.FC = () => {
           quickTransferUserData: quickTransfer,
           cardsData: cards,
         });
-      } catch (error) {
-        setError(error instanceof Error ? error : new Error('Failed to fetch dashboard data'));
+      } catch (err) {
+        setError(err instanceof Error ? err : new Error('Failed to fetch dashboard data'));
       } finally {
         setIsLoading(false);
       }
@@ -174,18 +185,18 @@ const Dashboard: React.FC = () => {
           <div className='flex flex-col space-y-6'>
             {/* First Row */}
             <div className='flex gap-6'>
-              <ErrorBoundary fallback={<div>Error loading cards section</div>}>
+              <ErrorBoundary fallback={cardsErrorFallback}>
                 <CardSection cardsData={dashboardData.cardsData} />
               </ErrorBoundary>
 
-              <ErrorBoundary fallback={<div>Error loading transactions</div>}>
+              <ErrorBoundary fallback={transactionsErrorFallback}>
                 <div className='flex flex-col basis-1/3 rounded-lg overflow-hidden'>
                   <div className='p-3 flex justify-between items-center bg-inherit'>
                     <h2 className='text-[22px] font-semibold leading-[20.57px] text-[#343C6A]'>
                       Recent Transactions
                     </h2>
                   </div>
-                  <Suspense fallback={<div className='animate-pulse h-[400px] bg-gray-100 rounded-lg' />}>
+                  <Suspense fallback={loadingFallback}>
                     <RecentTransactions transactions={dashboardData.transactionsData} />
                   </Suspense>
                 </div>
@@ -194,7 +205,7 @@ const Dashboard: React.FC = () => {
 
             {/* Second Row */}
             <div className='flex gap-6'>
-              <ErrorBoundary fallback={<div>Error loading weekly activity</div>}>
+              <ErrorBoundary fallback={weeklyActivityErrorFallback}>
                 <div className='flex flex-col basis-2/3 rounded-lg overflow-hidden'>
                   <div className='p-3 flex justify-between items-center bg-inherit'>
                     <h2 className='text-[22px] font-semibold leading-[20.57px] text-[#343C6A]'>
@@ -203,7 +214,7 @@ const Dashboard: React.FC = () => {
                   </div>
                   <Card className='flex-1 rounded-[25px]'>
                     <CardContent className='h-[calc(100%-48px)]'>
-                      <Suspense fallback={<div className='animate-pulse h-[400px] bg-gray-100 rounded-lg' />}>
+                      <Suspense fallback={loadingFallback}>
                         <div className='pt-4'>
                           <WeeklyActivity data={dashboardData.weeklyData} />
                         </div>
@@ -213,7 +224,7 @@ const Dashboard: React.FC = () => {
                 </div>
               </ErrorBoundary>
 
-              <ErrorBoundary fallback={<div>Error loading expense statistics</div>}>
+              <ErrorBoundary fallback={expenseStatisticsErrorFallback}>
                 <div className='flex flex-col basis-1/3 rounded-lg overflow-hidden'>
                   <div className='p-3 flex justify-between items-center bg-inherit'>
                     <h2 className='text-[22px] font-semibold leading-[20.57px] text-[#343C6A]'>
@@ -222,7 +233,7 @@ const Dashboard: React.FC = () => {
                   </div>
                   <Card className='flex-1 rounded-[25px]'>
                     <CardContent className='h-[400px] flex items-center justify-center'>
-                      <Suspense fallback={<div className='animate-pulse h-[400px] bg-gray-100 rounded-lg' />}>
+                      <Suspense fallback={loadingFallback}>
                         <ExpenseStatistics data={dashboardData.expenseData} />
                       </Suspense>
                     </CardContent>
@@ -233,7 +244,7 @@ const Dashboard: React.FC = () => {
 
             {/* Third Row */}
             <div className='flex gap-6'>
-              <ErrorBoundary fallback={<div>Error loading quick transfer</div>}>
+              <ErrorBoundary fallback={quickTransferErrorFallback}>
                 <div className='flex flex-col basis-1/3 rounded-lg overflow-hidden'>
                   <div className='p-3 flex justify-between items-center bg-inherit'>
                     <h2 className='text-[22px] font-semibold leading-[20.57px] text-[#343C6A]'>
@@ -250,7 +261,7 @@ const Dashboard: React.FC = () => {
                 </div>
               </ErrorBoundary>
 
-              <ErrorBoundary fallback={<div>Error loading balance history</div>}>
+              <ErrorBoundary fallback={balanceHistoryErrorFallback}>
                 <div className='flex flex-col basis-2/3 rounded-lg overflow-hidden'>
                   <div className='p-3 flex justify-between items-center bg-inherit'>
                     <h2 className='text-[22px] font-semibold leading-[20.57px] text-[#343C6A]'>
@@ -259,7 +270,7 @@ const Dashboard: React.FC = () => {
                   </div>
                   <Card className='flex-1 rounded-[25px]'>
                     <CardContent className='h-[calc(100%-48px)]'>
-                      <Suspense fallback={<div className='animate-pulse h-[400px] bg-gray-100 rounded-lg' />}>
+                      <Suspense fallback={loadingFallback}>
                         <BalanceHistory data={dashboardData.balanceHistoryData} />
                       </Suspense>
                     </CardContent>
