@@ -63,13 +63,23 @@ class DashboardAPIError extends Error {
 
 /**
  * Fetches data from the dashboard API
+ * @param serverSideCall - Whether the call is made from server side
  * @param endpoint - API endpoint to fetch from
  * @returns Promise with the typed response data
  * @throws DashboardAPIError if the request fails
  */
-async function fetchData<T>(endpoint: string): Promise<T> {
+async function fetchData<T>(serverSideCall: boolean, endpoint: string): Promise<T> {
   try {
-    const response = await fetch(`/api/dashboard/${endpoint}`);
+    const url = serverSideCall
+      ? `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/dashboard/${endpoint}`
+      : `/api/dashboard/${endpoint}`;
+
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
     
     if (!response.ok) {
       throw new DashboardAPIError(
@@ -81,57 +91,31 @@ async function fetchData<T>(endpoint: string): Promise<T> {
     
     return response.json();
   } catch (error) {
+    console.error('Dashboard fetch error:', error);
     if (error instanceof DashboardAPIError) {
       throw error;
     }
-    throw new DashboardAPIError(
-      'Failed to fetch data',
-      500,
-      endpoint
-    );
+    throw new DashboardAPIError('Failed to fetch data', 500, endpoint);
   }
 }
 
-/**
- * Dashboard data service for fetching various dashboard-related data
- */
 export const dashboardDataService = {
-  /**
-   * Fetches balance history data
-   */
-  getBalanceHistoryData: (): Promise<BalanceHistoryItem[]> => 
-    fetchData<BalanceHistoryItem[]>('balanceHistory'),
+  getBalanceHistoryData: (serverSideCall: boolean = false): Promise<BalanceHistoryItem[]> => 
+    fetchData<BalanceHistoryItem[]>(serverSideCall, 'balanceHistory'),
 
-  /**
-   * Fetches cards data
-   */
-  getCardsData: (): Promise<Card[]> => 
-    fetchData<Card[]>('cards'),
+  getCardsData: (serverSideCall: boolean = false): Promise<Card[]> => 
+    fetchData<Card[]>(serverSideCall, 'cards'),
 
-  /**
-   * Fetches expense statistics data
-   */
-  getExpenseStatisticsData: (): Promise<ExpenseStatistic[]> => 
-    fetchData<ExpenseStatistic[]>('expenseStatistics'),
+  getExpenseStatisticsData: (serverSideCall: boolean = false): Promise<ExpenseStatistic[]> => 
+    fetchData<ExpenseStatistic[]>(serverSideCall, 'expenseStatistics'),
 
-  /**
-   * Fetches quick transfer users data
-   */
-  getQuickTransferUsersData: (): Promise<QuickTransferUser[]> => 
-    fetchData<QuickTransferUser[]>('quickTransferUsers'),
+  getQuickTransferUsersData: (serverSideCall: boolean = false): Promise<QuickTransferUser[]> => 
+    fetchData<QuickTransferUser[]>(serverSideCall, 'quickTransferUsers'),
 
-  /**
-   * Fetches transactions data
-   */
-  getTransactionsData: (): Promise<Transaction[]> => 
-    fetchData<Transaction[]>('transactions'),
+  getTransactionsData: (serverSideCall: boolean = false): Promise<Transaction[]> => 
+    fetchData<Transaction[]>(serverSideCall, 'transactions'),
 
-  /**
-   * Fetches weekly activity data
-   */
-  getWeeklyActivityData: (): Promise<WeeklyActivity[]> => 
-    fetchData<WeeklyActivity[]>('weeklyActivity'),
+  getWeeklyActivityData: (serverSideCall: boolean = false): Promise<WeeklyActivity[]> => 
+    fetchData<WeeklyActivity[]>(serverSideCall, 'weeklyActivity'),
 } as const;
-
-// Type for the entire service
 export type DashboardDataService = typeof dashboardDataService;

@@ -12,6 +12,7 @@ import { Card, CardContent } from '@/app/components/shared/common/card';
 import Sidenav from '@/app/components/shared/desktop/nav';
 import TopBar from '@/app/components/shared/desktop/top-bar';
 import { useDashboardData } from '@/pages/dashboard/useDashboardData';
+import RecentTransactions from '@/app/components/dashboard/RecentTransactions';
 
 // Error fallback elements
 const cardsErrorFallback = <div>Error loading cards section</div>;
@@ -49,21 +50,28 @@ const WeeklyActivity = dynamic(
   }
 );
 
-const RecentTransactions = dynamic(
-  () => import('@/app/components/dashboard/RecentTransactions'),
-  {
-    loading: () => loadingFallback
-  }
-);
-
 // Types
 interface DashboardData {
-  weeklyData: any[];
-  balanceHistoryData: any[];
-  expenseData: any[];
-  transactionsData: any[];
-  quickTransferUserData: any[];
-  cardsData: any[];
+  cardsData?: any[];
+  transactionsData?: any[];
+  weeklyData?: any[];
+  expenseData?: any[];
+  quickTransferUserData?: any[];
+  balanceHistoryData?: any[];
+}
+
+interface SSRConfig {
+  CARDS_SSR_ENABLED: boolean;
+  TRANSACTIONS_SSR_ENABLED: boolean;
+  WEEKLY_SSR_ENABLED: boolean;
+  EXPENSE_SSR_ENABLED: boolean;
+  QUICK_TRANSFER_SSR_ENABLED: boolean;
+  BALANCE_HISTORY_SSR_ENABLED: boolean;
+}
+
+interface DashboardProps {
+  initialData: DashboardData;
+  ssrConfig: SSRConfig;
 }
 
 // Memoized Section Components
@@ -108,41 +116,15 @@ const CardSection = React.memo(function CardSection({
   );
 });
 
-// Loading Skeleton
-const DashboardSkeleton = () => (
-  <div className='min-h-screen bg-gray-50 flex'>
-    <Sidenav />
-    <div className='ml-64 flex-1'>
-      <TopBar />
-      <main className='p-8'>
-        <div className='flex flex-col space-y-6'>
-          <div className='animate-pulse h-[200px] bg-gray-100 rounded-lg' />
-          <div className='animate-pulse h-[400px] bg-gray-100 rounded-lg' />
-          <div className='animate-pulse h-[400px] bg-gray-100 rounded-lg' />
-        </div>
-      </main>
-    </div>
-  </div>
-);
-
 /**
  * Dashboard Component
  * Displays the dashboard, including credit cards, transactions, and various activity sections.
  */
-const Dashboard: React.FC = () => {
-  const { dashboardData, isLoading, error } = useDashboardData();
-
-  if (isLoading || !dashboardData) {
-    return <DashboardSkeleton />;
-  }
-
-  if (error) {
-    return (
-      <div className='min-h-screen flex items-center justify-center'>
-        <div className='text-red-500'>Error loading dashboard: {error.message}</div>
-      </div>
-    );
-  }
+const Dashboard: React.FC<DashboardProps> = ({ initialData, ssrConfig }) => {
+  const { dashboardData, loadingState, errors } = useDashboardData({
+    initialData,
+    ssrConfig
+  });
 
   return (
     <div className='min-h-screen bg-gray-50 flex'>
@@ -154,7 +136,11 @@ const Dashboard: React.FC = () => {
             {/* First Row */}
             <div className='flex gap-6'>
               <ErrorBoundary fallback={cardsErrorFallback}>
-                <CardSection cardsData={dashboardData.cardsData} />
+                {!loadingState.cards && dashboardData.cardsData ? (
+                  <CardSection cardsData={dashboardData.cardsData} />
+                ) : (
+                  loadingFallback
+                )}
               </ErrorBoundary>
 
               <ErrorBoundary fallback={transactionsErrorFallback}>
@@ -165,7 +151,9 @@ const Dashboard: React.FC = () => {
                     </h2>
                   </div>
                   <Suspense fallback={loadingFallback}>
-                    <RecentTransactions transactions={dashboardData.transactionsData} />
+                    {!loadingState.transactions && dashboardData.transactionsData && (
+                      <RecentTransactions transactions={dashboardData.transactionsData} />
+                    )}
                   </Suspense>
                 </div>
               </ErrorBoundary>
@@ -183,9 +171,11 @@ const Dashboard: React.FC = () => {
                   <Card className='flex-1 rounded-[25px]'>
                     <CardContent className='h-[calc(100%-48px)]'>
                       <Suspense fallback={loadingFallback}>
-                        <div className='pt-4'>
-                          <WeeklyActivity data={dashboardData.weeklyData} />
-                        </div>
+                        {!loadingState.weekly && dashboardData.weeklyData && (
+                          <div className='pt-4'>
+                            <WeeklyActivity data={dashboardData.weeklyData} />
+                          </div>
+                        )}
                       </Suspense>
                     </CardContent>
                   </Card>
@@ -202,7 +192,9 @@ const Dashboard: React.FC = () => {
                   <Card className='flex-1 rounded-[25px]'>
                     <CardContent className='h-[400px] flex items-center justify-center'>
                       <Suspense fallback={loadingFallback}>
-                        <ExpenseStatistics data={dashboardData.expenseData} />
+                        {!loadingState.expense && dashboardData.expenseData && (
+                          <ExpenseStatistics data={dashboardData.expenseData} />
+                        )}
                       </Suspense>
                     </CardContent>
                   </Card>
@@ -221,9 +213,12 @@ const Dashboard: React.FC = () => {
                   </div>
                   <Card className='flex-1 rounded-[25px]'>
                     <CardContent className='p-0 flex items-center justify-center h-full'>
-                      <QuickTransfer 
-                        users={dashboardData.quickTransferUserData} 
-                        defaultAmount='525.50'/>
+                      {!loadingState.quickTransfer && dashboardData.quickTransferUserData && (
+                        <QuickTransfer 
+                          users={dashboardData.quickTransferUserData} 
+                          defaultAmount='525.50'
+                        />
+                      )}
                     </CardContent>
                   </Card>
                 </div>
@@ -239,7 +234,9 @@ const Dashboard: React.FC = () => {
                   <Card className='flex-1 rounded-[25px]'>
                     <CardContent className='h-[calc(100%-48px)]'>
                       <Suspense fallback={loadingFallback}>
-                        <BalanceHistory data={dashboardData.balanceHistoryData} />
+                        {!loadingState.balanceHistory && dashboardData.balanceHistoryData && (
+                          <BalanceHistory data={dashboardData.balanceHistoryData} />
+                        )}
                       </Suspense>
                     </CardContent>
                   </Card>

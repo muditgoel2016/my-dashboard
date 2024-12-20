@@ -11,53 +11,53 @@ import QuickTransfer from '@/app/components/dashboard/QuickTransfer';
 import MobileNav from '@/app/components/shared/mobile/nav';
 import TopBar from '@/app/components/shared/mobile/top-bar';
 import { useDashboardData } from '@/pages/dashboard/useDashboardData';
+import RecentTransactions from '@/app/components/dashboard/RecentTransactions';
 
-// Dynamic imports with SSR disabled
+// Keep dynamic imports as is
 const WeeklyActivity = dynamic(() => import('@/app/components/dashboard/WeeklyActivity'), { ssr: false });
 const ExpenseStatistics = dynamic(() => import('@/app/components/dashboard/ExpenseStatistics'), { ssr: false });
 const BalanceHistory = dynamic(() => import('@/app/components/dashboard/BalanceHistory'), { ssr: false });
-const RecentTransactions = dynamic(() => import('@/app/components/dashboard/RecentTransactions'), { ssr: false });
-
-// Skeleton loader fallback
 const loadingFallback = (
   <div className='animate-pulse h-[200px] w-full bg-gray-200 rounded-lg'></div>
 );
 
-// Error fallback
 const errorFallback = (section: string) => (
   <div className='text-red-500'>Error loading {section}</div>
 );
 
-// Loading Skeleton
-const DashboardSkeleton = () => (
-  <div className='min-h-screen bg-gray-50'>
-    <TopBar onMenuClick={() => {}} />
-    <main className='px-4 py-6 pb-24 space-y-6'>
-      <div className='animate-pulse h-[200px] bg-gray-100 rounded-lg' />
-      <div className='animate-pulse h-[200px] bg-gray-100 rounded-lg' />
-      <div className='animate-pulse h-[200px] bg-gray-100 rounded-lg' />
-    </main>
-  </div>
-);
+// Types
+interface DashboardData {
+  cardsData?: any[];
+  transactionsData?: any[];
+  weeklyData?: any[];
+  expenseData?: any[];
+  quickTransferUserData?: any[];
+  balanceHistoryData?: any[];
+}
+
+interface SSRConfig {
+  CARDS_SSR_ENABLED: boolean;
+  TRANSACTIONS_SSR_ENABLED: boolean;
+  WEEKLY_SSR_ENABLED: boolean;
+  EXPENSE_SSR_ENABLED: boolean;
+  QUICK_TRANSFER_SSR_ENABLED: boolean;
+  BALANCE_HISTORY_SSR_ENABLED: boolean;
+}
+
+interface MobileDashboardProps {
+  initialData: DashboardData;
+  ssrConfig: SSRConfig;
+}
 
 /**
- * Renders the mobile dashboard layout with cards, recent transactions, and other activities.
+ * Renders the mobile dashboard layout with progressive loading
  */
-const MobileDashboard: React.FC = () => {
+const MobileDashboard: React.FC<MobileDashboardProps> = ({ initialData, ssrConfig }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
-  const { dashboardData, isLoading, error } = useDashboardData();
-
-  if (isLoading || !dashboardData) {
-    return <DashboardSkeleton />;
-  }
-
-  if (error) {
-    return (
-      <div className='min-h-screen flex items-center justify-center'>
-        <div className='text-red-500'>Error loading dashboard: {error.message}</div>
-      </div>
-    );
-  }
+  const { dashboardData, loadingState, errors } = useDashboardData({
+    initialData,
+    ssrConfig
+  });
 
   return (
     <div className='min-h-screen bg-gray-50'>
@@ -73,31 +73,33 @@ const MobileDashboard: React.FC = () => {
               See All
             </Link>
           </div>
-          <div className='relative overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 pb-4'>
-            <div className='flex gap-4 snap-x snap-mandatory'>
-              {dashboardData.cardsData.map((card, index) => {
-                const ChipImage = card.theme.bgColor === 'bg-[#31304D]' ? EMVChip : EMVChipBlack;
-                const creditProviderLogo = (
-                  <MasterCardLogo
-                    fillColor={card.theme.bgColor === 'bg-[#31304D]' ? 'white' : '#1a1f36'}/>
-                );
+          {!loadingState.cards && dashboardData.cardsData ? (
+            <div className='relative overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 pb-4'>
+              <div className='flex gap-4 snap-x snap-mandatory'>
+                {dashboardData.cardsData.map((card, index) => {
+                  const ChipImage = card.theme.bgColor === 'bg-[#31304D]' ? EMVChip : EMVChipBlack;
+                  const creditProviderLogo = (
+                    <MasterCardLogo
+                      fillColor={card.theme.bgColor === 'bg-[#31304D]' ? 'white' : '#1a1f36'}/>
+                  );
 
-                return (
-                  <div key={index} className='snap-center shrink-0 first:pl-4 last:pr-4'>
-                    <div className='w-72'>
-                      <CreditCard
-                        balance={card.balance}
-                        holder={card.holder}
-                        validThru={card.validThru}
-                        cardNumber={card.cardNumber}
-                        ChipImage={ChipImage}
-                        theme={{ ...card.theme, creditProviderLogo }}/>
+                  return (
+                    <div key={index} className='snap-center shrink-0 first:pl-4 last:pr-4'>
+                      <div className='w-72'>
+                        <CreditCard
+                          balance={card.balance}
+                          holder={card.holder}
+                          validThru={card.validThru}
+                          cardNumber={card.cardNumber}
+                          ChipImage={ChipImage}
+                          theme={{ ...card.theme, creditProviderLogo }}/>
+                      </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
+              </div>
             </div>
-          </div>
+          ) : loadingFallback}
         </div>
 
         {/* Recent Transactions */}
@@ -107,7 +109,9 @@ const MobileDashboard: React.FC = () => {
               <h2 className='text-[16px] font-semibold leading-[20.57px] text-[#343C6A]'>Recent Transactions</h2>
             </div>
             <Suspense fallback={loadingFallback}>
-              <RecentTransactions transactions={dashboardData.transactionsData} />
+              {!loadingState.transactions && dashboardData.transactionsData && (
+                <RecentTransactions transactions={dashboardData.transactionsData} />
+              )}
             </Suspense>
           </div>
         </ErrorBoundary>
@@ -120,7 +124,9 @@ const MobileDashboard: React.FC = () => {
             </div>
             <div className='bg-white p-4 rounded-xl'>
               <Suspense fallback={loadingFallback}>
-                <WeeklyActivity data={dashboardData.weeklyData} />
+                {!loadingState.weekly && dashboardData.weeklyData && (
+                  <WeeklyActivity data={dashboardData.weeklyData} />
+                )}
               </Suspense>
             </div>
           </div>
@@ -134,7 +140,9 @@ const MobileDashboard: React.FC = () => {
             </div>
             <div className='bg-white p-4 rounded-xl'>
               <Suspense fallback={loadingFallback}>
-                <ExpenseStatistics data={dashboardData.expenseData} />
+                {!loadingState.expense && dashboardData.expenseData && (
+                  <ExpenseStatistics data={dashboardData.expenseData} />
+                )}
               </Suspense>
             </div>
           </div>
@@ -147,9 +155,9 @@ const MobileDashboard: React.FC = () => {
               <h2 className='text-[16px] font-semibold leading-[20.57px] text-[#343C6A]'>Quick Transfer</h2>
             </div>
             <div className='bg-white p-4 rounded-xl'>
-              <Suspense fallback={loadingFallback}>
+              {!loadingState.quickTransfer && dashboardData.quickTransferUserData && (
                 <QuickTransfer users={dashboardData.quickTransferUserData} defaultAmount='525.50' />
-              </Suspense>
+              )}
             </div>
           </div>
         </ErrorBoundary>
@@ -162,7 +170,9 @@ const MobileDashboard: React.FC = () => {
             </div>
             <div className='bg-white p-4 rounded-xl'>
               <Suspense fallback={loadingFallback}>
-                <BalanceHistory data={dashboardData.balanceHistoryData} />
+                {!loadingState.balanceHistory && dashboardData.balanceHistoryData && (
+                  <BalanceHistory data={dashboardData.balanceHistoryData} />
+                )}
               </Suspense>
             </div>
           </div>
