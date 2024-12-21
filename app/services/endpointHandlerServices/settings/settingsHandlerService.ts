@@ -12,7 +12,7 @@ interface FormField {
 }
 
 interface SettingsData {
-  profileImage: ProfileImage;
+  profileImageData: ProfileImage;
   formFields: FormField[];
 }
 
@@ -36,9 +36,9 @@ interface FormFieldNames {
  */
 export function getSettingsData(): SettingsData {
   return {
-    profileImage: {
+    profileImageData: {
       type: 'image',
-      defaultValue: 'https://example.com/default-profile-image.jpg',
+      defaultValue: 'https://picsum.photos/id/64/96/96',
       label: 'Profile Picture'
     },
     formFields: [

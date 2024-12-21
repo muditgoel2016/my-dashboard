@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
-import { settingsDataService } from '@/app/services/dataServices/settings/settingsDataService';
-import { validateFieldExternal } from '@/pages/settings/formValidationUtil';
+import { settingsDataService } from '@/services/dataServices/settings/settingsDataService';
+import { validateFieldExternal } from '@/services/otherServices/formValidationUtil';
 
 export interface FormField {
   name: string;
@@ -13,7 +13,7 @@ export interface FormField {
 
 export interface SettingsData {
   formFields: FormField[];
-  profileImage?: {
+  profileImageData?: {
     url: string;
     alt: string;
   };

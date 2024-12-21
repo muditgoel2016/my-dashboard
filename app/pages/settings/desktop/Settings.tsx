@@ -1,6 +1,8 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
+import { Loader2 } from 'lucide-react';
+import { useToast } from '@/services/otherServices/useToast';
 
 import ProfileImagePicker from '@/app/components/settings/ProfileImagePicker';
 import { Button } from '@/app/components/shared/common/button';
@@ -12,6 +14,10 @@ import TopBar from '@/app/components/shared/desktop/top-bar';
 import { useSettingsData } from '@/pages/settings/useSettingsData';
 
 const Settings: React.FC<{ initialSettingsData: any }> = ({ initialSettingsData }) => {
+  const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [profileImage, setProfileImage] = useState<File | null>(null);
+  
   const {
     formValues,
     formErrors,
@@ -21,25 +27,76 @@ const Settings: React.FC<{ initialSettingsData: any }> = ({ initialSettingsData 
     validateForm,
   } = useSettingsData(initialSettingsData);
 
-  // =============== Event Handlers ===============
+  // Event Handlers
   const handleInputChange = (name: string, value: string): void => {
     setFormValues((prev) => ({ ...prev, [name]: value }));
     validateField(name, value);
   };
 
+  const handleProfileImageChange = (file: File | null) => {
+    setProfileImage(file);
+  };
+
   const handleSubmit = async (event: React.FormEvent): Promise<void> => {
     event.preventDefault();
     
-    if (validateForm()) {
-      try {
-        console.log('Form submitted successfully:', formValues);
-        alert('Form submitted successfully!');
-      } catch (error) {
-        console.error('Error updating settings:', error);
-        alert('Failed to update settings. Please try again.');
+    if (!validateForm()) {
+      toast({
+        variant: "destructive",
+        title: "Validation Error",
+        description: "Please check the form for errors."
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      // Create FormData instance
+      const formData = new FormData();
+      
+      // Add all form fields
+      Object.entries(formValues).forEach(([key, value]) => {
+        formData.append(key, value);
+      });
+
+      // Add profile image if exists
+      if (profileImage) {
+        formData.append('profileImage', profileImage);
       }
-    } else {
-      console.log('Validation failed.');
+
+      const response = await fetch('/api/settings', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        if (data.errors) {
+          // Handle validation errors
+          Object.entries(data.errors).forEach(([field, error]) => {
+            validateField(field, formValues[field], error as string);
+          });
+          throw new Error('Please check the form for errors.');
+        }
+        throw new Error(data.error || 'Failed to update settings');
+      }
+
+      toast({
+        variant: "success",
+        title: "Success",
+        description: "Settings updated successfully"
+      });
+
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: error instanceof Error ? error.message : 'Failed to update settings'
+      });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -75,7 +132,10 @@ const Settings: React.FC<{ initialSettingsData: any }> = ({ initialSettingsData 
 
                 <TabsContent value='profile'>
                   <div className='flex gap-8'>
-                    <ProfileImagePicker imageData={settingsData?.profileImage} />
+                    <ProfileImagePicker 
+                      imageData={settingsData?.profileImageData} 
+                      onImageChange={handleProfileImageChange}
+                    />
 
                     <form 
                       className='grid grid-cols-2 gap-x-8 gap-y-6 flex-1' 
@@ -96,7 +156,8 @@ const Settings: React.FC<{ initialSettingsData: any }> = ({ initialSettingsData 
                                 formErrors[field.name] ? 'border-red-500' : ''
                               }`}
                               onChange={(e) => handleInputChange(field.name, e.target.value)}
-                              onBlur={() => validateField(field.name, formValues[field.name])}/>
+                              onBlur={() => validateField(field.name, formValues[field.name])}
+                            />
                           </div>
                           {formErrors[field.name] && (
                             <p className='text-red-500 text-xs mt-1'>{formErrors[field.name]}</p>
@@ -107,8 +168,14 @@ const Settings: React.FC<{ initialSettingsData: any }> = ({ initialSettingsData 
                       <div className='col-span-2 flex justify-end mt-6'>
                         <Button
                           type='submit'
-                          className='bg-[#1A1F36] hover:bg-[#1A1F36]/90 text-white w-[190px] h-[50px] rounded-[15px] text-sm font-medium'>
-                          Save
+                          disabled={isSubmitting}
+                          className='bg-[#1A1F36] hover:bg-[#1A1F36]/90 text-white w-[190px] h-[50px] rounded-[15px] text-sm font-medium transition-all active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed'>
+                          {isSubmitting ? (
+                            <>
+                              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                              Saving...
+                            </>
+                          ) : 'Save'}
                         </Button>
                       </div>
                     </form>
