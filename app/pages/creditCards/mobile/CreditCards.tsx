@@ -8,7 +8,6 @@ import MasterCardLogo from '@/app/components/dashboard/MasterCardLogo';
 import MobileNav from '@/app/components/shared/mobile/nav';
 import TopBar from '@/app/components/shared/mobile/top-bar';
 import { useCardsData } from '@/pages/creditCards/useCardsData';
-import type { Card as CreditCardType } from './types';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
@@ -38,7 +37,7 @@ const ErrorDisplay: React.FC<{ message: string }> = ({ message }) => (
 
 // Credit Card Item Component
 interface CreditCardItemProps {
-  card: CreditCardType;
+  card: any;
 }
 
 const CreditCardItem: React.FC<CreditCardItemProps> = ({ card }) => {
@@ -68,7 +67,7 @@ const CreditCardItem: React.FC<CreditCardItemProps> = ({ card }) => {
 };
 
 interface MobileCreditCardsProps {
-  initialCardsData: CreditCardType[] | null;
+  initialCardsData: any[] | null;
   ssrConfig: {
     CARDS_SSR_ENABLED: boolean;
   };

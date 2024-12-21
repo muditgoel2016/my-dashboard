@@ -68,7 +68,7 @@ const CreditCard: React.FC<CreditCardProps> = React.memo(({
 
   return (
     <Card className={cardClassName}>
-      <CardContent className='p-6 h-[235px] flex flex-col'>
+      <CardContent className='p-6 w-[350px] h-[235px] flex flex-col'>
         {/* Top Row - Balance and Chip */}
         <div className='flex-1 flex justify-between'>
           <div>

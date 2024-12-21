@@ -12,7 +12,6 @@ import RecentTransactions from '@/app/components/dashboard/RecentTransactions';
 import MobileNav from '@/app/components/shared/mobile/nav';
 import TopBar from '@/app/components/shared/mobile/top-bar';
 import { useDashboardData } from '@/pages/dashboard/useDashboardData';
-import type { Card as CreditCardType } from './types';
 
 // Keep dynamic imports as is
 const WeeklyActivity = dynamic(() => import('@/app/components/dashboard/WeeklyActivity'), { ssr: false });
@@ -22,7 +21,7 @@ const BalanceHistory = dynamic(() => import('@/app/components/dashboard/BalanceH
 // Skeleton loaders
 const cardSkeleton = (
   <div className='pl-4'>
-    <div className='w-[280px] h-[200px] bg-gray-200 rounded-2xl animate-pulse'/>
+    <div className='w-[350px] h-[235px] bg-gray-200 rounded-2xl animate-pulse'/>
   </div>
 );
 
@@ -53,7 +52,7 @@ const errorFallback = (section: string) => (
 
 // Types
 interface DashboardData {
-  cardsData?: CreditCardType[];
+  cardsData?: any[];
   transactionsData?: any[];
   weeklyData?: any[];
   expenseData?: any[];
@@ -121,7 +120,7 @@ const MobileDashboard: React.FC<MobileDashboardProps> = ({ initialData, ssrConfi
 
                     return (
                       <div key={card.id} className='snap-center shrink-0 first:pl-4 last:pr-4'>
-                        <div className='w-[280px]'>
+                        <div>
                           <CreditCard
                             card={cardWithLogo}
                             ChipImage={ChipImage}

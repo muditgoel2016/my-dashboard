@@ -91,7 +91,7 @@ const CardSection = React.memo(function CardSection({
         </Link>
       </div>
       <div className='relative overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100 hover:scrollbar-thumb-gray-400'>
-        <div className='flex gap-6 snap-x snap-mandatory pb-4'>
+        <div className='flex gap-6 snap-x snap-mandatory'>
           {cardsData.map((card) => {
             const ChipImage = card.theme.bgColor === 'bg-[#31304D]' ? EMVChip : EMVChipBlack;
             
@@ -139,7 +139,7 @@ const Dashboard: React.FC<DashboardProps> = ({ initialData, ssrConfig }) => {
   return (
     <div className='min-h-screen bg-gray-50 flex'>
       <Sidenav />
-      <div className='ml-64 flex-1'>
+      <div className='ml-64 w-[80%] flex-1'>
         <TopBar />
         <main className='p-8'>
           <div className='flex flex-col space-y-6'>
