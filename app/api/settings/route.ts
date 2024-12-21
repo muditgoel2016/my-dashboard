@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { getSettingsData } from '@/services/endpointHandlerServices/settings/settingsHandlerService';
+import { getSettingsData , updateSettingsData} from '@/services/endpointHandlerServices/settings/settingsHandlerService';
 import { validateFieldExternal } from '@/app/services/otherServices/formValidationUtil';
 
 interface FormField {
@@ -39,7 +39,7 @@ interface SettingsData {
  */
 export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
-    const settingsData: SettingsData = getSettingsData();
+    const settingsData = await getSettingsData(); // Now properly awaiting
     
     return NextResponse.json(settingsData, {
       status: 200,
@@ -49,9 +49,21 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     });
   } catch (error) {
     console.error('Error fetching settings:', error);
+    
+    // Handle specific error messages
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+    
+    // Map error messages to appropriate status codes
+    let statusCode = 500;
+    if (errorMessage === 'Settings data source not found') {
+      statusCode = 404;
+    } else if (errorMessage === 'Failed to parse settings data source') {
+      statusCode = 500;
+    }
+    
     return NextResponse.json(
-      { error: 'Failed to fetch settings data' },
-      { status: 500 }
+      { error: errorMessage },
+      { status: statusCode }
     );
   }
 }
@@ -61,9 +73,17 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
  */
 export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
+    // First verify we can read current settings
+    try {
+      await getSettingsData();
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Failed to access settings data';
+      return NextResponse.json({ error: errorMessage }, { status: 500 });
+    }
+
     const formData = await request.formData();
     
-    // Handle profile image if it exists
+    // Handle profile image if exists
     const profileImage = formData.get('profileImage') as File | null;
     if (profileImage) {
       // Validate file type and size
@@ -82,19 +102,26 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
           { status: 400 }
         );
       }
-
-      // TODO: Add your image upload logic here
-      console.log('Processing image:', profileImage.name);
     }
 
-    // Extract form fields
-    const formFields = Object.fromEntries(formData.entries());
-    delete formFields.profileImage;
+    // Extract and validate form fields
+    const formFields = {
+      yourName: formData.get('yourName') as string,
+      userName: formData.get('userName') as string,
+      email: formData.get('email') as string,
+      password: formData.get('password') as string,
+      dateOfBirth: formData.get('dateOfBirth') as string,
+      presentAddress: formData.get('presentAddress') as string,
+      permanentAddress: formData.get('permanentAddress') as string,
+      city: formData.get('city') as string,
+      postalCode: formData.get('postalCode') as string,
+      country: formData.get('country') as string
+    };
 
-    // Validate all fields using shared validation logic
+    // Validate all fields
     const errors: Record<string, string> = {};
     Object.entries(formFields).forEach(([field, value]) => {
-      const error = validateFieldExternal(field, value as string);
+      const error = validateFieldExternal(field, value);
       if (error) {
         errors[field] = error;
       }
@@ -104,15 +131,13 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       return NextResponse.json({ errors }, { status: 400 });
     }
 
-    // TODO: Add your database update logic here
-    // For now, simulate success
+    // Update settings with validated data
+    const updatedData = await updateSettingsData(formFields, profileImage || undefined);
+
     return NextResponse.json({
       success: true,
       message: 'Settings updated successfully',
-      data: {
-        ...formFields,
-        profileImageUrl: profileImage ? '/api/images/profile.jpg' : undefined
-      }
+      data: updatedData
     }, { status: 200 });
 
   } catch (error) {

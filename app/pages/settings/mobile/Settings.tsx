@@ -1,7 +1,8 @@
 'use client';
 
-import { ChevronDown } from 'lucide-react';
 import React, { useState } from 'react';
+import { ChevronDown, Loader2 } from 'lucide-react';
+import { useToast } from '@/services/otherServices/useToast';
 
 import ProfileImagePicker from '@/app/components/settings/ProfileImagePicker';
 import { Button } from '@/app/components/shared/common/button';
@@ -13,6 +14,10 @@ import { useSettingsData } from '@/pages/settings/useSettingsData';
 
 const Settings: React.FC<{ initialSettingsData: any }> = ({ initialSettingsData }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [profileImage, setProfileImage] = useState<File | null>(null);
+
+  const { toast } = useToast();
   const {
     formValues,
     formErrors,
@@ -28,14 +33,64 @@ const Settings: React.FC<{ initialSettingsData: any }> = ({ initialSettingsData 
     validateField(name, value);
   };
 
-  const handleSubmit = (event: React.FormEvent): void => {
+  const handleProfileImageChange = (file: File | null) => {
+    setProfileImage(file);
+  };
+
+  const handleSubmit = async (event: React.FormEvent): Promise<void> => {
     event.preventDefault();
 
-    if (validateForm()) {
-      console.log('Form submitted successfully:', formValues);
-      alert('Form submitted successfully!');
-    } else {
-      console.log('Validation failed.');
+    if (!validateForm()) {
+      toast({
+        variant: 'destructive',
+        title: 'Validation Error',
+        description: 'Please check the form for errors.',
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const formData = new FormData();
+      Object.entries(formValues).forEach(([key, value]) => {
+        formData.append(key, value);
+      });
+
+      if (profileImage) {
+        formData.append('profileImage', profileImage);
+      }
+
+      const response = await fetch('/api/settings', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        if (data.errors) {
+          Object.entries(data.errors).forEach(([field, error]) => {
+            validateField(field, formValues[field], error as string);
+          });
+          throw new Error('Please check the form for errors.');
+        }
+        throw new Error(data.error || 'Failed to update settings');
+      }
+
+      toast({
+        variant: 'success',
+        title: 'Success',
+        description: 'Settings updated successfully.',
+      });
+    } catch (error) {
+      toast({
+        variant: 'destructive',
+        title: 'Error',
+        description: error instanceof Error ? error.message : 'Failed to update settings',
+      });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -44,7 +99,8 @@ const Settings: React.FC<{ initialSettingsData: any }> = ({ initialSettingsData 
     <div className='min-h-screen bg-[#f6f7fa]'>
       <TopBar 
         title='Settings' 
-        onMenuClick={(): void => setIsMobileMenuOpen(true)}/>
+        onMenuClick={(): void => setIsMobileMenuOpen(true)}
+      />
       <main className='pb-24'>
         <div
           className='bg-white rounded-[15px] shadow-md mx-auto mt-6'
@@ -72,7 +128,10 @@ const Settings: React.FC<{ initialSettingsData: any }> = ({ initialSettingsData 
             {/* Tab Content */}
             <TabsContent value='profile'>
               <div className='flex justify-center mb-6'>
-                <ProfileImagePicker imageData={settingsData.profileImage} />
+                <ProfileImagePicker 
+                  imageData={settingsData.profileImageData} 
+                  onImageChange={handleProfileImageChange}
+                />
               </div>
 
               <form 
@@ -105,8 +164,14 @@ const Settings: React.FC<{ initialSettingsData: any }> = ({ initialSettingsData 
 
                 <Button 
                   type='submit' 
+                  disabled={isSubmitting}
                   className='w-full bg-[#1A1F36] h-[50px] rounded-[15px] mt-6 text-white'>
-                  Save
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Saving...
+                    </>
+                  ) : 'Save'}
                 </Button>
               </form>
             </TabsContent>

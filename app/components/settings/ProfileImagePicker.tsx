@@ -1,5 +1,5 @@
 import { Pencil } from 'lucide-react';
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 
 import { Avatar, AvatarImage } from '@/components/shared/common/avatar';
 
@@ -19,6 +19,21 @@ const ProfileImagePicker: React.FC<ProfileImagePickerProps> = ({
   onImageChange
 }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+
+  // Reset preview when imageData changes
+  useEffect(() => {
+    setPreviewUrl(null);
+  }, [imageData]);
+
+  // Cleanup preview URL on unmount
+  useEffect(() => {
+    return () => {
+      if (previewUrl) {
+        URL.revokeObjectURL(previewUrl);
+      }
+    };
+  }, [previewUrl]);
 
   const handleEditClick = () => {
     fileInputRef.current?.click();
@@ -26,15 +41,29 @@ const ProfileImagePicker: React.FC<ProfileImagePickerProps> = ({
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0] || null;
+    if (file) {
+      // Clean up previous preview URL
+      if (previewUrl) {
+        URL.revokeObjectURL(previewUrl);
+      }
+      // Create new preview URL
+      const newPreviewUrl = URL.createObjectURL(file);
+      setPreviewUrl(newPreviewUrl);
+    } else {
+      setPreviewUrl(null);
+    }
     onImageChange?.(file);
   };
+
+  // Use preview URL if available, otherwise fall back to imageData default
+  const displayUrl = previewUrl || imageData?.defaultValue;
 
   return (
     <div className='flex flex-col items-center w-48'>
       <div className='relative'>
         <Avatar className='w-24 h-24 border border-gray-200 rounded-full'>
           <AvatarImage 
-            src={imageData?.defaultValue}
+            src={displayUrl}
             alt={imageData?.label || 'Profile'} 
             className='object-cover rounded-full'
           />
