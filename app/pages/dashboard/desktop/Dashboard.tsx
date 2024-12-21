@@ -92,21 +92,28 @@ const CardSection = React.memo(function CardSection({
       </div>
       <div className='relative overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100 hover:scrollbar-thumb-gray-400'>
         <div className='flex gap-6 snap-x snap-mandatory pb-4'>
-          {cardsData.map((card, index) => {
+          {cardsData.map((card) => {
             const ChipImage = card.theme.bgColor === 'bg-[#31304D]' ? EMVChip : EMVChipBlack;
-            const creditProviderLogo = (
-              <MasterCardLogo fillColor={card.theme.bgColor === 'bg-[#31304D]' ? 'white' : '#1a1f36'} />
-            );
+            
+            // Add creditProviderLogo to the card theme
+            const cardWithLogo = {
+              ...card,
+              theme: {
+                ...card.theme,
+                creditProviderLogo: (
+                  <MasterCardLogo 
+                    fillColor={card.theme.bgColor === 'bg-[#31304D]' ? 'white' : '#1a1f36'} 
+                  />
+                )
+              }
+            };
 
             return (
-              <div key={index} className='snap-center shrink-0 first:pl-4 last:pr-4'>
+              <div key={card.id} className='snap-center shrink-0 first:pl-4 last:pr-4'>
                 <CreditCard
-                  balance={card.balance}
-                  holder={card.holder}
-                  validThru={card.validThru}
-                  cardNumber={card.cardNumber}
+                  card={cardWithLogo}
                   ChipImage={ChipImage}
-                  theme={{ ...card.theme, creditProviderLogo }}/>
+                />
               </div>
             );
           })}

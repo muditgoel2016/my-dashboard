@@ -4,9 +4,12 @@ interface BalanceHistoryItem {
   value: number;
 }
 
+// Extended interfaces
 interface CardTheme {
   bgColor: string;
   textPrimaryColor: string;
+  labelColor: string;  // New property for label text
+  valueColor: string;  // New property for value text
 }
 
 interface Card {
@@ -16,6 +19,11 @@ interface Card {
   validThru: string;
   cardNumber: string;
   theme: CardTheme;
+  labels?: {     // Optional labels object for customization
+    balance: string;
+    cardHolder: string;
+    validThru: string;
+  };
 }
 
 interface ExpenseStatistic {
@@ -82,6 +90,8 @@ export function getCardsData(): Card[] {
       theme: {
         bgColor: 'bg-[#31304D]',
         textPrimaryColor: 'text-white',
+        labelColor: 'text-white/70',    // White with 70% opacity for labels
+        valueColor: 'text-white'        // Pure white for values
       }
     },
     {
@@ -93,6 +103,8 @@ export function getCardsData(): Card[] {
       theme: {
         bgColor: 'bg-[#f8faff]',
         textPrimaryColor: 'text-[#1a1f36]',
+        labelColor: 'text-[#6B7280]',   // Light blue/purple for labels
+        valueColor: 'text-[#1a1f36]'    // Navy blue for values
       }
     },
     {
@@ -104,6 +116,8 @@ export function getCardsData(): Card[] {
       theme: {
         bgColor: 'bg-[#FFFAE6]',
         textPrimaryColor: 'text-[#D97706]',
+        labelColor: 'text-[#D97706]/70',
+        valueColor: 'text-[#D97706]'
       }
     },
     {
@@ -115,6 +129,8 @@ export function getCardsData(): Card[] {
       theme: {
         bgColor: 'bg-[#E6FFFA]',
         textPrimaryColor: 'text-[#059669]',
+        labelColor: 'text-[#059669]/70',
+        valueColor: 'text-[#059669]'
       }
     },
     {
@@ -126,6 +142,8 @@ export function getCardsData(): Card[] {
       theme: {
         bgColor: 'bg-[#E0E7FF]',
         textPrimaryColor: 'text-[#4338CA]',
+        labelColor: 'text-[#4338CA]/70',
+        valueColor: 'text-[#4338CA]'
       }
     }
   ];

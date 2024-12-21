@@ -9,6 +9,7 @@ import { Card, CardContent } from '@/app/components/shared/common/card';
 import Sidenav from '@/app/components/shared/desktop/nav';
 import TopBar from '@/app/components/shared/desktop/top-bar';
 import { useCardsData } from '@/pages/creditCards/useCardsData';
+import type { Card as CreditCardType } from './types';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
@@ -20,14 +21,14 @@ const CardsSkeleton = () => (
       <TopBar />
       <main className='p-8'>
         <div className='mb-6'>
-          <div className='h-6 w-32 bg-gray-200 rounded animate-pulse' />
+          <div className='h-7 w-32 bg-gray-200 rounded animate-pulse' />
         </div>
         <Card className='rounded-[25px]'>
           <CardContent>
             <div className='flex flex-wrap gap-6 p-6'>
               {[1, 2, 3].map((i) => (
                 <div key={i} className='basis-[calc(33.333%-1rem)] flex-grow'>
-                  <div className='h-48 bg-gray-200 rounded-lg animate-pulse' />
+                  <div className='w-[350px] h-[235px] bg-gray-200 rounded-2xl animate-pulse' />
                 </div>
               ))}
             </div>
@@ -39,7 +40,7 @@ const CardsSkeleton = () => (
 );
 
 interface CreditCardsProps {
-  initialCardsData: any[] | null;
+  initialCardsData: CreditCardType[] | null;
   ssrConfig: {
     CARDS_SSR_ENABLED: boolean;
   };
@@ -81,22 +82,28 @@ const CreditCards: React.FC<CreditCardsProps> = ({ initialCardsData, ssrConfig }
             <CardContent>
               {/* Flex Container for 3-column grid */}
               <div className='flex flex-wrap gap-6 p-6'>
-                {cardsData.map((card, index) => {
-                  const chipImage = card.theme.bgColor === 'bg-[#31304D]' ? EMVChip : EMVChipBlack;
-                  const creditProviderLogo = (
-                    <MasterCardLogo
-                      fillColor={card.theme.bgColor === 'bg-[#31304D]' ? 'white' : '#1a1f36'}/>
-                  );
+                {cardsData.map((card) => {
+                  const ChipImage = card.theme.bgColor === 'bg-[#31304D]' ? EMVChip : EMVChipBlack;
+                  
+                  // Add creditProviderLogo to the card theme
+                  const cardWithLogo = {
+                    ...card,
+                    theme: {
+                      ...card.theme,
+                      creditProviderLogo: (
+                        <MasterCardLogo 
+                          fillColor={card.theme.bgColor === 'bg-[#31304D]' ? 'white' : '#1a1f36'} 
+                        />
+                      )
+                    }
+                  };
 
                   return (
-                    <div key={index} className='basis-[calc(33.333%-1rem)] flex-grow'>
+                    <div key={card.id} className='basis-[calc(33.333%-1rem)] flex-grow'>
                       <CreditCard
-                        balance={card.balance}
-                        holder={card.holder}
-                        validThru={card.validThru}
-                        cardNumber={card.cardNumber}
-                        ChipImage={chipImage}
-                        theme={{ ...card.theme, creditProviderLogo }}/>
+                        card={cardWithLogo}
+                        ChipImage={ChipImage}
+                      />
                     </div>
                   );
                 })}

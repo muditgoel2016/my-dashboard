@@ -8,6 +8,7 @@ import MasterCardLogo from '@/app/components/dashboard/MasterCardLogo';
 import MobileNav from '@/app/components/shared/mobile/nav';
 import TopBar from '@/app/components/shared/mobile/top-bar';
 import { useCardsData } from '@/pages/creditCards/useCardsData';
+import type { Card as CreditCardType } from './types';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
@@ -17,11 +18,11 @@ const CardsSkeleton: React.FC = () => (
     <TopBar onMenuClick={() => {}} />
     <main className='px-4 py-6'>
       <div className='mb-4'>
-        <div className='h-5 w-24 bg-gray-200 rounded animate-pulse' />
+        <div className='h-6 w-28 bg-gray-200 rounded animate-pulse' />
       </div>
       <div className='space-y-4'>
         {[1, 2, 3].map((i) => (
-          <div key={i} className='h-48 bg-gray-200 rounded-lg animate-pulse' />
+          <div key={i} className='w-full h-[235px] bg-gray-200 rounded-2xl animate-pulse' />
         ))}
       </div>
     </main>
@@ -36,31 +37,41 @@ const ErrorDisplay: React.FC<{ message: string }> = ({ message }) => (
 );
 
 // Credit Card Item Component
-const CreditCardItem: React.FC<{ card: any }> = ({ card }) => {
+interface CreditCardItemProps {
+  card: CreditCardType;
+}
+
+const CreditCardItem: React.FC<CreditCardItemProps> = ({ card }) => {
   const ChipImage = card.theme.bgColor === 'bg-[#31304D]' ? EMVChip : EMVChipBlack;
-  const creditProviderLogo = (
-    <MasterCardLogo
-      fillColor={card.theme.bgColor === 'bg-[#31304D]' ? 'white' : '#1a1f36'}
-    />
-  );
+  
+  // Add creditProviderLogo to the card theme
+  const cardWithLogo = {
+    ...card,
+    theme: {
+      ...card.theme,
+      creditProviderLogo: (
+        <MasterCardLogo 
+          fillColor={card.theme.bgColor === 'bg-[#31304D]' ? 'white' : '#1a1f36'} 
+        />
+      )
+    }
+  };
 
   return (
-    <div>
+    <div className='w-full'>
       <CreditCard
-        balance={card.balance}
-        holder={card.holder}
-        validThru={card.validThru}
-        cardNumber={card.cardNumber}
+        card={cardWithLogo}
         ChipImage={ChipImage}
-        theme={{ ...card.theme, creditProviderLogo }}
       />
     </div>
   );
 };
 
 interface MobileCreditCardsProps {
-  initialCardsData: CardData[] | null;
-  ssrConfig: SSRConfig;
+  initialCardsData: CreditCardType[] | null;
+  ssrConfig: {
+    CARDS_SSR_ENABLED: boolean;
+  };
 }
 
 const MobileCreditCards: React.FC<MobileCreditCardsProps> = ({
@@ -92,7 +103,7 @@ const MobileCreditCards: React.FC<MobileCreditCardsProps> = ({
           </h2>
         </div>
 
-        {/* Cards Grid */}
+        {/* Cards Stack */}
         <div className='space-y-4'>
           {cardsData.map(card => (
             <CreditCardItem key={card.id} card={card} />

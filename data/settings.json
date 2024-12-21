@@ -1,7 +1,7 @@
 {
   "profileImageData": {
     "type": "image",
-    "defaultValue": "/uploads/profile-1734779756231.png",
+    "defaultValue": "/uploads/profile-1734782147043.png",
     "label": "Profile Picture"
   },
   "formFields": [
@@ -19,19 +19,19 @@
     },
     {
       "label": "Email",
-      "defaultValue": "rfererere@grgrg.com",
+      "defaultValue": "rfererere@grgrg.comsss",
       "type": "email",
       "name": "email"
     },
     {
       "label": "Password",
-      "defaultValue": "********dddddd",
+      "defaultValue": "*****gddggdgdgdfgdf",
       "type": "password",
       "name": "password"
     },
     {
       "label": "Date of Birth",
-      "defaultValue": "2024-12-03",
+      "defaultValue": "2024-12-11",
       "type": "date",
       "name": "dateOfBirth"
     },
@@ -61,7 +61,7 @@
     },
     {
       "label": "Country",
-      "defaultValue": "USA",
+      "defaultValue": "USAw",
       "type": "text",
       "name": "country"
     }

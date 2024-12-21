@@ -12,13 +12,39 @@ import RecentTransactions from '@/app/components/dashboard/RecentTransactions';
 import MobileNav from '@/app/components/shared/mobile/nav';
 import TopBar from '@/app/components/shared/mobile/top-bar';
 import { useDashboardData } from '@/pages/dashboard/useDashboardData';
+import type { Card as CreditCardType } from './types';
 
 // Keep dynamic imports as is
 const WeeklyActivity = dynamic(() => import('@/app/components/dashboard/WeeklyActivity'), { ssr: false });
 const ExpenseStatistics = dynamic(() => import('@/app/components/dashboard/ExpenseStatistics'), { ssr: false });
 const BalanceHistory = dynamic(() => import('@/app/components/dashboard/BalanceHistory'), { ssr: false });
-const loadingFallback = (
-  <div className='animate-pulse h-[200px] w-full bg-gray-200 rounded-lg'></div>
+
+// Skeleton loaders
+const cardSkeleton = (
+  <div className='pl-4'>
+    <div className='w-[280px] h-[200px] bg-gray-200 rounded-2xl animate-pulse'/>
+  </div>
+);
+
+const transactionsSkeleton = (
+  <div className='space-y-4 p-4'>
+    {[1, 2, 3].map((index) => (
+      <div key={index} className='flex items-center justify-between'>
+        <div className='flex items-center space-x-3'>
+          <div className='w-10 h-10 bg-gray-200 rounded-full animate-pulse'/>
+          <div className='space-y-2'>
+            <div className='h-4 w-24 bg-gray-200 rounded animate-pulse'/>
+            <div className='h-3 w-20 bg-gray-200 rounded animate-pulse'/>
+          </div>
+        </div>
+        <div className='h-4 w-16 bg-gray-200 rounded animate-pulse'/>
+      </div>
+    ))}
+  </div>
+);
+
+const chartSkeleton = (
+  <div className='h-[200px] w-full bg-gray-200 rounded-xl animate-pulse'/>
 );
 
 const errorFallback = (section: string) => (
@@ -27,7 +53,7 @@ const errorFallback = (section: string) => (
 
 // Types
 interface DashboardData {
-  cardsData?: any[];
+  cardsData?: CreditCardType[];
   transactionsData?: any[];
   weeklyData?: any[];
   expenseData?: any[];
@@ -51,9 +77,6 @@ interface MobileDashboardProps {
 
 /**
  * Renders the mobile dashboard layout with progressive loading
- * @param root0
- * @param root0.initialData
- * @param root0.ssrConfig
  */
 const MobileDashboard: React.FC<MobileDashboardProps> = ({ initialData, ssrConfig }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
@@ -67,43 +90,53 @@ const MobileDashboard: React.FC<MobileDashboardProps> = ({ initialData, ssrConfi
       <TopBar onMenuClick={() => setIsMobileMenuOpen(true)} />
       <main className='px-4 py-6 pb-24 space-y-6'>
         {/* My Cards Section */}
-        <div>
-          <div className='p-3 flex justify-between items-center'>
-            <h2 className='text-[16px] font-semibold leading-[20.57px] text-[#343C6A]'>My Cards</h2>
-            <Link
-              href='/pages/creditCards'
-              className='text-[14px] font-semibold text-[#343C6A] hover:underline'>
-              See All
-            </Link>
-          </div>
-          {!loadingState.cards && dashboardData.cardsData ? (
-            <div className='relative overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 pb-4'>
-              <div className='flex gap-4 snap-x snap-mandatory'>
-                {dashboardData.cardsData.map((card, index) => {
-                  const ChipImage = card.theme.bgColor === 'bg-[#31304D]' ? EMVChip : EMVChipBlack;
-                  const creditProviderLogo = (
-                    <MasterCardLogo
-                      fillColor={card.theme.bgColor === 'bg-[#31304D]' ? 'white' : '#1a1f36'}/>
-                  );
-
-                  return (
-                    <div key={index} className='snap-center shrink-0 first:pl-4 last:pr-4'>
-                      <div className='w-72'>
-                        <CreditCard
-                          balance={card.balance}
-                          holder={card.holder}
-                          validThru={card.validThru}
-                          cardNumber={card.cardNumber}
-                          ChipImage={ChipImage}
-                          theme={{ ...card.theme, creditProviderLogo }}/>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
+        <ErrorBoundary fallback={errorFallback('Cards')}>
+          <div>
+            <div className='p-3 flex justify-between items-center'>
+              <h2 className='text-[16px] font-semibold leading-[20.57px] text-[#343C6A]'>My Cards</h2>
+              <Link
+                href='/pages/creditCards'
+                className='text-[14px] font-semibold text-[#343C6A] hover:underline'>
+                See All
+              </Link>
             </div>
-          ) : loadingFallback}
-        </div>
+            <div className='relative overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 pb-4'>
+              {!loadingState.cards && dashboardData.cardsData ? (
+                <div className='flex gap-4 snap-x snap-mandatory'>
+                  {dashboardData.cardsData.map((card) => {
+                    const ChipImage = card.theme.bgColor === 'bg-[#31304D]' ? EMVChip : EMVChipBlack;
+                    
+                    // Add creditProviderLogo to the card theme
+                    const cardWithLogo = {
+                      ...card,
+                      theme: {
+                        ...card.theme,
+                        creditProviderLogo: (
+                          <MasterCardLogo 
+                            fillColor={card.theme.bgColor === 'bg-[#31304D]' ? 'white' : '#1a1f36'} 
+                          />
+                        )
+                      }
+                    };
+
+                    return (
+                      <div key={card.id} className='snap-center shrink-0 first:pl-4 last:pr-4'>
+                        <div className='w-[280px]'>
+                          <CreditCard
+                            card={cardWithLogo}
+                            ChipImage={ChipImage}
+                          />
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              ) : (
+                cardSkeleton
+              )}
+            </div>
+          </div>
+        </ErrorBoundary>
 
         {/* Recent Transactions */}
         <ErrorBoundary fallback={errorFallback('Recent Transactions')}>
@@ -111,7 +144,7 @@ const MobileDashboard: React.FC<MobileDashboardProps> = ({ initialData, ssrConfi
             <div className='p-3'>
               <h2 className='text-[16px] font-semibold leading-[20.57px] text-[#343C6A]'>Recent Transactions</h2>
             </div>
-            <Suspense fallback={loadingFallback}>
+            <Suspense fallback={transactionsSkeleton}>
               {!loadingState.transactions && dashboardData.transactionsData && (
                 <RecentTransactions transactions={dashboardData.transactionsData} />
               )}
@@ -126,7 +159,7 @@ const MobileDashboard: React.FC<MobileDashboardProps> = ({ initialData, ssrConfi
               <h2 className='text-[16px] font-semibold leading-[20.57px] text-[#343C6A]'>Weekly Activity</h2>
             </div>
             <div className='bg-white p-4 rounded-xl'>
-              <Suspense fallback={loadingFallback}>
+              <Suspense fallback={chartSkeleton}>
                 {!loadingState.weekly && dashboardData.weeklyData && (
                   <WeeklyActivity data={dashboardData.weeklyData} />
                 )}
@@ -142,7 +175,7 @@ const MobileDashboard: React.FC<MobileDashboardProps> = ({ initialData, ssrConfi
               <h2 className='text-[16px] font-semibold leading-[20.57px] text-[#343C6A]'>Expense Statistics</h2>
             </div>
             <div className='bg-white p-4 rounded-xl'>
-              <Suspense fallback={loadingFallback}>
+              <Suspense fallback={chartSkeleton}>
                 {!loadingState.expense && dashboardData.expenseData && (
                   <ExpenseStatistics data={dashboardData.expenseData} />
                 )}
@@ -172,7 +205,7 @@ const MobileDashboard: React.FC<MobileDashboardProps> = ({ initialData, ssrConfi
               <h2 className='text-[16px] font-semibold leading-[20.57px] text-[#343C6A]'>Balance History</h2>
             </div>
             <div className='bg-white p-4 rounded-xl'>
-              <Suspense fallback={loadingFallback}>
+              <Suspense fallback={chartSkeleton}>
                 {!loadingState.balanceHistory && dashboardData.balanceHistoryData && (
                   <BalanceHistory data={dashboardData.balanceHistoryData} />
                 )}
