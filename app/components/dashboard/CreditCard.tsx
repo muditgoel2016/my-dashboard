@@ -121,7 +121,7 @@ const CreditCard: React.FC<CreditCardProps> = React.memo(({
             </h2>
           </div>
           <div 
-            className='w-12 h-12 transition-transform group-hover:scale-105'
+            className='transition-transform group-hover:scale-105'
             aria-hidden='true'>
             <ChipImage />
           </div>
