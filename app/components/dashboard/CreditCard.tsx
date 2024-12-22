@@ -49,7 +49,7 @@ export interface CreditCardProps {
 }
 
 // Common styles as constants
-const baseCardStyles = 'flex-1 rounded-2xl border transition-all duration-200 hover:shadow-lg';
+const baseCardStyles = 'flex-1 rounded-[1.5rem] border transition-all duration-200 hover:shadow-lg';
 const baseTextStyles = 'font-medium';
 const baseLabelStyles = 'text-xs';
 
@@ -151,6 +151,8 @@ const CreditCard: React.FC<CreditCardProps> = React.memo(({
               aria-labelledby={`valid-label-${card.id}`}>
               {validThru}
             </p>
+          </div>
+          <div className='spacer'>
           </div>
         </div>
 
