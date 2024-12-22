@@ -14,19 +14,30 @@ const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
 // Loading Skeleton
 const CardsSkeleton = () => (
-  <div className={`${inter.variable} font-sans min-h-screen bg-gray-50 flex`}>
+  <div 
+    className={`${inter.variable} font-sans min-h-screen bg-gray-50 flex`}
+    aria-label='Loading credit cards'>
     <Sidenav />
     <div className='ml-64 flex-1'>
       <TopBar title='Credit Cards'/>
-      <main className='p-8'>
+      <main 
+        className='p-8'
+        aria-busy='true'>
         <div className='mb-6'>
-          <div className='h-7 w-32 bg-gray-200 rounded animate-pulse' />
+          <div 
+            className='h-7 w-32 bg-gray-200 rounded animate-pulse'
+            aria-hidden='true'/>
         </div>
         <Card className='rounded-[25px]'>
           <CardContent>
-            <div className='flex flex-wrap justify-center gap-6 p-6'>
+            <div 
+              className='flex flex-wrap justify-center gap-6 p-6'
+              role='status'
+              aria-label='Loading credit cards'>
               {[1, 2, 3].map((i) => (
-                <div key={i}>
+                <div 
+                  key={i}
+                  aria-hidden='true'>
                   <div className='w-[350px] h-[235px] bg-gray-200 rounded-2xl animate-pulse' />
                 </div>
               ))}
@@ -57,27 +68,37 @@ const CreditCards: React.FC<CreditCardsProps> = ({ initialCardsData, ssrConfig }
 
   if (error) {
     return (
-      <div className='min-h-screen flex items-center justify-center'>
-        <div className='text-red-500'>Error loading cards: {error.message}</div>
+      <div 
+        className='min-h-screen flex items-center justify-center'
+        role='alert'>
+        <div className='text-red-500'>
+          Error loading cards: {error.message}
+        </div>
       </div>
     );
   }
 
   return (
-    <div className={`${inter.variable} font-sans min-h-screen bg-gray-50 flex`}>
+    <div 
+      className={`${inter.variable} font-sans min-h-screen bg-gray-50 flex`}
+      role='application'
+      aria-label='Credit Cards Dashboard'>
       <Sidenav />
       <div className='ml-64 flex-1'>
         <TopBar title='Credit Cards'/>
-        <main className='p-8'>
-          {/* Single White Card Container */}
+        <main 
+          className='p-8'
+          role='main'
+          aria-label='Credit Cards Overview'>
           <Card className='rounded-[25px]'>
             <CardContent>
-              {/* Flex Container for 3-column grid */}
-              <div className='flex flex-wrap justify-center gap-6 p-6'>
+              <div 
+                className='flex flex-wrap justify-center gap-6 p-6'
+                role='list'
+                aria-label='Available credit cards'>
                 {cardsData.map((card) => {
                   const ChipImage = card.theme.bgColor === 'bg-[#31304D]' ? EMVChip : EMVChipBlack;
                   
-                  // Add creditProviderLogo to the card theme
                   const cardWithLogo = {
                     ...card,
                     theme: {
@@ -90,7 +111,10 @@ const CreditCards: React.FC<CreditCardsProps> = ({ initialCardsData, ssrConfig }
                   };
 
                   return (
-                    <div key={card.id}>
+                    <div 
+                      key={card.id}
+                      role='listitem'
+                      aria-label={`Credit card ending in ${card.lastFourDigits}`}>
                       <CreditCard
                         card={cardWithLogo}
                         ChipImage={ChipImage}/>
