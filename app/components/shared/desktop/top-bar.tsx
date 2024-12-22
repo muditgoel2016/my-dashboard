@@ -8,7 +8,7 @@ const TopBar = ({ title = 'Overview' }) => {
   return (
     <header className='bg-white border-b border-gray-200'>
       <div className='mx-auto px-4 sm:px-6 lg:px-8'>
-        <div className='flex items-center justify-between h-16'>
+        <div className='flex items-center justify-between h-20'>
           {/* Left Section: Title */}
           <div className='text-[#1A1F36] text-xl font-semibold'>{title}</div>
 
@@ -39,7 +39,7 @@ const TopBar = ({ title = 'Overview' }) => {
             </Button>
 
             {/* Avatar */}
-            <Avatar className='w-10 h-10'>
+            <Avatar className='w-14 h-14'>
               <AvatarImage src='https://picsum.photos/id/64/96/96' alt='User avatar' />
               <AvatarFallback>U</AvatarFallback>
             </Avatar>
