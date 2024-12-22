@@ -14,16 +14,23 @@ import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
 
 interface MenuItem {
-  icon: React.ReactNode;
+  icon: React.ReactNode;  // More generic type for any icon system
   label: string;
   href: string;
 }
 
-const Nav: React.FC = () => {
-  const [mounted, setMounted] = useState<boolean>(false);
-  const [activePath, setActivePath] = useState<string>('/pages/dashboard');
+interface NavProps {
+  className?: string;
+  defaultPath?: string;
+}
 
-  // Handle client-side mounting
+const Nav: React.FC<NavProps> = ({ 
+  className,
+  defaultPath = '/pages/dashboard'
+}) => {
+  const [mounted, setMounted] = useState<boolean>(false);
+  const [activePath, setActivePath] = useState<string>(defaultPath);
+
   useEffect(() => {
     setMounted(true);
     const path = window.location.pathname;
@@ -43,15 +50,22 @@ const Nav: React.FC = () => {
   ];
 
   return (
-    <div className='w-64 bg-white border-r h-screen fixed left-0 top-0'>
-      <div className='flex items-center gap-3 px-6 py-6'>
+    <div 
+      className={`w-64 bg-white border-r h-screen fixed left-0 top-0 ${className ?? ''}`}
+      role='navigation'
+      aria-label='Main navigation'>
+      <div 
+        className='flex items-center gap-3 px-6 py-6'
+        role='banner'>
         <div className='w-8 h-8 bg-indigo-600 rounded flex items-center justify-center'>
-          <CheckSquare className='w-5 h-5 text-white' />
+          <CheckSquare className='w-5 h-5 text-white' aria-hidden='true' />
         </div>
         <span className='text-xl font-semibold text-gray-900'>Soar Task</span>
       </div>
 
-      <nav className='px-3 py-2'>
+      <nav 
+        className='px-3 py-2'
+        aria-label='Main menu'>
         {menuItems.map((item) => {
           const isActive = mounted && activePath === item.href;
           
@@ -64,11 +78,16 @@ const Nav: React.FC = () => {
                   ? 'text-gray-900 font-medium hover:bg-gray-50' 
                   : 'text-gray-400 hover:bg-gray-50 hover:text-gray-600'
                 }`}
-              onClick={() => setActivePath(item.href)}>
+              onClick={() => setActivePath(item.href)}
+              aria-current={isActive ? 'page' : undefined}>
               {isActive && (
-                <div className='absolute left-0 top-0 h-full w-1 bg-gray-900 rounded-r' />
+                <div 
+                  className='absolute left-0 top-0 h-full w-1 bg-gray-900 rounded-r'
+                  aria-hidden='true'/>
               )}
-              <span className={isActive ? 'text-gray-900' : 'text-gray-400'}>
+              <span 
+                className={isActive ? 'text-gray-900' : 'text-gray-400'}
+                aria-hidden='true'>
                 {item.icon}
               </span>
               <span>{item.label}</span>
