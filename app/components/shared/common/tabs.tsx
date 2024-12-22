@@ -12,7 +12,7 @@ const TabsList = React.forwardRef<
   <TabsPrimitive.List
     ref={ref}
     className={cn(
-      'inline-flex h-12 items-center justify-start border-b border-gray-300 space-x-12', // Added consistent border height
+      'flex items-center space-x-4 border-b border-gray-300', // Horizontal orientation with border
       className
     )}
     {...props}/>
@@ -26,11 +26,13 @@ const TabsTrigger = React.forwardRef<
   <TabsPrimitive.Trigger
     ref={ref}
     className={cn(
-      'relative px-0 pb-3 text-lg font-medium text-gray-400 hover:text-gray-600 focus-visible:outline-none data-[state=active]:text-gray-900 data-[state=active]:after:content-[\'\'] data-[state=active]:after:absolute data-[state=active]:after:bottom-0 data-[state=active]:after:left-0 data-[state=active]:after:right-0 data-[state=active]:after:h-[2px] data-[state=active]:after:bg-[#4F46E5]', // Adjusted padding and positioning
+      'relative px-4 py-2 text-lg font-medium text-[#718ebf] hover:text-[#5f7ba5] focus-visible:outline-none data-[state=active]:text-gray-900 data-[state=active]:hover:text-gray-900', // Styling for active and hover states
+      'data-[state=active]:after:content-[""] data-[state=active]:after:absolute data-[state=active]:after:bottom-0 data-[state=active]:after:left-0 data-[state=active]:after:right-0 data-[state=active]:after:h-[3px] data-[state=active]:after:bg-gray-900 data-[state=active]:after:rounded-tl-[3px] data-[state=active]:after:rounded-tr-[3px]', // Accent for active state with border radius
       className
     )}
     {...props}/>
 ));
+
 TabsTrigger.displayName = TabsPrimitive.Trigger.displayName;
 
 const TabsContent = React.forwardRef<

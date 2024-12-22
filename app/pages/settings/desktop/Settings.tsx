@@ -125,19 +125,16 @@ const Settings: React.FC<{ initialSettingsData: any }> = ({ initialSettingsData 
                     aria-label='Settings sections'>
                     <TabsTrigger 
                       value='profile' 
-                      className="relative px-0 pb-4 text-base font-medium text-[#718EBF] data-[state=active]:text-[#1A1F36] data-[state=active]:after:content-[''] data-[state=active]:after:absolute data-[state=active]:after:bottom-0 data-[state=active]:after:left-0 data-[state=active]:after:right-0 data-[state=active]:after:h-0.5 data-[state=active]:after:bg-[#4F46E5]"
                       aria-controls='profile-tab'>
                       Edit Profile
                     </TabsTrigger>
                     <TabsTrigger 
                       value='preferences' 
-                      className='relative px-0 pb-4 text-base font-medium text-[#718EBF]'
                       aria-controls='preferences-tab'>
                       Preferences
                     </TabsTrigger>
                     <TabsTrigger 
                       value='security' 
-                      className='relative px-0 pb-4 text-base font-medium text-[#718EBF]'
                       aria-controls='security-tab'>
                       Security
                     </TabsTrigger>
