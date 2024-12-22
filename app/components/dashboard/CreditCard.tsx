@@ -198,6 +198,8 @@ const CreditCard: React.FC<CreditCardProps> = React.memo(({
                 {validThru}
               </p>
             </div>
+            <div aria-hidden='true' className='spacer'>
+            </div>
           </div>
         </div>
 

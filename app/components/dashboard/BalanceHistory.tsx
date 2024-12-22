@@ -41,12 +41,6 @@ const BalanceHistory: React.FC<BalanceHistoryProps> = ({
       role='figure' 
       aria-label={title}
       aria-roledescription={description}>
-      {/* Hidden but accessible text description */}
-      <div className='sr-only'>
-        {description}
-        <p>Data points: {dataSummary}</p>
-      </div>
-      
       <ResponsiveContainer width='100%' height={height}>
         <LineChart
           data={data}

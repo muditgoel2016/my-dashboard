@@ -57,20 +57,6 @@ interface QuickTransferUser {
   avatarUrl?: string;
 }
 
-interface TransactionIcon {
-  bg: string;
-  color: string;
-}
-
-interface Transaction {
-  id: number;
-  title: string;
-  date: string;
-  amount: string;
-  type: 'credit' | 'debit';
-  icon: TransactionIcon;
-}
-
 interface WeeklyActivity {
   name: string;
   deposit: number;
@@ -319,6 +305,25 @@ export function getQuickTransferUsersData(): QuickTransferUser[] {
  * Retrieves transaction history data
  * @returns Array of transaction objects with their details
  */
+// Updated Transaction interface with depositMode
+interface TransactionIcon {
+  bg: string;
+  color: string;
+}
+
+interface Transaction {
+  id: number;
+  title: string;
+  date: string;
+  amount: string;
+  type: 'credit' | 'debit';
+  depositMode: 'card' | 'paypal' | 'cash';  // New field
+  icon: TransactionIcon;
+}
+
+/**
+ *
+ */
 export function getTransactionsData(): Transaction[] {
   return [
     {
@@ -327,6 +332,7 @@ export function getTransactionsData(): Transaction[] {
       date: '28 January 2021',
       amount: '850',
       type: 'debit',
+      depositMode: 'card',
       icon: {
         bg: '#FFF7EA',
         color: '#FFB545'
@@ -338,6 +344,7 @@ export function getTransactionsData(): Transaction[] {
       date: '25 January 2021',
       amount: '2,500',
       type: 'credit',
+      depositMode: 'paypal',
       icon: {
         bg: '#EFF4FF',
         color: '#316FF6'
@@ -349,6 +356,7 @@ export function getTransactionsData(): Transaction[] {
       date: '21 January 2021',
       amount: '5,400',
       type: 'credit',
+      depositMode: 'cash',
       icon: {
         bg: '#E7FFF3',
         color: '#35C28F'
@@ -360,6 +368,7 @@ export function getTransactionsData(): Transaction[] {
       date: '20 January 2021',
       amount: '14.99',
       type: 'debit',
+      depositMode: 'card',
       icon: {
         bg: '#FFE7E7',
         color: '#F23838'
@@ -371,6 +380,7 @@ export function getTransactionsData(): Transaction[] {
       date: '19 January 2021',
       amount: '4,750',
       type: 'credit',
+      depositMode: 'cash',
       icon: {
         bg: '#E7FFF3',
         color: '#35C28F'
@@ -382,6 +392,7 @@ export function getTransactionsData(): Transaction[] {
       date: '18 January 2021',
       amount: '239.50',
       type: 'debit',
+      depositMode: 'card',
       icon: {
         bg: '#FFF7EA',
         color: '#FFB545'
@@ -393,6 +404,7 @@ export function getTransactionsData(): Transaction[] {
       date: '17 January 2021',
       amount: '1,200',
       type: 'credit',
+      depositMode: 'cash',
       icon: {
         bg: '#EFF4FF',
         color: '#316FF6'
@@ -404,6 +416,7 @@ export function getTransactionsData(): Transaction[] {
       date: '15 January 2021',
       amount: '156.85',
       type: 'debit',
+      depositMode: 'card',
       icon: {
         bg: '#FFE7E7',
         color: '#F23838'
@@ -415,6 +428,7 @@ export function getTransactionsData(): Transaction[] {
       date: '14 January 2021',
       amount: '980',
       type: 'credit',
+      depositMode: 'paypal',
       icon: {
         bg: '#E7FFF3',
         color: '#35C28F'
@@ -426,6 +440,7 @@ export function getTransactionsData(): Transaction[] {
       date: '13 January 2021',
       amount: '42.50',
       type: 'debit',
+      depositMode: 'card',
       icon: {
         bg: '#FFF7EA',
         color: '#FFB545'
@@ -437,6 +452,7 @@ export function getTransactionsData(): Transaction[] {
       date: '12 January 2021',
       amount: '3,200',
       type: 'credit',
+      depositMode: 'cash',
       icon: {
         bg: '#EFF4FF',
         color: '#316FF6'
@@ -448,6 +464,7 @@ export function getTransactionsData(): Transaction[] {
       date: '10 January 2021',
       amount: '89.99',
       type: 'debit',
+      depositMode: 'card',
       icon: {
         bg: '#FFE7E7',
         color: '#F23838'
@@ -459,6 +476,7 @@ export function getTransactionsData(): Transaction[] {
       date: '08 January 2021',
       amount: '2,800',
       type: 'credit',
+      depositMode: 'paypal',
       icon: {
         bg: '#E7FFF3',
         color: '#35C28F'
@@ -470,6 +488,7 @@ export function getTransactionsData(): Transaction[] {
       date: '05 January 2021',
       amount: '75',
       type: 'debit',
+      depositMode: 'card',
       icon: {
         bg: '#FFE7E7',
         color: '#F23838'
@@ -481,6 +500,7 @@ export function getTransactionsData(): Transaction[] {
       date: '03 January 2021',
       amount: '1,500',
       type: 'credit',
+      depositMode: 'cash',
       icon: {
         bg: '#E7FFF3',
         color: '#35C28F'
