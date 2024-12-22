@@ -8,8 +8,22 @@ interface BalanceHistoryItem {
 interface CardTheme {
   bgColor: string;
   textPrimaryColor: string;
-  labelColor: string;  // New property for label text
-  valueColor: string;  // New property for value text
+  labelColor: string;
+  valueColor: string;
+  gradients?: {
+    overall?: {
+      enabled: boolean;
+      value: string;
+    };
+    footer?: {
+      enabled: boolean;
+      value: string;
+    };
+  };
+  separator?: {
+    enabled: boolean;
+    value?: string;
+  };
 }
 
 interface Card {
@@ -79,6 +93,32 @@ export function getBalanceHistoryData(): BalanceHistoryItem[] {
  * Retrieves credit cards data
  * @returns Array of card objects with their details and themes
  */
+// Extended CardTheme interface with new properties
+interface CardTheme {
+  bgColor: string;
+  textPrimaryColor: string;
+  labelColor: string;
+  valueColor: string;
+  gradients?: {
+    overall?: {
+      enabled: boolean;
+      value: string;
+    };
+    footer?: {
+      enabled: boolean;
+      value: string;
+    };
+  };
+  separator?: {
+    enabled: boolean;
+    value?: string;
+  };
+}
+
+// Updated cards data with new theme properties
+/**
+ *
+ */
 export function getCardsData(): Card[] {
   return [
     {
@@ -90,8 +130,21 @@ export function getCardsData(): Card[] {
       theme: {
         bgColor: 'bg-[#31304D]',
         textPrimaryColor: 'text-white',
-        labelColor: 'text-white/70',    // White with 70% opacity for labels
-        valueColor: 'text-white'        // Pure white for values
+        labelColor: 'text-white/70',
+        valueColor: 'text-white',
+        gradients: {
+          overall: {
+            enabled: true,
+            value: 'bg-[linear-gradient(107.38deg,#5B5A6F_2.61%,#000000_101.2%)]'
+          },
+          footer: {
+            enabled: true,
+            value: 'bg-[linear-gradient(180deg,rgba(255,255,255,0.15)_0%,rgba(255,255,255,0)_100%)]'
+          }
+        },
+        separator: {
+          enabled: false
+        }
       }
     },
     {
@@ -101,10 +154,24 @@ export function getCardsData(): Card[] {
       validThru: '11/23',
       cardNumber: '1234 **** **** 5678',
       theme: {
-        bgColor: 'bg-[#f8faff]',
-        textPrimaryColor: 'text-[#1a1f36]',
-        labelColor: 'text-[#6B7280]',   // Light blue/purple for labels
-        valueColor: 'text-[#1a1f36]'    // Navy blue for values
+        bgColor: 'bg-[#FFF]',
+        textPrimaryColor: 'text-[#343C6A]',
+        labelColor: 'text-[#718EBF]',
+        valueColor: 'text-[#343C6A]',
+        gradients: {
+          overall: {
+            enabled: false,
+            value: ''
+          },
+          footer: {
+            enabled: false,
+            value: ''
+          }
+        },
+        separator: {
+          enabled: true,
+          value: 'border-t border-[#e6efff]'
+        }
       }
     },
     {
@@ -117,7 +184,21 @@ export function getCardsData(): Card[] {
         bgColor: 'bg-[#FFFAE6]',
         textPrimaryColor: 'text-[#D97706]',
         labelColor: 'text-[#D97706]/70',
-        valueColor: 'text-[#D97706]'
+        valueColor: 'text-[#D97706]',
+        gradients: {
+          overall: {
+            enabled: false,
+            value: ''
+          },
+          footer: {
+            enabled: false,
+            value: ''
+          }
+        },
+        separator: {
+          enabled: true,
+          value: 'border-t border-[#EAB308]/20'
+        }
       }
     },
     {
@@ -130,7 +211,21 @@ export function getCardsData(): Card[] {
         bgColor: 'bg-[#E6FFFA]',
         textPrimaryColor: 'text-[#059669]',
         labelColor: 'text-[#059669]/70',
-        valueColor: 'text-[#059669]'
+        valueColor: 'text-[#059669]',
+        gradients: {
+          overall: {
+            enabled: false,
+            value: ''
+          },
+          footer: {
+            enabled: false,
+            value: ''
+          }
+        },
+        separator: {
+          enabled: true,
+          value: 'border-t border-[#059669]/20'
+        }
       }
     },
     {
@@ -143,7 +238,21 @@ export function getCardsData(): Card[] {
         bgColor: 'bg-[#E0E7FF]',
         textPrimaryColor: 'text-[#4338CA]',
         labelColor: 'text-[#4338CA]/70',
-        valueColor: 'text-[#4338CA]'
+        valueColor: 'text-[#4338CA]',
+        gradients: {
+          overall: {
+            enabled: false,
+            value: ''
+          },
+          footer: {
+            enabled: false,
+            value: ''
+          }
+        },
+        separator: {
+          enabled: true,
+          value: 'border-t border-[#4338CA]/20'
+        }
       }
     }
   ];
