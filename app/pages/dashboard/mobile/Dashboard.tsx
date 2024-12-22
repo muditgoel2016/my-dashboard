@@ -18,17 +18,28 @@ const WeeklyActivity = dynamic(() => import('@/app/components/dashboard/WeeklyAc
 const ExpenseStatistics = dynamic(() => import('@/app/components/dashboard/ExpenseStatistics'), { ssr: false });
 const BalanceHistory = dynamic(() => import('@/app/components/dashboard/BalanceHistory'), { ssr: false });
 
-// Skeleton loaders
+// Skeleton loaders with accessibility improvements
 const cardSkeleton = (
-  <div className='pl-4'>
-    <div className='w-[350px] h-[235px] bg-gray-200 rounded-2xl animate-pulse'/>
+  <div 
+    className='pl-4'
+    role='status'
+    aria-label='Loading credit card'>
+    <div 
+      className='w-[350px] h-[235px] bg-gray-200 rounded-2xl animate-pulse'
+      aria-hidden='true'/>
   </div>
 );
 
 const transactionsSkeleton = (
-  <div className='space-y-4 p-4'>
+  <div 
+    className='space-y-4 p-4'
+    role='status'
+    aria-label='Loading transactions'>
     {[1, 2, 3].map((index) => (
-      <div key={index} className='flex items-center justify-between'>
+      <div 
+        key={index} 
+        className='flex items-center justify-between'
+        aria-hidden='true'>
         <div className='flex items-center space-x-3'>
           <div className='w-10 h-10 bg-gray-200 rounded-full animate-pulse'/>
           <div className='space-y-2'>
@@ -43,11 +54,20 @@ const transactionsSkeleton = (
 );
 
 const chartSkeleton = (
-  <div className='h-[200px] w-full bg-gray-200 rounded-xl animate-pulse'/>
+  <div 
+    className='h-[200px] w-full bg-gray-200 rounded-xl animate-pulse'
+    role='status'
+    aria-label='Loading chart'
+    aria-hidden='true'/>
 );
 
 const errorFallback = (section: string) => (
-  <div className='text-red-500'>Error loading {section}</div>
+  <div 
+    className='text-red-500'
+    role='alert'
+    aria-live='polite'>
+    Error loading {section}
+  </div>
 );
 
 // Types
@@ -76,6 +96,9 @@ interface MobileDashboardProps {
 
 /**
  * Renders the mobile dashboard layout with progressive loading
+ * @param root0
+ * @param root0.initialData
+ * @param root0.ssrConfig
  */
 const MobileDashboard: React.FC<MobileDashboardProps> = ({ initialData, ssrConfig }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
@@ -85,47 +108,61 @@ const MobileDashboard: React.FC<MobileDashboardProps> = ({ initialData, ssrConfi
   });
 
   return (
-    <div className='min-h-screen bg-gray-50'>
+    <div 
+      className='min-h-screen bg-gray-50'
+      role='application'
+      aria-label='Mobile Dashboard'>
       <TopBar onMenuClick={() => setIsMobileMenuOpen(true)} />
-      <main className='px-4 py-6 pb-24 space-y-6'>
+      <main 
+        className='px-4 py-6 pb-24 space-y-6'
+        role='main'
+        aria-label='Dashboard Content'>
         {/* My Cards Section */}
         <ErrorBoundary fallback={errorFallback('Cards')}>
-          <div>
+          <div role='region' aria-label='Credit Cards'>
             <div className='p-3 flex justify-between items-center'>
-              <h2 className='text-[16px] font-semibold leading-[20.57px] text-[#343C6A]'>My Cards</h2>
+              <h2 className='text-[16px] font-semibold leading-[20.57px] text-[#343C6A]'>
+                My Cards
+              </h2>
               <Link
                 href='/pages/creditCards'
-                className='text-[14px] font-semibold text-[#343C6A] hover:underline'>
+                className='text-[14px] font-semibold text-[#343C6A] hover:underline'
+                aria-label='View all credit cards'>
                 See All
               </Link>
             </div>
-            <div className='relative overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 pb-4'>
+            <div 
+              className='relative overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 pb-4'
+              role='region'
+              aria-label='Credit cards carousel'>
               {!loadingState.cards && dashboardData.cardsData ? (
-                <div className='flex gap-4 snap-x snap-mandatory'>
+                <div 
+                  className='flex gap-4 snap-x snap-mandatory'
+                  role='list'
+                  aria-label='Available credit cards'>
                   {dashboardData.cardsData.map((card) => {
                     const ChipImage = card.theme.bgColor === 'bg-[#31304D]' ? EMVChip : EMVChipBlack;
                     
-                    // Add creditProviderLogo to the card theme
                     const cardWithLogo = {
                       ...card,
                       theme: {
                         ...card.theme,
                         creditProviderLogo: (
                           <MasterCardLogo 
-                            fillColor={card.theme.bgColor === 'bg-[#31304D]' ? 'white' : '#1a1f36'} 
-                          />
+                            fillColor={card.theme.bgColor === 'bg-[#31304D]' ? 'white' : '#1a1f36'}/>
                         )
                       }
                     };
 
                     return (
-                      <div key={card.id} className='snap-center shrink-0 first:pl-4 last:pr-4'>
-                        <div>
-                          <CreditCard
-                            card={cardWithLogo}
-                            ChipImage={ChipImage}
-                          />
-                        </div>
+                      <div
+                        key={card.id} 
+                        className='snap-center shrink-0 first:pl-4 last:pr-4'
+                        role='listitem'
+                        aria-label={`Credit card ending in ${card.lastFourDigits}`}>
+                        <CreditCard
+                          card={cardWithLogo}
+                          ChipImage={ChipImage}/>
                       </div>
                     );
                   })}
@@ -139,9 +176,11 @@ const MobileDashboard: React.FC<MobileDashboardProps> = ({ initialData, ssrConfi
 
         {/* Recent Transactions */}
         <ErrorBoundary fallback={errorFallback('Recent Transactions')}>
-          <div>
+          <div role='region' aria-label='Recent Transactions'>
             <div className='p-3'>
-              <h2 className='text-[16px] font-semibold leading-[20.57px] text-[#343C6A]'>Recent Transactions</h2>
+              <h2 className='text-[16px] font-semibold leading-[20.57px] text-[#343C6A]'>
+                Recent Transactions
+              </h2>
             </div>
             <Suspense fallback={transactionsSkeleton}>
               {!loadingState.transactions && dashboardData.transactionsData && (
@@ -153,9 +192,11 @@ const MobileDashboard: React.FC<MobileDashboardProps> = ({ initialData, ssrConfi
 
         {/* Weekly Activity */}
         <ErrorBoundary fallback={errorFallback('Weekly Activity')}>
-          <div>
+          <div role='region' aria-label='Weekly Activity'>
             <div className='p-3'>
-              <h2 className='text-[16px] font-semibold leading-[20.57px] text-[#343C6A]'>Weekly Activity</h2>
+              <h2 className='text-[16px] font-semibold leading-[20.57px] text-[#343C6A]'>
+                Weekly Activity
+              </h2>
             </div>
             <div className='bg-white p-4 rounded-xl'>
               <Suspense fallback={chartSkeleton}>
@@ -169,9 +210,11 @@ const MobileDashboard: React.FC<MobileDashboardProps> = ({ initialData, ssrConfi
 
         {/* Expense Statistics */}
         <ErrorBoundary fallback={errorFallback('Expense Statistics')}>
-          <div>
+          <div role='region' aria-label='Expense Statistics'>
             <div className='p-3'>
-              <h2 className='text-[16px] font-semibold leading-[20.57px] text-[#343C6A]'>Expense Statistics</h2>
+              <h2 className='text-[16px] font-semibold leading-[20.57px] text-[#343C6A]'>
+                Expense Statistics
+              </h2>
             </div>
             <div className='bg-white p-4 rounded-xl'>
               <Suspense fallback={chartSkeleton}>
@@ -185,13 +228,17 @@ const MobileDashboard: React.FC<MobileDashboardProps> = ({ initialData, ssrConfi
 
         {/* Quick Transfer */}
         <ErrorBoundary fallback={errorFallback('Quick Transfer')}>
-          <div>
+          <div role='region' aria-label='Quick Transfer'>
             <div className='p-3'>
-              <h2 className='text-[16px] font-semibold leading-[20.57px] text-[#343C6A]'>Quick Transfer</h2>
+              <h2 className='text-[16px] font-semibold leading-[20.57px] text-[#343C6A]'>
+                Quick Transfer
+              </h2>
             </div>
             <div className='bg-white p-4 rounded-xl'>
               {!loadingState.quickTransfer && dashboardData.quickTransferUserData && (
-                <QuickTransfer users={dashboardData.quickTransferUserData} defaultAmount='525.50' />
+                <QuickTransfer 
+                  users={dashboardData.quickTransferUserData} 
+                  defaultAmount='525.50'/>
               )}
             </div>
           </div>
@@ -199,9 +246,11 @@ const MobileDashboard: React.FC<MobileDashboardProps> = ({ initialData, ssrConfi
 
         {/* Balance History */}
         <ErrorBoundary fallback={errorFallback('Balance History')}>
-          <div>
+          <div role='region' aria-label='Balance History'>
             <div className='p-3'>
-              <h2 className='text-[16px] font-semibold leading-[20.57px] text-[#343C6A]'>Balance History</h2>
+              <h2 className='text-[16px] font-semibold leading-[20.57px] text-[#343C6A]'>
+                Balance History
+              </h2>
             </div>
             <div className='bg-white p-4 rounded-xl'>
               <Suspense fallback={chartSkeleton}>
@@ -213,7 +262,9 @@ const MobileDashboard: React.FC<MobileDashboardProps> = ({ initialData, ssrConfi
           </div>
         </ErrorBoundary>
       </main>
-      <MobileNav isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)} />
+      <MobileNav 
+        isOpen={isMobileMenuOpen} 
+        onClose={() => setIsMobileMenuOpen(false)}/>
     </div>
   );
 };

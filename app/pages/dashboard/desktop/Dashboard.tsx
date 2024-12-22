@@ -15,15 +15,21 @@ import TopBar from '@/app/components/shared/desktop/top-bar';
 import { useDashboardData } from '@/pages/dashboard/useDashboardData';
 
 // Error fallback elements
-const cardsErrorFallback = <div>Error loading cards section</div>;
-const transactionsErrorFallback = <div>Error loading transactions</div>;
-const weeklyActivityErrorFallback = <div>Error loading weekly activity</div>;
-const expenseStatisticsErrorFallback = <div>Error loading expense statistics</div>;
-const quickTransferErrorFallback = <div>Error loading quick transfer</div>;
-const balanceHistoryErrorFallback = <div>Error loading balance history</div>;
+const cardsErrorFallback = <div role='alert'>Error loading cards section</div>;
+const transactionsErrorFallback = <div role='alert'>Error loading transactions</div>;
+const weeklyActivityErrorFallback = <div role='alert'>Error loading weekly activity</div>;
+const expenseStatisticsErrorFallback = <div role='alert'>Error loading expense statistics</div>;
+const quickTransferErrorFallback = <div role='alert'>Error loading quick transfer</div>;
+const balanceHistoryErrorFallback = <div role='alert'>Error loading balance history</div>;
 
 // Loading fallback elements
-const loadingFallback = <div className='animate-pulse h-[400px] bg-gray-100 rounded-[25px]' />;
+const loadingFallback = (
+  <div 
+    className='animate-pulse h-[400px] bg-gray-100 rounded-[25px]'
+    role='status'
+    aria-busy='true'
+    aria-label='Loading content'/>
+);
 
 // Lazy loaded components
 const BalanceHistory = dynamic(
@@ -75,45 +81,54 @@ interface DashboardProps {
 }
 
 // Memoized Section Components
-const CardSection = React.memo(function CardSection({ 
-  cardsData 
-}: { 
-  cardsData: any[] 
-}) {
+const CardSection = React.memo(function CardSection({ cardsData }: { cardsData: any[] }) {
   return (
-    <div className='flex flex-col basis-2/3 rounded-lg overflow-hidden'>
+    <div 
+      className='flex flex-col basis-2/3 rounded-lg overflow-hidden'
+      role='region'
+      aria-label='Credit Cards Overview'>
       <div className='p-3 flex justify-between items-center bg-inherit'>
-        <h2 className='text-[22px] font-semibold leading-[20.57px] text-[#343C6A]'>My Cards</h2>
+        <h2 className='text-[22px] font-semibold leading-[20.57px] text-[#343C6A]'>
+          My Cards
+        </h2>
         <Link
           href='/pages/creditCards'
-          className='text-[17px] font-semibold leading-[20.57px] text-[#343C6A] hover:scale-105 active:scale-100 hover:underline transition-all duration-200 cursor-pointer text-right underline-offset-2'>
+          className='text-[17px] font-semibold leading-[20.57px] text-[#343C6A] hover:scale-105 active:scale-100 hover:underline transition-all duration-200 cursor-pointer text-right underline-offset-2'
+          aria-label='View all credit cards'>
           See All
         </Link>
       </div>
-      <div className='relative overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100 hover:scrollbar-thumb-gray-400'>
-        <div className='flex gap-6 snap-x snap-mandatory'>
+      <div 
+        className='relative overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100 hover:scrollbar-thumb-gray-400'
+        role='region'
+        aria-label='Credit cards carousel'>
+        <div 
+          className='flex gap-6 snap-x snap-mandatory'
+          role='list'
+          aria-label='Available credit cards'>
           {cardsData.map((card) => {
             const ChipImage = card.theme.bgColor === 'bg-[#31304D]' ? EMVChip : EMVChipBlack;
             
-            // Add creditProviderLogo to the card theme
             const cardWithLogo = {
               ...card,
               theme: {
                 ...card.theme,
                 creditProviderLogo: (
                   <MasterCardLogo 
-                    fillColor={card.theme.bgColor === 'bg-[#31304D]' ? 'white' : '#1a1f36'} 
-                  />
+                    fillColor={card.theme.bgColor === 'bg-[#31304D]' ? 'white' : '#1a1f36'}/>
                 )
               }
             };
 
             return (
-              <div key={card.id} className='snap-center shrink-0 first:pl-4 last:pr-4'>
+              <div 
+                key={card.id} 
+                className='snap-center shrink-0 first:pl-4 last:pr-4'
+                role='listitem'
+                aria-label={`Credit card ending in ${card.lastFourDigits}`}>
                 <CreditCard
                   card={cardWithLogo}
-                  ChipImage={ChipImage}
-                />
+                  ChipImage={ChipImage}/>
               </div>
             );
           })}
@@ -137,14 +152,23 @@ const Dashboard: React.FC<DashboardProps> = ({ initialData, ssrConfig }) => {
   });
 
   return (
-    <div className='min-h-screen bg-gray-50 flex'>
+    <div 
+      className='min-h-screen bg-gray-50 flex'
+      role='application'
+      aria-label='Dashboard'>
       <Sidenav />
       <div className='ml-64 w-[80%] flex-1'>
         <TopBar />
-        <main className='p-8'>
+        <main 
+          className='p-8'
+          role='main'
+          aria-label='Dashboard content'>
           <div className='flex flex-col space-y-6'>
             {/* First Row */}
-            <div className='flex gap-6'>
+            <div 
+              className='flex gap-6'
+              role='region'
+              aria-label='Cards and Transactions'>
               <ErrorBoundary fallback={cardsErrorFallback}>
                 {!loadingState.cards && dashboardData.cardsData ? (
                   <CardSection cardsData={dashboardData.cardsData} />
@@ -154,7 +178,10 @@ const Dashboard: React.FC<DashboardProps> = ({ initialData, ssrConfig }) => {
               </ErrorBoundary>
 
               <ErrorBoundary fallback={transactionsErrorFallback}>
-                <div className='flex flex-col basis-1/3 rounded-lg overflow-hidden'>
+                <div 
+                  className='flex flex-col basis-1/3 rounded-lg overflow-hidden'
+                  role='region'
+                  aria-label='Recent Transactions'>
                   <div className='p-3 flex justify-between items-center bg-inherit'>
                     <h2 className='text-[22px] font-semibold leading-[20.57px] text-[#343C6A]'>
                       Recent Transactions
@@ -170,9 +197,15 @@ const Dashboard: React.FC<DashboardProps> = ({ initialData, ssrConfig }) => {
             </div>
 
             {/* Second Row */}
-            <div className='flex gap-6'>
+            <div 
+              className='flex gap-6'
+              role='region'
+              aria-label='Activity and Statistics'>
               <ErrorBoundary fallback={weeklyActivityErrorFallback}>
-                <div className='flex flex-col basis-2/3 rounded-lg overflow-hidden'>
+                <div 
+                  className='flex flex-col basis-2/3 rounded-lg overflow-hidden'
+                  role='region'
+                  aria-label='Weekly Activity Overview'>
                   <div className='p-3 flex justify-between items-center bg-inherit'>
                     <h2 className='text-[22px] font-semibold leading-[20.57px] text-[#343C6A]'>
                       Weekly Activity
@@ -193,7 +226,10 @@ const Dashboard: React.FC<DashboardProps> = ({ initialData, ssrConfig }) => {
               </ErrorBoundary>
 
               <ErrorBoundary fallback={expenseStatisticsErrorFallback}>
-                <div className='flex flex-col basis-1/3 rounded-lg overflow-hidden'>
+                <div 
+                  className='flex flex-col basis-1/3 rounded-lg overflow-hidden'
+                  role='region'
+                  aria-label='Expense Statistics Overview'>
                   <div className='p-3 flex justify-between items-center bg-inherit'>
                     <h2 className='text-[22px] font-semibold leading-[20.57px] text-[#343C6A]'>
                       Expense Statistics
@@ -213,9 +249,15 @@ const Dashboard: React.FC<DashboardProps> = ({ initialData, ssrConfig }) => {
             </div>
 
             {/* Third Row */}
-            <div className='flex gap-6'>
+            <div 
+              className='flex gap-6'
+              role='region'
+              aria-label='Transfer and Balance History'>
               <ErrorBoundary fallback={quickTransferErrorFallback}>
-                <div className='flex flex-col basis-1/3 rounded-lg overflow-hidden'>
+                <div 
+                  className='flex flex-col basis-1/3 rounded-lg overflow-hidden'
+                  role='region'
+                  aria-label='Quick Transfer Section'>
                   <div className='p-3 flex justify-between items-center bg-inherit'>
                     <h2 className='text-[22px] font-semibold leading-[20.57px] text-[#343C6A]'>
                       Quick Transfer
@@ -234,7 +276,10 @@ const Dashboard: React.FC<DashboardProps> = ({ initialData, ssrConfig }) => {
               </ErrorBoundary>
 
               <ErrorBoundary fallback={balanceHistoryErrorFallback}>
-                <div className='flex flex-col basis-2/3 rounded-lg overflow-hidden'>
+                <div 
+                  className='flex flex-col basis-2/3 rounded-lg overflow-hidden'
+                  role='region'
+                  aria-label='Balance History Overview'>
                   <div className='p-3 flex justify-between items-center bg-inherit'>
                     <h2 className='text-[22px] font-semibold leading-[20.57px] text-[#343C6A]'>
                       Balance History
