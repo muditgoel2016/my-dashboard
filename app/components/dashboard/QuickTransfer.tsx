@@ -111,7 +111,7 @@ const QuickTransfer: React.FC<QuickTransferProps> = ({
           role='listbox'
           aria-label='Transfer recipients'
           tabIndex={0}>
-          <div className='flex gap-6 min-w-max px-1'>
+          <div className='flex min-w-max px-1'>
             {users.map((user, index) => (
               <div 
                 key={index} 

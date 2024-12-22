@@ -9,7 +9,6 @@ import { Card, CardContent } from '@/app/components/shared/common/card';
 import Sidenav from '@/app/components/shared/desktop/nav';
 import TopBar from '@/app/components/shared/desktop/top-bar';
 import { useCardsData } from '@/pages/creditCards/useCardsData';
-import type { Card as CreditCardType } from './types';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
@@ -18,16 +17,16 @@ const CardsSkeleton = () => (
   <div className={`${inter.variable} font-sans min-h-screen bg-gray-50 flex`}>
     <Sidenav />
     <div className='ml-64 flex-1'>
-      <TopBar />
+      <TopBar title='Credit Cards'/>
       <main className='p-8'>
         <div className='mb-6'>
           <div className='h-7 w-32 bg-gray-200 rounded animate-pulse' />
         </div>
         <Card className='rounded-[25px]'>
           <CardContent>
-            <div className='flex flex-wrap gap-6 p-6'>
+            <div className='flex flex-wrap justify-center gap-6 p-6'>
               {[1, 2, 3].map((i) => (
-                <div key={i} className='basis-[calc(33.333%-1rem)] flex-grow'>
+                <div key={i}>
                   <div className='w-[350px] h-[235px] bg-gray-200 rounded-2xl animate-pulse' />
                 </div>
               ))}
@@ -40,7 +39,7 @@ const CardsSkeleton = () => (
 );
 
 interface CreditCardsProps {
-  initialCardsData: CreditCardType[] | null;
+  initialCardsData: any[] | null;
   ssrConfig: {
     CARDS_SSR_ENABLED: boolean;
   };
@@ -68,20 +67,13 @@ const CreditCards: React.FC<CreditCardsProps> = ({ initialCardsData, ssrConfig }
     <div className={`${inter.variable} font-sans min-h-screen bg-gray-50 flex`}>
       <Sidenav />
       <div className='ml-64 flex-1'>
-        <TopBar />
+        <TopBar title='Credit Cards'/>
         <main className='p-8'>
-          {/* Page Header */}
-          <div className='mb-6'>
-            <h2 className='text-[22px] font-semibold leading-[20.57px] text-[#343C6A]'>
-              Credit Cards
-            </h2>
-          </div>
-
           {/* Single White Card Container */}
           <Card className='rounded-[25px]'>
             <CardContent>
               {/* Flex Container for 3-column grid */}
-              <div className='flex flex-wrap gap-6 p-6'>
+              <div className='flex flex-wrap justify-center gap-6 p-6'>
                 {cardsData.map((card) => {
                   const ChipImage = card.theme.bgColor === 'bg-[#31304D]' ? EMVChip : EMVChipBlack;
                   
@@ -92,18 +84,16 @@ const CreditCards: React.FC<CreditCardsProps> = ({ initialCardsData, ssrConfig }
                       ...card.theme,
                       creditProviderLogo: (
                         <MasterCardLogo 
-                          fillColor={card.theme.bgColor === 'bg-[#31304D]' ? 'white' : '#1a1f36'} 
-                        />
+                          fillColor={card.theme.bgColor === 'bg-[#31304D]' ? 'white' : '#1a1f36'}/>
                       )
                     }
                   };
 
                   return (
-                    <div key={card.id} className='basis-[calc(33.333%-1rem)] flex-grow'>
+                    <div key={card.id}>
                       <CreditCard
                         card={cardWithLogo}
-                        ChipImage={ChipImage}
-                      />
+                        ChipImage={ChipImage}/>
                     </div>
                   );
                 })}

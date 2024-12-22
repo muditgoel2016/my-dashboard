@@ -14,7 +14,7 @@ const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 // Loading Skeleton Component
 const CardsSkeleton: React.FC = () => (
   <div className={`${inter.variable} font-sans min-h-screen bg-gray-50`}>
-    <TopBar onMenuClick={() => {}} />
+    <TopBar title='Credit Cards' onMenuClick={() => {}} />
     <main className='px-4 py-6'>
       <div className='mb-4'>
         <div className='h-6 w-28 bg-gray-200 rounded animate-pulse' />
@@ -93,7 +93,7 @@ const MobileCreditCards: React.FC<MobileCreditCardsProps> = ({
 
   return (
     <div className={`${inter.variable} font-sans min-h-screen bg-gray-50`}>
-      <TopBar onMenuClick={() => setIsMobileMenuOpen(true)} />
+      <TopBar title='Credit Cards' onMenuClick={() => setIsMobileMenuOpen(true)} />
       <main className='px-4 py-6 pb-24'>
         {/* Page Header */}
         <div className='mb-6'>
