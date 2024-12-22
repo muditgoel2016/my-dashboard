@@ -3,13 +3,17 @@ import React from 'react';
 
 import { Card, CardContent } from '@/app/components/shared/common/card';
 
-// Updated interfaces with gradient and separator support
+// Updated interface to include border configuration
 interface CardTheme {
   bgColor: string;
   textPrimaryColor: string;
   labelColor: string;
   valueColor: string;
   creditProviderLogo?: ReactNode;
+  border?: {
+    enabled: boolean;
+    value?: string;
+  };
   gradients?: {
     overall?: {
       enabled: boolean;
@@ -45,6 +49,10 @@ export const defaultCardTheme: CardTheme = {
   textPrimaryColor: 'text-[#1a1f36]',
   labelColor: 'text-[#6B7280]',
   valueColor: 'text-[#1a1f36]',
+  border: {
+    enabled: true,
+    value: 'border border-[#e6efff]'
+  },
   gradients: {
     overall: {
       enabled: false,
@@ -77,7 +85,7 @@ export interface CreditCardProps {
 }
 
 // Common styles as constants
-const baseCardStyles = 'flex-1 rounded-[1.5rem] border transition-all duration-200 hover:shadow-lg';
+const baseCardStyles = 'flex-1 rounded-[1.5rem] transition-all duration-200 hover:shadow-lg';
 const baseTextStyles = 'font-medium';
 const baseLabelStyles = 'text-xs';
 
@@ -104,14 +112,15 @@ const CreditCard: React.FC<CreditCardProps> = React.memo(({
     valueColor,
     creditProviderLogo,
     gradients,
-    separator
+    separator,
+    border
   } = theme;
 
   const formattedCardNumber = cardNumber.replace(/(.{4})/g, '$1 ').trim();
   
-  // Update className logic for gradient support
   const cardClassName = `
     ${gradients.overall.enabled ? gradients.overall.value : bgColor}
+    ${border.enabled ? border.value : ''}
     ${baseCardStyles}
     ${className}
   `.trim();
@@ -202,7 +211,7 @@ const CreditCard: React.FC<CreditCardProps> = React.memo(({
           className={`
             h-[70px] px-6 flex justify-between items-center
             ${gradients.footer.enabled ? gradients.footer.value : ''}
-          `}
+          `.trim()}
           role='group'
           aria-label='Card number and provider logo'>
           <p 

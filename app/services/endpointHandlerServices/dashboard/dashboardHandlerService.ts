@@ -10,6 +10,10 @@ interface CardTheme {
   textPrimaryColor: string;
   labelColor: string;
   valueColor: string;
+  border?: {
+    enabled: boolean;
+    value?: string;
+  };
   gradients?: {
     overall?: {
       enabled: boolean;
@@ -132,6 +136,9 @@ export function getCardsData(): Card[] {
         textPrimaryColor: 'text-white',
         labelColor: 'text-white/70',
         valueColor: 'text-white',
+        border: {
+          enabled: false,
+        },
         gradients: {
           overall: {
             enabled: true,
@@ -158,6 +165,10 @@ export function getCardsData(): Card[] {
         textPrimaryColor: 'text-[#343C6A]',
         labelColor: 'text-[#718EBF]',
         valueColor: 'text-[#343C6A]',
+        border: {
+          enabled: true,
+          value: 'border border-[#DFEAF2]'
+        },
         gradients: {
           overall: {
             enabled: false,
@@ -170,7 +181,7 @@ export function getCardsData(): Card[] {
         },
         separator: {
           enabled: true,
-          value: 'border-t border-[#e6efff]'
+          value: 'border-t border-[#DFEAF2]'
         }
       }
     },
@@ -185,6 +196,10 @@ export function getCardsData(): Card[] {
         textPrimaryColor: 'text-[#D97706]',
         labelColor: 'text-[#D97706]/70',
         valueColor: 'text-[#D97706]',
+        border: {
+          enabled: true,
+          value: 'border border-[#EAB308]/20'
+        },
         gradients: {
           overall: {
             enabled: false,
@@ -212,6 +227,10 @@ export function getCardsData(): Card[] {
         textPrimaryColor: 'text-[#059669]',
         labelColor: 'text-[#059669]/70',
         valueColor: 'text-[#059669]',
+        border: {
+          enabled: true,
+          value: 'border border-[#059669]/20'
+        },
         gradients: {
           overall: {
             enabled: false,
@@ -239,6 +258,10 @@ export function getCardsData(): Card[] {
         textPrimaryColor: 'text-[#4338CA]',
         labelColor: 'text-[#4338CA]/70',
         valueColor: 'text-[#4338CA]',
+        border: {
+          enabled: true,
+          value: 'border border-[#4338CA]/20'
+        },
         gradients: {
           overall: {
             enabled: false,
