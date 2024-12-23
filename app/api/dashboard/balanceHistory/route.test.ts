@@ -1,6 +1,8 @@
-import { GET } from './route'; // Import the API route handler
+import type { NextRequest } from 'next/server';
+
 import { getBalanceHistoryData } from '@/services/endpointHandlerServices/dashboard/dashboardHandlerService';
-import { NextRequest } from 'next/server';
+
+import { GET } from './route'; // Import the API route handler
 
 // Mock the `getBalanceHistoryData` function
 jest.mock('@/services/endpointHandlerServices/dashboard/dashboardHandlerService', () => ({

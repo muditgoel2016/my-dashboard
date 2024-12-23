@@ -2,7 +2,8 @@ import type { ReactNode } from 'react';
 import React from 'react';
 
 import { Card, CardContent } from '@/app/components/shared/common/card';
-import { CardTheme, CreditCardProps } from './dashboardInterfaces';
+
+import type { CardTheme, CreditCardProps } from './dashboardInterfaces';
 
 export const defaultCardTheme: CardTheme = {
   bgColor: 'bg-[#f8faff]',

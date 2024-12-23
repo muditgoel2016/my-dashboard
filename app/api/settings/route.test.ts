@@ -1,7 +1,9 @@
 import { NextRequest } from 'next/server'
-import { GET, POST, PUT } from './route'
-import * as settingsHandlerService from '@/services/endpointHandlerServices/settings/settingsHandlerService'
+
 import * as formValidationUtil from '@/app/services/otherServices/formValidationUtil'
+import * as settingsHandlerService from '@/services/endpointHandlerServices/settings/settingsHandlerService'
+
+import { GET, POST, PUT } from './route'
 
 jest.mock('@/services/endpointHandlerServices/settings/settingsHandlerService')
 jest.mock('@/app/services/otherServices/formValidationUtil')

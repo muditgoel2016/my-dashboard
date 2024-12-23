@@ -1,22 +1,23 @@
-import React from 'react'
 import { render } from '@testing-library/react'
+import React from 'react'
+
 import '@testing-library/jest-dom'
-import ExpenseStatistics from './ExpenseStatistics'
 import type { ExpenseData } from './dashboardInterfaces'
+import ExpenseStatistics from './ExpenseStatistics'
 
 // Mock Recharts components
 jest.mock('recharts', () => ({
   PieChart: ({ children, ...props }: React.PropsWithChildren<any>) => (
-    <div data-testid="pie-chart" {...props}>
+    <div data-testid='pie-chart' {...props}>
       {children}
     </div>
   ),
   Pie: ({ children, ...props }: React.PropsWithChildren<any>) => (
-    <div data-testid="pie" {...props}>
+    <div data-testid='pie' {...props}>
       {children}
     </div>
   ),
-  Cell: (props: any) => <div data-testid="pie-cell" {...props} />
+  Cell: (props: any) => <div data-testid='pie-cell' {...props} />
 }))
 
 describe('ExpenseStatistics Component', () => {

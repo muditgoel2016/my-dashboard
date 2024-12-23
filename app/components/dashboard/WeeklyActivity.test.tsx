@@ -1,22 +1,23 @@
-import React from 'react'
 import { render } from '@testing-library/react'
+import React from 'react'
+
 import '@testing-library/jest-dom'
-import WeeklyActivity from './WeeklyActivity'
 import type { ActivityData } from './dashboardInterfaces'
+import WeeklyActivity from './WeeklyActivity'
 
 // Mock Recharts components
 jest.mock('recharts', () => ({
   ResponsiveContainer: ({ children }: { children: React.ReactNode }) => (
-    <div data-testid="responsive-container">{children}</div>
+    <div data-testid='responsive-container'>{children}</div>
   ),
   BarChart: ({ children, ...props }: React.PropsWithChildren<any>) => (
-    <div data-testid="bar-chart" {...props}>{children}</div>
+    <div data-testid='bar-chart' {...props}>{children}</div>
   ),
-  Bar: (props: any) => <div data-testid="bar" {...props} />,
-  CartesianGrid: (props: any) => <div data-testid="cartesian-grid" {...props} />,
-  XAxis: (props: any) => <div data-testid="x-axis" {...props} />,
-  YAxis: (props: any) => <div data-testid="y-axis" {...props} />,
-  Legend: (props: any) => <div data-testid="legend" {...props} />
+  Bar: (props: any) => <div data-testid='bar' {...props} />,
+  CartesianGrid: (props: any) => <div data-testid='cartesian-grid' {...props} />,
+  XAxis: (props: any) => <div data-testid='x-axis' {...props} />,
+  YAxis: (props: any) => <div data-testid='y-axis' {...props} />,
+  Legend: (props: any) => <div data-testid='legend' {...props} />
 }))
 
 describe('WeeklyActivity Component', () => {

@@ -1,17 +1,18 @@
-import React from 'react'
 import { render } from '@testing-library/react'
+import React from 'react'
+
 import '@testing-library/jest-dom'
 import BalanceHistory from './BalanceHistory'
-import { BalanceHistoryProps } from './dashboardInterfaces'
+import type { BalanceHistoryProps } from './dashboardInterfaces'
 
 jest.mock('recharts', () => ({
-  LineChart: ({ children }: { children: React.ReactNode }) => <div data-testid="line-chart">{children}</div>,
-  Line: () => <div data-testid="chart-line" />,
-  CartesianGrid: () => <div data-testid="chart-grid" />,
-  XAxis: () => <div data-testid="x-axis" />,
-  YAxis: () => <div data-testid="y-axis" />,
-  Area: () => <div data-testid="chart-area" />,
-  ResponsiveContainer: ({ children }: { children: React.ReactNode }) => <div data-testid="responsive-container">{children}</div>,
+  LineChart: ({ children }: { children: React.ReactNode }) => <div data-testid='line-chart'>{children}</div>,
+  Line: () => <div data-testid='chart-line' />,
+  CartesianGrid: () => <div data-testid='chart-grid' />,
+  XAxis: () => <div data-testid='x-axis' />,
+  YAxis: () => <div data-testid='y-axis' />,
+  Area: () => <div data-testid='chart-area' />,
+  ResponsiveContainer: ({ children }: { children: React.ReactNode }) => <div data-testid='responsive-container'>{children}</div>,
 }))
 
 describe('BalanceHistory Component', () => {

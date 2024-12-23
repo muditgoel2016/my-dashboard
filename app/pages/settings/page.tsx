@@ -1,7 +1,9 @@
 import { type NextPage } from 'next';
 import { headers } from 'next/headers';
+
 import { settingsDataService } from '@/app/services/dataServices/settings/settingsDataService';
 import { isMobileUserAgent } from '@/app/services/otherServices/utils';
+
 import ClientSettings from './client';
 
 const CONFIG = {
@@ -18,7 +20,7 @@ const SettingsPage: NextPage = async (): Promise<JSX.Element> => {
   if (CONFIG.SETTINGS_SSR_ENABLED) {
     try {
       const settings = await settingsDataService.getSettingsData(true);
-      if (settings) preFetchedData = settings;
+      if (settings) {preFetchedData = settings;}
     } catch (error) {
       console.error('Failed to fetch settings data:', error);
     }
@@ -28,8 +30,7 @@ const SettingsPage: NextPage = async (): Promise<JSX.Element> => {
     <ClientSettings 
       initialIsMobile={initialIsMobile}
       initialSettingsData={preFetchedData}
-      ssrConfig={CONFIG}
-    />
+      ssrConfig={CONFIG}/>
   );
 };
 

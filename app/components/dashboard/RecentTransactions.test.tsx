@@ -1,8 +1,10 @@
-import React from 'react'
 import { render, act } from '@testing-library/react'
+import React from 'react'
+
 import '@testing-library/jest-dom'
-import QuickTransfer from './QuickTransfer'
 import { useToast } from '@/services/otherServices/useToast'
+
+import QuickTransfer from './QuickTransfer'
 
 // Mock dependencies
 jest.mock('@/services/otherServices/useToast', () => ({
@@ -10,8 +12,8 @@ jest.mock('@/services/otherServices/useToast', () => ({
 }))
 
 jest.mock('lucide-react', () => ({
-  Send: () => <div data-testid="send-icon">Send Icon</div>,
-  Loader2: () => <div data-testid="loader-icon">Loader Icon</div>
+  Send: () => <div data-testid='send-icon'>Send Icon</div>,
+  Loader2: () => <div data-testid='loader-icon'>Loader Icon</div>
 }))
 
 describe('QuickTransfer Component', () => {
@@ -38,8 +40,7 @@ describe('QuickTransfer Component', () => {
     return render(
       <QuickTransfer
         users={mockUsers}
-        {...props}
-      />
+        {...props}/>
     )
   }
 

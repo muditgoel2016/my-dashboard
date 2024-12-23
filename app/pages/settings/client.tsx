@@ -1,6 +1,7 @@
 'use client';
 
 import useMediaQuery from '@/app/services/otherServices/useMediaQuery';
+
 import DesktopSettings from './desktop/Settings';
 import MobileSettings from './mobile/Settings';
 
@@ -22,13 +23,11 @@ const ClientSettings = ({
   return isMobile ? (
     <MobileSettings 
       initialSettingsData={initialSettingsData} 
-      ssrConfig={ssrConfig} 
-    />
+      ssrConfig={ssrConfig}/>
   ) : (
     <DesktopSettings 
       initialSettingsData={initialSettingsData} 
-      ssrConfig={ssrConfig} 
-    />
+      ssrConfig={ssrConfig}/>
   );
 };
 

@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { BarChart, Bar, CartesianGrid, XAxis, YAxis, Legend, ResponsiveContainer } from 'recharts';
-import { WeeklyActivityProps } from './dashboardInterfaces';
+
+import type { WeeklyActivityProps } from './dashboardInterfaces';
 
 const CHART_MARGIN = { top: 20, right: 30, left: 20, bottom: 20 };
 const Y_AXIS_TICKS = [0, 100, 200, 300, 400, 500, 600];

@@ -1,6 +1,8 @@
 import { renderHook } from '@testing-library/react'
-import { useDashboardData } from './useDashboardData'
+
 import { dashboardDataService } from '@/services/dataServices/dashboard/dashboardDataService'
+
+import { useDashboardData } from './useDashboardData'
 
 jest.mock('@/services/dataServices/dashboard/dashboardDataService')
 
@@ -104,7 +106,7 @@ describe('useDashboardData Hook', () => {
     await new Promise(resolve => setTimeout(resolve, 0))
 
     expect(result.current.errors.cards).toBeInstanceOf(Error)
-    expect(result.current.errors.cards?.message).toBe('Failed to fetch cards data')
+    expect(result.current.errors.cards.message).toBe('Failed to fetch cards data')
   })
 
   it('maintains independent loading and error states for each data type', async () => {

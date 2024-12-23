@@ -5,7 +5,8 @@ import { Avatar, AvatarImage, AvatarFallback } from '@/app/components/shared/com
 import { Button } from '@/app/components/shared/common/button';
 import { Input } from '@/app/components/shared/common/input';
 import { useToast } from '@/services/otherServices/useToast';
-import { QuickTransferProps } from './dashboardInterfaces';
+
+import type { QuickTransferProps } from './dashboardInterfaces';
 
 const defaultTransfer = async (amount: string): Promise<void> => {
   await new Promise((resolve, reject) => {

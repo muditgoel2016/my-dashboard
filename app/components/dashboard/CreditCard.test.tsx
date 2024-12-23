@@ -1,12 +1,13 @@
-import React from 'react'
 import { render, act } from '@testing-library/react'
+import React from 'react'
+
 import '@testing-library/jest-dom'
 import CreditCard, { defaultCardTheme, defaultCardLabels } from './CreditCard'
 import type { Card } from './dashboardInterfaces'
 
 describe('CreditCard Component', () => {
-  const mockChipImage = () => <div data-testid="chip-image">Chip</div>
-  const mockProviderLogo = () => <div data-testid="provider-logo">Logo</div>
+  const mockChipImage = () => <div data-testid='chip-image'>Chip</div>
+  const mockProviderLogo = () => <div data-testid='provider-logo'>Logo</div>
 
   const defaultCard: Card = {
     id: 1,
@@ -25,8 +26,7 @@ describe('CreditCard Component', () => {
       <CreditCard
         card={defaultCard}
         ChipImage={mockChipImage}
-        {...props}
-      />
+        {...props}/>
     )
   }
 

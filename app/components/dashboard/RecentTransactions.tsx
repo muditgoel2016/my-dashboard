@@ -2,7 +2,8 @@ import { CreditCard, RussianRuble, Coins } from 'lucide-react';
 import React, { useMemo } from 'react';
 
 import { Card, CardContent } from '@/app/components/shared/common/card';
-import { RecentTransactionsProps, Transaction } from './dashboardInterfaces';
+
+import type { RecentTransactionsProps, Transaction } from './dashboardInterfaces';
 
 const RecentTransactions: React.FC<RecentTransactionsProps> = ({ transactions }) => {
   const getTransactionIcon = (depositMode: Transaction['depositMode']) => {

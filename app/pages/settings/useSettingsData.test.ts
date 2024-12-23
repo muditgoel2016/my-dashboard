@@ -1,7 +1,9 @@
 import { renderHook, act } from '@testing-library/react'
-import { useSettingsData } from './useSettingsData'
+
 import { settingsDataService } from '@/services/dataServices/settings/settingsDataService'
 import { validateFieldExternal } from '@/services/otherServices/formValidationUtil'
+
+import { useSettingsData } from './useSettingsData'
 
 jest.mock('@/services/dataServices/settings/settingsDataService')
 jest.mock('@/services/otherServices/formValidationUtil')

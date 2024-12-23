@@ -1,6 +1,7 @@
 'use client';
 
 import useMediaQuery from '@/app/services/otherServices/useMediaQuery';
+
 import DesktopCreditCardList from './desktop/CreditCards';
 import MobileCreditCardList from './mobile/CreditCards';
 

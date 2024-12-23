@@ -1,5 +1,6 @@
 import fs from 'fs/promises'
 import path from 'path'
+
 import { getSettingsData, updateSettingsData } from './settingsHandlerService'
 
 jest.mock('fs/promises')
@@ -135,7 +136,7 @@ describe('Settings Handler Service', () => {
         } else {
           expect(field.defaultValue).toBe(mockSettingsData.formFields.find(
             f => f.name === field.name
-          )?.defaultValue)
+          ).defaultValue)
         }
       })
     })

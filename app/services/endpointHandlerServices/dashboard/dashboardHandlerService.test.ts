@@ -77,7 +77,7 @@ describe('Dashboard Handler Service', () => {
         expect(expense).toMatchObject({
           name: expect.any(String),
           value: expect.any(Number),
-          color: expect.stringMatching(/^#[0-9A-F]{6}$/i)
+          color: expect.stringMatching(/^#[\da-f]{6}$/i)
         })
       })
     })
@@ -133,8 +133,8 @@ describe('Dashboard Handler Service', () => {
           type: expect.stringMatching(/^(credit|debit)$/),
           depositMode: expect.stringMatching(/^(card|paypal|cash)$/),
           icon: expect.objectContaining({
-            bg: expect.stringMatching(/^#[A-Za-z0-9]+$/),
-            color: expect.stringMatching(/^#[A-Za-z0-9]+$/)
+            bg: expect.stringMatching(/^#[A-Za-z\d]+$/),
+            color: expect.stringMatching(/^#[A-Za-z\d]+$/)
           })
         })
       })

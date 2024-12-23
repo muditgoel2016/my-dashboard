@@ -1,6 +1,7 @@
 import React, { useCallback, useMemo } from 'react';
 import { PieChart, Pie, Cell } from 'recharts';
-import { CustomizedLabelProps, ExpenseStatisticsProps } from './dashboardInterfaces';
+
+import type { CustomizedLabelProps, ExpenseStatisticsProps } from './dashboardInterfaces';
 
 const RADIAN = Math.PI / 180;
 

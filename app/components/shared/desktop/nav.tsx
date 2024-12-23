@@ -12,7 +12,8 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
-import { NavProps, MenuItem } from '../sharedInterfaces';
+
+import type { NavProps, MenuItem } from '../sharedInterfaces';
 
 const Nav: React.FC<NavProps> = ({ 
   className,

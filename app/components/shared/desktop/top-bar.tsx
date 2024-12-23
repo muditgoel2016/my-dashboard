@@ -1,9 +1,11 @@
 import { Search, Bell, Settings } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+
 import { Avatar, AvatarFallback, AvatarImage } from '@/app/components/shared/common/avatar';
 import { Button } from '@/app/components/shared/common/button';
 import { Input } from '@/app/components/shared/common/input';
-import { TopBarProps } from '../sharedInterfaces';
+
+import type { TopBarProps } from '../sharedInterfaces';
 
 const TopBar = ({ 
   title = 'Overview',

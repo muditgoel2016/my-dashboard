@@ -1,10 +1,11 @@
-import React from 'react'
 import { render, act } from '@testing-library/react'
+import React from 'react'
+
 import '@testing-library/jest-dom'
 import ProfileImagePicker from './ProfileImagePicker'
 
 jest.mock('lucide-react', () => ({
-  Pencil: () => <div data-testid="pencil-icon">Edit Icon</div>
+  Pencil: () => <div data-testid='pencil-icon'>Edit Icon</div>
 }))
 
 describe('ProfileImagePicker Component', () => {
@@ -21,8 +22,7 @@ describe('ProfileImagePicker Component', () => {
       <ProfileImagePicker
         imageData={mockImageData}
         onImageChange={mockOnImageChange}
-        {...props}
-      />
+        {...props}/>
     )
   }
 
@@ -46,7 +46,7 @@ describe('ProfileImagePicker Component', () => {
     const file = new File(['test'], 'test.jpg', { type: 'image/jpeg' })
 
     act(() => {
-      const input = document.querySelector('input[type="file"]') as HTMLInputElement
+      const input = document.querySelector('input[type="file"]')
       Object.defineProperty(input, 'files', {
         value: [file]
       })
@@ -87,7 +87,7 @@ describe('ProfileImagePicker Component', () => {
       editButton.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }))
     })
 
-    const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement
+    const fileInput = document.querySelector('input[type="file"]')
     expect(document.activeElement).toBe(fileInput)
   })
 
@@ -127,7 +127,7 @@ describe('ProfileImagePicker Component', () => {
     const file = new File(['test'], 'test.jpg', { type: 'image/jpeg' })
 
     act(() => {
-      const input = document.querySelector('input[type="file"]') as HTMLInputElement
+      const input = document.querySelector('input[type="file"]')
       Object.defineProperty(input, 'files', {
         value: [file]
       })
@@ -149,7 +149,7 @@ describe('ProfileImagePicker Component', () => {
     const file = new File(['test'], 'test.jpg', { type: 'image/jpeg' })
 
     act(() => {
-      const input = document.querySelector('input[type="file"]') as HTMLInputElement
+      const input = document.querySelector('input[type="file"]')
       Object.defineProperty(input, 'files', {
         value: [file]
       })

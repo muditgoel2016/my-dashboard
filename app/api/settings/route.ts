@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { getSettingsData , updateSettingsData} from '@/services/endpointHandlerServices/settings/settingsHandlerService';
+
 import { validateFieldExternal } from '@/app/services/otherServices/formValidationUtil';
+import { getSettingsData , updateSettingsData} from '@/services/endpointHandlerServices/settings/settingsHandlerService';
 
 interface FormField {
   label: string;
@@ -36,6 +37,7 @@ interface SettingsData {
 
 /**
  * GET handler for fetching settings data
+ * @param request
  */
 export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
@@ -70,6 +72,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 
 /**
  * POST handler for updating settings
+ * @param request
  */
 export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
@@ -151,6 +154,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
 /**
  * PUT handler for field validation
+ * @param request
  */
 export async function PUT(request: NextRequest): Promise<NextResponse> {
   try {

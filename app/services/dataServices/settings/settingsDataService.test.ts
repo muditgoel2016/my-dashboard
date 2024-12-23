@@ -137,6 +137,10 @@ describe('Settings Data Service', () => {
 })
 
 // Helper functions for testing
+/**
+ *
+ * @param data
+ */
 function mockSuccessfulResponse(data: any) {
   global.fetch = jest.fn().mockResolvedValue({
     ok: true,
@@ -144,6 +148,11 @@ function mockSuccessfulResponse(data: any) {
   })
 }
 
+/**
+ *
+ * @param status
+ * @param statusText
+ */
 function mockFailedResponse(status: number, statusText: string) {
   global.fetch = jest.fn().mockResolvedValue({
     ok: false,
@@ -152,6 +161,11 @@ function mockFailedResponse(status: number, statusText: string) {
   })
 }
 
+/**
+ *
+ * @param endpoint
+ * @param isServerSide
+ */
 function validateFetchCall(endpoint: string, isServerSide: boolean) {
   const expectedUrl = isServerSide
     ? `${mockBaseUrl}/api/settings${endpoint}`

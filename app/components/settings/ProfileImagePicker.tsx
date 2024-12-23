@@ -2,7 +2,8 @@ import { Pencil } from 'lucide-react';
 import React, { useRef, useState, useEffect } from 'react';
 
 import { Avatar, AvatarImage } from '@/components/shared/common/avatar';
-import { ProfileImagePickerProps } from './settingsInterfaces';
+
+import type { ProfileImagePickerProps } from './settingsInterfaces';
 
 const ProfileImagePicker: React.FC<ProfileImagePickerProps> = ({
   imageData,

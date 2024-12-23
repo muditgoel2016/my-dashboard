@@ -1,6 +1,8 @@
 import { renderHook } from '@testing-library/react'
-import { useCardsData } from './useCardsData'
+
 import { dashboardDataService } from '@/app/services/dataServices/dashboard/dashboardDataService'
+
+import { useCardsData } from './useCardsData'
 
 jest.mock('@/app/services/dataServices/dashboard/dashboardDataService')
 
@@ -101,7 +103,7 @@ describe('useCardsData Hook', () => {
     await new Promise(resolve => setTimeout(resolve, 0))
 
     expect(result.current.error).toBeInstanceOf(Error)
-    expect(result.current.error?.message).toBe('Failed to fetch cards data')
+    expect(result.current.error.message).toBe('Failed to fetch cards data')
   })
 
   it('initializes with empty array when no initial data is provided', () => {

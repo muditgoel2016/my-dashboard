@@ -1,6 +1,8 @@
 import { NextRequest } from 'next/server'
-import { GET } from './route'
+
 import * as dashboardHandlerService from '@/services/endpointHandlerServices/dashboard/dashboardHandlerService'
+
+import { GET } from './route'
 
 // Mock the dashboardHandlerService
 jest.mock('@/services/endpointHandlerServices/dashboard/dashboardHandlerService')
