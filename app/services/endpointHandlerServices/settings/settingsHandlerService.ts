@@ -15,7 +15,7 @@ interface FormField {
 }
 
 interface SettingsData {
-  profileImageData: ProfileImage;
+  profileImage: ProfileImage;
   formFields: FormField[];
 }
 
