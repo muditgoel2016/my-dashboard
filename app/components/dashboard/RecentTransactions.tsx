@@ -2,25 +2,7 @@ import { CreditCard, RussianRuble, Coins } from 'lucide-react';
 import React, { useMemo } from 'react';
 
 import { Card, CardContent } from '@/app/components/shared/common/card';
-
-interface TransactionIcon {
-  bg: string;
-  color: string;
-}
-
-interface Transaction {
-  id: string | number;
-  title: string;
-  date: string;
-  type: 'credit' | 'debit';
-  amount: number | string;
-  depositMode: 'card' | 'paypal' | 'cash';
-  icon: TransactionIcon;
-}
-
-interface RecentTransactionsProps {
-  transactions: Transaction[];
-}
+import { RecentTransactionsProps, Transaction } from './dashboardInterfaces';
 
 const RecentTransactions: React.FC<RecentTransactionsProps> = ({ transactions }) => {
   const getTransactionIcon = (depositMode: Transaction['depositMode']) => {

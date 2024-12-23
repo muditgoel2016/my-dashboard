@@ -1,25 +1,6 @@
 import React, { useCallback, useMemo } from 'react';
 import { PieChart, Pie, Cell } from 'recharts';
-
-interface ExpenseData {
-  name: string;
-  value: number;
-  color: string;
-}
-
-interface CustomizedLabelProps {
-  cx: number;
-  cy: number;
-  midAngle: number;
-  innerRadius: number;
-  outerRadius: number;
-  percent: number;
-  name: string;
-}
-
-interface ExpenseStatisticsProps {
-  data: ExpenseData[];
-}
+import { CustomizedLabelProps, ExpenseStatisticsProps } from './dashboardInterfaces';
 
 const RADIAN = Math.PI / 180;
 

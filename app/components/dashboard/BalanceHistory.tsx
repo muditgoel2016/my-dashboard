@@ -1,19 +1,6 @@
 import React from 'react';
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Area, ResponsiveContainer } from 'recharts';
-
-interface BalanceHistoryData {
-  month: string;
-  value: number;
-}
-
-interface BalanceHistoryProps {
-  data: BalanceHistoryData[];
-  height?: number;
-  gradientColor?: string;
-  lineColor?: string;
-  title?: string; // Add title prop for accessibility
-  description?: string; // Add description prop for accessibility
-}
+import { BalanceHistoryProps } from './dashboardInterfaces';
 
 const margin = { top: 20, right: 30, left: 20, bottom: 10 } as const;
 const tickStyles = { fill: '#718EBF', fontSize: 14 } as const;

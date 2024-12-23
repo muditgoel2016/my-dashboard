@@ -2,47 +2,7 @@ import type { ReactNode } from 'react';
 import React from 'react';
 
 import { Card, CardContent } from '@/app/components/shared/common/card';
-
-// Updated interface to include border configuration
-interface CardTheme {
-  bgColor: string;
-  textPrimaryColor: string;
-  labelColor: string;
-  valueColor: string;
-  creditProviderLogo?: ReactNode;
-  border?: {
-    enabled: boolean;
-    value?: string;
-  };
-  gradients?: {
-    overall?: {
-      enabled: boolean;
-      value: string;
-    };
-    footer?: {
-      enabled: boolean;
-      value: string;
-    };
-  };
-  separator?: {
-    enabled: boolean;
-    value?: string;
-  };
-}
-
-interface Card {
-  id: number;
-  balance: string;
-  holder: string;
-  validThru: string;
-  cardNumber: string;
-  theme: CardTheme;
-  labels?: {
-    balance: string;
-    cardHolder: string;
-    validThru: string;
-  };
-}
+import { CardTheme, CreditCardProps } from './dashboardInterfaces';
 
 export const defaultCardTheme: CardTheme = {
   bgColor: 'bg-[#f8faff]',
@@ -74,15 +34,6 @@ export const defaultCardLabels = {
   cardHolder: 'CARD HOLDER',
   validThru: 'VALID THRU'
 };
-
-export interface CreditCardProps {
-  card: Card;
-  ChipImage?: React.ComponentType;
-  width?: string;
-  height?: string;
-  className?: string;
-  onCardClick?: () => void;
-}
 
 // Common styles as constants
 const baseCardStyles = 'flex-1 rounded-[1.5rem] transition-all duration-200 hover:shadow-lg';
