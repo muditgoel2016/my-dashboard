@@ -3,13 +3,7 @@ import { useRouter } from 'next/navigation';
 import { Avatar, AvatarFallback, AvatarImage } from '@/app/components/shared/common/avatar';
 import { Button } from '@/app/components/shared/common/button';
 import { Input } from '@/app/components/shared/common/input';
-
-interface TopBarProps {
-  title?: string;
-  onSettingsClick?: () => void;
-  onNotificationsClick?: () => void;
-  userName?: string;
-}
+import { TopBarProps } from '../sharedInterfaces';
 
 const TopBar = ({ 
   title = 'Overview',

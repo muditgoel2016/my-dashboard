@@ -12,17 +12,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
-
-interface MenuItem {
-  icon: React.ReactNode;  // More generic type for any icon system
-  label: string;
-  href: string;
-}
-
-interface NavProps {
-  className?: string;
-  defaultPath?: string;
-}
+import { NavProps, MenuItem } from '../sharedInterfaces';
 
 const Nav: React.FC<NavProps> = ({ 
   className,

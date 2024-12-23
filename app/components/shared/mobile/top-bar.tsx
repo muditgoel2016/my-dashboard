@@ -5,12 +5,7 @@ import { Menu, Search } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from '@/app/components/shared/common/avatar'
 import { Button } from '@/app/components/shared/common/button'
 import { Input } from '@/app/components/shared/common/input'
-
-interface TopBarProps {
-  onMenuClick: () => void;
-  title?: string;
-  userName?: string;
-}
+import { TopBarProps } from '../sharedInterfaces'
 
 const TopBar = ({ 
   onMenuClick, 
