@@ -156,7 +156,7 @@ const Settings: React.FC<{ initialSettingsData: any }> = ({ initialSettingsData 
                 className='flex justify-center mb-6'
                 aria-label='Profile image section'>
                 <ProfileImagePicker 
-                  imageData={settingsData.profileImageData} 
+                  imageData={settingsData?.profileImageData} 
                   onImageChange={handleProfileImageChange}/>
               </div>
 
@@ -167,7 +167,7 @@ const Settings: React.FC<{ initialSettingsData: any }> = ({ initialSettingsData 
                 }} 
                 noValidate
                 aria-label='Profile settings form'>
-                {settingsData.formFields.map((field, index) => (
+                {settingsData?.formFields.map((field, index) => (
                   <div key={index}>
                     <label 
                       htmlFor={field.name}

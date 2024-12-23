@@ -89,8 +89,8 @@ const ProfileImagePicker: React.FC<ProfileImagePickerProps> = ({
   };
 
   // Use preview URL if available, otherwise fall back to imageData default
-  const displayUrl = previewUrl || imageData.defaultValue;
-  const imageLabel = imageData.label || 'Profile picture';
+  const displayUrl = previewUrl || imageData?.defaultValue;
+  const imageLabel = imageData?.label || 'Profile picture';
 
   return (
     <div 
@@ -132,11 +132,11 @@ const ProfileImagePicker: React.FC<ProfileImagePickerProps> = ({
           aria-label={`Upload new ${imageLabel.toLowerCase()}`}
           tabIndex={-1}/>
       </div>
-      {imageData.label && (
+      {imageData?.label && (
         <span 
           className='text-sm text-gray-500 mt-2'
           id='profile-image-description'>
-          {imageData.label}
+          {imageData?.label}
         </span>
       )}
       <div className='sr-only' aria-live='polite'>

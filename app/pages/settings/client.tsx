@@ -1,28 +1,34 @@
 'use client';
 
 import useMediaQuery from '@/app/services/otherServices/useMediaQuery';
-
 import DesktopSettings from './desktop/Settings';
 import MobileSettings from './mobile/Settings';
 
 interface Props {
   initialIsMobile: boolean;
-  initialSettingsData: any; // Pre-fetched data
+  initialSettingsData: any | null;
+  ssrConfig: {
+    SETTINGS_SSR_ENABLED: boolean;
+  };
 }
 
-/**
- * Client component that renders either mobile or desktop view
- * @param {object} props - Component props
- * @param {boolean} props.initialIsMobile - Initial mobile state from server-side detection
- * @param {boolean} props.initialSettingsData - Initial settings data from server-side detection
- */
-const ClientSettings = ({ initialIsMobile, initialSettingsData }: Props) => {
+const ClientSettings = ({ 
+  initialIsMobile, 
+  initialSettingsData, 
+  ssrConfig 
+}: Props) => {
   const isMobile = useMediaQuery('(max-width: 768px)', initialIsMobile);
-
+  
   return isMobile ? (
-    <MobileSettings initialSettingsData={initialSettingsData} />
+    <MobileSettings 
+      initialSettingsData={initialSettingsData} 
+      ssrConfig={ssrConfig} 
+    />
   ) : (
-    <DesktopSettings initialSettingsData={initialSettingsData} />
+    <DesktopSettings 
+      initialSettingsData={initialSettingsData} 
+      ssrConfig={ssrConfig} 
+    />
   );
 };
 

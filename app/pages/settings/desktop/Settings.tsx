@@ -13,7 +13,14 @@ import TopBar from '@/app/components/shared/desktop/top-bar';
 import { useSettingsData } from '@/pages/settings/useSettingsData';
 import { useToast } from '@/services/otherServices/useToast';
 
-const Settings: React.FC<{ initialSettingsData: any }> = ({ initialSettingsData }) => {
+interface SettingsProps {
+  initialSettingsData: any | null;
+  ssrConfig: {
+    SETTINGS_SSR_ENABLED: boolean;
+  };
+}
+
+const Settings: React.FC<SettingsProps> = ({ initialSettingsData, ssrConfig }) => {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [profileImage, setProfileImage] = useState<File | null>(null);
@@ -25,7 +32,7 @@ const Settings: React.FC<{ initialSettingsData: any }> = ({ initialSettingsData 
     setFormValues,
     validateField,
     validateForm,
-  } = useSettingsData(initialSettingsData);
+  } = useSettingsData({initialData: initialSettingsData, ssrConfig: ssrConfig});
 
   // Event Handlers
   const handleInputChange = (name: string, value: string): void => {
@@ -148,7 +155,7 @@ const Settings: React.FC<{ initialSettingsData: any }> = ({ initialSettingsData 
                   aria-label='Edit profile settings'>
                   <div className='flex gap-8'>
                     <ProfileImagePicker 
-                      imageData={settingsData.profileImageData} 
+                      imageData={settingsData?.profileImageData} 
                       onImageChange={handleProfileImageChange}/>
 
                     <form 
@@ -158,7 +165,7 @@ const Settings: React.FC<{ initialSettingsData: any }> = ({ initialSettingsData 
                       }} 
                       noValidate
                       aria-label='Profile settings form'>
-                      {settingsData.formFields.map((field, index) => (
+                      {settingsData?.formFields.map((field, index) => (
                         <div key={index}>
                           <label 
                             htmlFor={field.name}
