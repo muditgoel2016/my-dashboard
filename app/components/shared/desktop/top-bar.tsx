@@ -1,5 +1,5 @@
 import { Search, Bell, Settings } from 'lucide-react';
-
+import { useRouter } from 'next/navigation';
 import { Avatar, AvatarFallback, AvatarImage } from '@/app/components/shared/common/avatar';
 import { Button } from '@/app/components/shared/common/button';
 import { Input } from '@/app/components/shared/common/input';
@@ -17,6 +17,11 @@ const TopBar = ({
   onNotificationsClick,
   userName = 'User' 
 }: TopBarProps) => {
+  const router = useRouter();
+
+  const handleSettingsClick = () => {
+    router.push('/pages/settings');
+  };
   return (
     <header 
       className='bg-white border-b border-gray-200'
@@ -52,15 +57,14 @@ const TopBar = ({
             <Button
               variant='ghost'
               size='icon'
-              onClick={onSettingsClick}
-              aria-label='Open settings'
+              onClick={handleSettingsClick}
+              aria-label='Go to settings'
               className='w-12 h-12 bg-[#f6f7fa] rounded-full flex items-center justify-center hover:bg-gray-200'>
               <Settings 
                 className='w-6 h-6 text-[#718ebf]' 
                 style={{ width: '1.56rem', height: '1.56rem', flexShrink: 1 }}
                 aria-hidden='true'/>
             </Button>
-
             {/* Bell Icon */}
             <Button
               variant='ghost'
