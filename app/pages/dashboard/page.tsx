@@ -3,6 +3,7 @@ import { headers } from 'next/headers';
 
 import { isMobileUserAgent } from '@/app/services/otherServices/utils';
 import { dashboardDataService } from '@/services/dataServices/dashboard/dashboardDataService';
+import { DashboardProvider } from '@/app/contexts/DashboardContext';
 
 import ClientDashboard from './client';
 
@@ -19,10 +20,10 @@ interface DashboardData {
 const CONFIG = {
   CARDS_SSR_ENABLED: true,
   TRANSACTIONS_SSR_ENABLED: true,
-  WEEKLY_SSR_ENABLED: false,
-  EXPENSE_SSR_ENABLED: false,
+  WEEKLY_SSR_ENABLED: false, //should be kept false as ui library dosnt's support SSR
+  EXPENSE_SSR_ENABLED: false, //should be kept false as ui library dosnt's support SSR
   QUICK_TRANSFER_SSR_ENABLED: true,
-  BALANCE_HISTORY_SSR_ENABLED: false,
+  BALANCE_HISTORY_SSR_ENABLED: false, //should be kept false as ui library dosnt's support SSR
 } as const;
 
 /**
@@ -104,10 +105,9 @@ const DashboardPage: NextPage = async (): Promise<any> => {
   }
 
   return (
-    <ClientDashboard
-      initialIsMobile={initialIsMobile}
-      initialDashboardData={preFetchedData}
-      ssrConfig={CONFIG}/>
+    <DashboardProvider initialData={preFetchedData} ssrConfig={CONFIG}>
+      <ClientDashboard initialIsMobile={initialIsMobile} />
+    </DashboardProvider>
   );
 };
 
