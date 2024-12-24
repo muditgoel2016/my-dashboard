@@ -13,10 +13,10 @@ import type {
 
 interface DashboardState {
   balanceHistory: BalanceHistoryData[];
-  cards: Card[];
+  cardsData: Card[];
   expenses: ExpenseData[];
-  quickTransferUsers: QuickTransferUser[];
-  transactions: Transaction[];
+  quickTransferUserData: QuickTransferUser[];
+  transactionsData: Transaction[];
   weeklyActivity: ActivityData[];
   isLoading: boolean;
 }
@@ -49,10 +49,10 @@ interface DashboardProviderProps {
 
 const initialState: DashboardState = {
   balanceHistory: [],
-  cards: [],
+  cardsData: [],
   expenses: [],
-  quickTransferUsers: [],
-  transactions: [],
+  quickTransferUserData: [],
+  transactionsData: [],
   weeklyActivity: [],
   isLoading: false,
 };
@@ -71,10 +71,10 @@ export function DashboardProvider({ children, initialData = {}, ssrConfig }: Das
 
   const resetState = () => {
     setBalanceHistory(initialState.balanceHistory);
-    setCards(initialState.cards);
+    setCards(initialState.cardsData);
     setExpenses(initialState.expenses);
-    setQuickTransferUsers(initialState.quickTransferUsers);
-    setTransactions(initialState.transactions);
+    setQuickTransferUsers(initialState.quickTransferUserData);
+    setTransactions(initialState.transactionsData);
     setWeeklyActivity(initialState.weeklyActivity);
     setIsLoading(initialState.isLoading);
   };
