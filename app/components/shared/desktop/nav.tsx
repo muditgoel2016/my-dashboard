@@ -7,13 +7,15 @@ import {
   PiggyBank,
   Wrench,
   Award,
-  Settings,
-  CheckSquare
+  Settings
 } from 'lucide-react';
+import { Inter } from 'next/font/google';
 import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
-
+import SoarIcon from '@/components/shared/common/SoarIcon';
 import type { NavProps, MenuItem } from '../sharedInterfaces';
+
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
 const Nav: React.FC<NavProps> = ({ 
   className,
@@ -48,10 +50,10 @@ const Nav: React.FC<NavProps> = ({
       <div 
         className='flex items-center gap-3 px-6 py-6'
         role='banner'>
-        <div className='w-8 h-8 bg-indigo-600 rounded flex items-center justify-center'>
-          <CheckSquare className='w-5 h-5 text-white' aria-hidden='true' />
-        </div>
-        <span className='text-xl font-semibold text-gray-900'>Soar Task</span>
+        <SoarIcon />
+        <span className={`${inter.variable} font-sans text-[1.56rem] font-extrabold text-[#343c6a]`}>
+          Soar Task
+      </span>
       </div>
 
       <nav 

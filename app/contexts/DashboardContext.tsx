@@ -60,7 +60,6 @@ const initialState: DashboardState = {
 const DashboardContext = createContext<DashboardContextData | undefined>(undefined);
 
 export function DashboardProvider({ children, initialData = {}, ssrConfig }: DashboardProviderProps) {
-  debugger;
   const [balanceHistory, setBalanceHistory] = useState(initialData.balanceHistory || []);
   const [cards, setCards] = useState(initialData.cardsData || []);
   const [expenses, setExpenses] = useState(initialData.expenses || []);
