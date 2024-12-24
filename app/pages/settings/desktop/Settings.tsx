@@ -10,31 +10,16 @@ import { Input } from '@/app/components/shared/common/input';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/app/components/shared/common/tabs';
 import Sidenav from '@/app/components/shared/desktop/nav';
 import TopBar from '@/app/components/shared/desktop/top-bar';
-import { useSettingsData } from '@/pages/settings/useSettingsData';
+import { useSettings } from '@/app/contexts/SettingsContext';
 import { useToast } from '@/services/otherServices/useToast';
 
-interface SettingsProps {
-  initialSettingsData: any | null;
-  ssrConfig: {
-    SETTINGS_SSR_ENABLED: boolean;
-  };
-}
-
-const Settings: React.FC<SettingsProps> = ({ initialSettingsData, ssrConfig }) => {
+const Settings: React.FC = () => {
   const { toast } = useToast();
+  const { settings, formValues, formErrors, validateField, validateForm, setFormValues } =
+    useSettings();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [profileImage, setProfileImage] = useState<File | null>(null);
-  
-  const {
-    formValues,
-    formErrors,
-    settingsData,
-    setFormValues,
-    validateField,
-    validateForm,
-  } = useSettingsData({initialData: initialSettingsData, ssrConfig: ssrConfig});
 
-  // Event Handlers
   const handleInputChange = (name: string, value: string): void => {
     setFormValues((prev) => ({ ...prev, [name]: value }));
     validateField(name, value);
@@ -155,7 +140,7 @@ const Settings: React.FC<SettingsProps> = ({ initialSettingsData, ssrConfig }) =
                   aria-label='Edit profile settings'>
                   <div className='flex gap-8'>
                     <ProfileImagePicker 
-                      imageData={settingsData?.profileImageData} 
+                      imageData={settings?.profileImageData} 
                       onImageChange={handleProfileImageChange}/>
 
                     <form 
@@ -165,7 +150,7 @@ const Settings: React.FC<SettingsProps> = ({ initialSettingsData, ssrConfig }) =
                       }} 
                       noValidate
                       aria-label='Profile settings form'>
-                      {settingsData?.formFields.map((field, index) => (
+                      {settings?.formFields.map((field, index) => (
                         <div key={index}>
                           <label 
                             htmlFor={field.name}

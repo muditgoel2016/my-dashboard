@@ -78,7 +78,7 @@ const errorFallback = (section: string) => (
   </div>
 );
 
-const MobileDashboard: React.FC = () => {
+const Dashboard: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
 
   const {
@@ -252,4 +252,4 @@ const MobileDashboard: React.FC = () => {
   );
 };
 
-export default MobileDashboard;
+export default Dashboard;
