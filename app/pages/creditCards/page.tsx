@@ -1,9 +1,9 @@
 import { type NextPage } from 'next';
 import { headers } from 'next/headers';
 
+import { CreditCardsProvider } from '@/app/contexts/CreditCardsContext';
 import { dashboardDataService } from '@/app/services/dataServices/dashboard/dashboardDataService';
 import { isMobileUserAgent } from '@/app/services/otherServices/utils';
-import { CreditCardsProvider } from '@/app/contexts/CreditCardsContext';
 
 import ClientCCList from './client';
 

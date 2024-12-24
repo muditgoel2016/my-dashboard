@@ -98,58 +98,49 @@ const Settings: React.FC = () => {
 
   return (
     <div
-      className="min-h-screen bg-[#f6f7fa]"
-      role="application"
-      aria-label="Settings page"
-    >
+      className='min-h-screen bg-[#f6f7fa]'
+      role='application'
+      aria-label='Settings page'>
       <TopBar
-        title="Settings"
-        onMenuClick={(): void => setIsMobileMenuOpen(true)}
-      />
+        title='Settings'
+        onMenuClick={(): void => setIsMobileMenuOpen(true)}/>
       <main
-        className="pb-24"
-        role="main"
-        aria-label="Settings content"
-      >
+        className='pb-24'
+        role='main'
+        aria-label='Settings content'>
         <div
-          className="bg-white rounded-[15px] shadow-md mx-auto mt-6"
+          className='bg-white rounded-[15px] shadow-md mx-auto mt-6'
           style={{
             width: '90%',
             maxWidth: '325px',
             padding: '4%',
-          }}
-        >
+          }}>
           <Tabs
-            defaultValue="profile"
-            className="w-full"
-            orientation="horizontal"
-            aria-label="Settings sections"
-          >
+            defaultValue='profile'
+            className='w-full'
+            orientation='horizontal'
+            aria-label='Settings sections'>
             {/* Tabs Header */}
-            <div className="border-b border-gray-200 mb-4">
+            <div className='border-b border-gray-200 mb-4'>
               <TabsList
-                className="w-full flex justify-start px-4 border-0"
-                aria-label="Settings options"
-              >
+                className='w-full flex justify-start px-4 border-0'
+                aria-label='Settings options'>
                 <TabsTrigger
-                  value="profile"
-                  className="relative px-0 pb-3 text-base font-medium text-[#718EBF]"
-                  aria-controls="profile-tab"
-                >
+                  value='profile'
+                  className='relative px-0 pb-3 text-base font-medium text-[#718EBF]'
+                  aria-controls='profile-tab'>
                   Edit Profile
                 </TabsTrigger>
                 <TabsTrigger
-                  value="preferences"
-                  className="relative px-0 pb-3 ml-8 text-base font-medium text-[#718EBF]"
-                  aria-controls="preferences-tab"
-                >
+                  value='preferences'
+                  className='relative px-0 pb-3 ml-8 text-base font-medium text-[#718EBF]'
+                  aria-controls='preferences-tab'>
                   Preference
                 </TabsTrigger>
                 <TabsTrigger
-                  value="security"
-                  className="relative px-0 pb-3 ml-8 text-base font-medium text-[#718EBF]"
-                  aria-controls="security-tab"
-                >
+                  value='security'
+                  className='relative px-0 pb-3 ml-8 text-base font-medium text-[#718EBF]'
+                  aria-controls='security-tab'>
                   Security
                 </TabsTrigger>
               </TabsList>
@@ -157,38 +148,33 @@ const Settings: React.FC = () => {
 
             {/* Tab Content */}
             <TabsContent
-              value="profile"
-              id="profile-tab"
-              role="tabpanel"
-              aria-label="Edit profile settings"
-            >
+              value='profile'
+              id='profile-tab'
+              role='tabpanel'
+              aria-label='Edit profile settings'>
               <div
-                className="flex justify-center mb-6"
-                aria-label="Profile image section"
-              >
+                className='flex justify-center mb-6'
+                aria-label='Profile image section'>
                 <ProfileImagePicker
                   imageData={settings?.profileImageData}
-                  onImageChange={handleProfileImageChange}
-                />
+                  onImageChange={handleProfileImageChange}/>
               </div>
 
               <form
-                className="space-y-4"
+                className='space-y-4'
                 onSubmit={(e) => {
                   void handleSubmit(e);
                 }}
                 noValidate
-                aria-label="Profile settings form"
-              >
+                aria-label='Profile settings form'>
                 {settings?.formFields.map((field, index) => (
                   <div key={index}>
                     <label
                       htmlFor={field.name}
-                      className="block text-sm text-[#1A1F36] mb-2"
-                    >
+                      className='block text-sm text-[#1A1F36] mb-2'>
                       {field.label}
                     </label>
-                    <div className="relative">
+                    <div className='relative'>
                       <Input
                         id={field.name}
                         name={field.name}
@@ -203,22 +189,19 @@ const Settings: React.FC = () => {
                           formErrors[field.name] ? 'border-red-500' : ''
                         }`}
                         onChange={(e) => handleInputChange(field.name, e.target.value)}
-                        onBlur={() => validateField(field.name, formValues[field.name])}
-                      />
+                        onBlur={() => validateField(field.name, formValues[field.name])}/>
                       {field.hasDropdown && (
                         <ChevronDown
-                          className="absolute right-3 top-1/2 -translate-y-1/2 text-[#718EBF]"
+                          className='absolute right-3 top-1/2 -translate-y-1/2 text-[#718EBF]'
                           size={16}
-                          aria-hidden="true"
-                        />
+                          aria-hidden='true'/>
                       )}
                     </div>
                     {formErrors[field.name] && (
                       <p
                         id={`${field.name}-error`}
-                        className="text-red-500 text-xs mt-1"
-                        role="alert"
-                      >
+                        className='text-red-500 text-xs mt-1'
+                        role='alert'>
                         {formErrors[field.name]}
                       </p>
                     )}
@@ -226,18 +209,16 @@ const Settings: React.FC = () => {
                 ))}
 
                 <Button
-                  type="submit"
+                  type='submit'
                   disabled={isSubmitting}
                   aria-disabled={isSubmitting}
                   aria-label={isSubmitting ? 'Saving changes' : 'Save changes'}
-                  className="w-full bg-[#1A1F36] h-[50px] rounded-[15px] mt-6 text-white"
-                >
+                  className='w-full bg-[#1A1F36] h-[50px] rounded-[15px] mt-6 text-white'>
                   {isSubmitting ? (
                     <>
                       <Loader2
-                        className="mr-2 h-4 w-4 animate-spin"
-                        aria-hidden="true"
-                      />
+                        className='mr-2 h-4 w-4 animate-spin'
+                        aria-hidden='true'/>
                       <span>Saving...</span>
                     </>
                   ) : (
@@ -251,8 +232,7 @@ const Settings: React.FC = () => {
       </main>
       <MobileNav
         isOpen={isMobileMenuOpen}
-        onClose={() => setIsMobileMenuOpen(false)}
-      />
+        onClose={() => setIsMobileMenuOpen(false)}/>
     </div>
   );
 };

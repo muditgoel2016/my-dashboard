@@ -2,6 +2,7 @@
 'use client';
 
 import useMediaQuery from '@/app/services/otherServices/useMediaQuery';
+
 import DesktopDashboard from './desktop/Dashboard';
 import MobileDashboard from './mobile/Dashboard';
 

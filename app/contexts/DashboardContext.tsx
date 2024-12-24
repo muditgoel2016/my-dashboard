@@ -1,7 +1,7 @@
 'use client';
 
 import { createContext, useContext, useEffect, useState } from 'react';
-import { dashboardDataService } from '@/services/dataServices/dashboard/dashboardDataService';
+
 import type {
   BalanceHistoryData,
   Card,
@@ -10,6 +10,7 @@ import type {
   Transaction,
   ActivityData,
 } from '@/app/components/dashboard/dashboardInterfaces';
+import { dashboardDataService } from '@/services/dataServices/dashboard/dashboardDataService';
 
 interface DashboardState {
   balanceHistory: BalanceHistoryData[];
@@ -59,7 +60,14 @@ const initialState: DashboardState = {
 
 const DashboardContext = createContext<DashboardContextData | undefined>(undefined);
 
-export function DashboardProvider({ children, initialData = {}, ssrConfig }: DashboardProviderProps) {
+/**
+ *
+ * @param root0
+ * @param root0.children
+ * @param root0.initialData
+ * @param root0.ssrConfig
+ */
+export const DashboardProvider = ({ children, initialData = {}, ssrConfig }: DashboardProviderProps) => {
   const [balanceHistory, setBalanceHistory] = useState(initialData.balanceHistory || []);
   const [cards, setCards] = useState(initialData.cardsData || []);
   const [expenses, setExpenses] = useState(initialData.expenses || []);
@@ -145,13 +153,15 @@ export function DashboardProvider({ children, initialData = {}, ssrConfig }: Das
         setWeeklyActivity,
         setIsLoading,
         resetState,
-      }}
-    >
+      }}>
       {children}
     </DashboardContext.Provider>
   );
 }
 
+/**
+ *
+ */
 export function useDashboard() {
   const context = useContext(DashboardContext);
   if (!context) {

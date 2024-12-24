@@ -1,6 +1,7 @@
 'use client';
 
 import { createContext, useContext, useState, useEffect } from 'react';
+
 import { settingsDataService } from '@/app/services/dataServices/settings/settingsDataService';
 import { validateFieldExternal } from '@/services/otherServices/formValidationUtil';
 
@@ -44,7 +45,15 @@ const initialState: SettingsState = {
 
 const SettingsContext = createContext<SettingsContextData | undefined>(undefined);
 
-export function SettingsProvider({
+/**
+ *
+ * @param root0
+ * @param root0.children
+ * @param root0.initialData
+ * @param root0.ssrConfig
+ * @param root0.ssrConfig.SETTINGS_SSR_ENABLED
+ */
+export const SettingsProvider = ({
   children,
   initialData,
   ssrConfig,
@@ -54,7 +63,7 @@ export function SettingsProvider({
   ssrConfig: {
     SETTINGS_SSR_ENABLED: boolean;
   };
-}) {
+}) => {
   const [settings, setSettings] = useState<SettingsData | null>(initialData || null);
   const [formValues, setFormValues] = useState<Record<string, string>>(
     initialData
@@ -97,14 +106,14 @@ export function SettingsProvider({
   };
 
   const validateForm = (): boolean => {
-    if (!settings) return false;
+    if (!settings) {return false;}
 
     const errors: Record<string, string> = {};
     let isValid = true;
 
     settings.formFields.forEach((field) => {
       const error = validateField(field.name, formValues[field.name]);
-      if (error) isValid = false;
+      if (error) {isValid = false;}
       errors[field.name] = error;
     });
 
@@ -133,13 +142,15 @@ export function SettingsProvider({
         resetState,
         validateField,
         validateForm,
-      }}
-    >
+      }}>
       {children}
     </SettingsContext.Provider>
   );
 }
 
+/**
+ *
+ */
 export function useSettings() {
   const context = useContext(SettingsContext);
   if (!context) {

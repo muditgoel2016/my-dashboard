@@ -1,6 +1,7 @@
 'use client';
 
 import useMediaQuery from '@/app/services/otherServices/useMediaQuery';
+
 import DesktopSettings from './desktop/Settings';
 import MobileSettings from './mobile/Settings';
 

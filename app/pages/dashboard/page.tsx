@@ -1,9 +1,9 @@
 import { type NextPage } from 'next';
 import { headers } from 'next/headers';
 
+import { DashboardProvider } from '@/app/contexts/DashboardContext';
 import { isMobileUserAgent } from '@/app/services/otherServices/utils';
 import { dashboardDataService } from '@/services/dataServices/dashboard/dashboardDataService';
-import { DashboardProvider } from '@/app/contexts/DashboardContext';
 
 import ClientDashboard from './client';
 

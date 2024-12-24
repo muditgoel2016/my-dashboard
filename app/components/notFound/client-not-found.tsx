@@ -1,7 +1,7 @@
 'use client'
-import useMediaQuery from '@/app/services/otherServices/useMediaQuery';
 import DesktopNotFound from '@/app/components/notFound/desktop/NotFound';
 import MobileNotFound from '@/app/components/notFound/mobile/NotFound';
+import useMediaQuery from '@/app/services/otherServices/useMediaQuery';
 
 
 const ClientNotFound = ({ initialIsMobile }: { initialIsMobile: boolean }) => {

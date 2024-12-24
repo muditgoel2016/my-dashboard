@@ -1,7 +1,7 @@
 'use client';
 
-import useMediaQuery from '@/app/services/otherServices/useMediaQuery';
 import { useCreditCards } from '@/app/contexts/CreditCardsContext';
+import useMediaQuery from '@/app/services/otherServices/useMediaQuery';
 
 import DesktopCreditCardList from './desktop/CreditCards';
 import MobileCreditCardList from './mobile/CreditCards';
@@ -15,11 +15,11 @@ const ClientCCList = ({ initialIsMobile }: Props) => {
   const { cardsData, isLoading, error } = useCreditCards();
 
   if (isLoading) {
-    return <div aria-busy="true">Loading...</div>;
+    return <div aria-busy='true'>Loading...</div>;
   }
 
   if (error) {
-    return <div role="alert">Error: {error.message}</div>;
+    return <div role='alert'>Error: {error.message}</div>;
   }
 
   return isMobile ? (

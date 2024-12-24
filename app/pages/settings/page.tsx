@@ -1,8 +1,9 @@
 import { type NextPage } from 'next';
 import { headers } from 'next/headers';
 
-import { settingsDataService } from '@/app/services/dataServices/settings/settingsDataService';
 import { SettingsProvider } from '@/app/contexts/SettingsContext';
+import { settingsDataService } from '@/app/services/dataServices/settings/settingsDataService';
+
 import ClientSettings from './client';
 
 const CONFIG = {

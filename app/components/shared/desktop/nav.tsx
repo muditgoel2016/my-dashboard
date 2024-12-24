@@ -12,7 +12,9 @@ import {
 import { Inter } from 'next/font/google';
 import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
+
 import SoarIcon from '@/components/shared/common/SoarIcon';
+
 import type { NavProps, MenuItem } from '../sharedInterfaces';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
