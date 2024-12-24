@@ -1,25 +1,31 @@
 'use client';
 
 import useMediaQuery from '@/app/services/otherServices/useMediaQuery';
+import { useCreditCards } from '@/app/contexts/CreditCardsContext';
 
 import DesktopCreditCardList from './desktop/CreditCards';
 import MobileCreditCardList from './mobile/CreditCards';
 
 interface Props {
   initialIsMobile: boolean;
-  initialCardsData: any[] | null;
-  ssrConfig: {
-    CARDS_SSR_ENABLED: boolean;
-  };
 }
 
-const ClientCCList = ({ initialIsMobile, initialCardsData, ssrConfig }: Props) => {
+const ClientCCList = ({ initialIsMobile }: Props) => {
   const isMobile = useMediaQuery('(max-width: 768px)', initialIsMobile);
-  
+  const { cardsData, isLoading, error } = useCreditCards();
+
+  if (isLoading) {
+    return <div aria-busy="true">Loading...</div>;
+  }
+
+  if (error) {
+    return <div role="alert">Error: {error.message}</div>;
+  }
+
   return isMobile ? (
-    <MobileCreditCardList initialCardsData={initialCardsData} ssrConfig={ssrConfig} />
+    <MobileCreditCardList cardsData={cardsData} />
   ) : (
-    <DesktopCreditCardList initialCardsData={initialCardsData} ssrConfig={ssrConfig} />
+    <DesktopCreditCardList cardsData={cardsData} />
   );
 };
 

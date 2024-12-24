@@ -7,7 +7,7 @@ import EMVChipBlack from '@/app/components/dashboard/EMVChipBlack';
 import MasterCardLogo from '@/app/components/dashboard/MasterCardLogo';
 import MobileNav from '@/app/components/shared/mobile/nav';
 import TopBar from '@/app/components/shared/mobile/top-bar';
-import { useCardsData } from '@/pages/creditCards/useCardsData';
+import { useCreditCards } from '@/app/contexts/CreditCardsContext';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
@@ -84,22 +84,9 @@ const CreditCardItem: React.FC<CreditCardItemProps> = ({ card, index }) => {
   );
 };
 
-interface MobileCreditCardsProps {
-  initialCardsData: any[] | null;
-  ssrConfig: {
-    CARDS_SSR_ENABLED: boolean;
-  };
-}
-
-const MobileCreditCards: React.FC<MobileCreditCardsProps> = ({
-  initialCardsData,
-  ssrConfig
-}) => {
+const MobileCreditCards: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
-  const { cardsData, isLoading, error } = useCardsData({
-    initialData: initialCardsData,
-    ssrConfig
-  });
+  const { cardsData, isLoading, error } = useCreditCards();
 
   if (isLoading) {
     return <CardsSkeleton />;

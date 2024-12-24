@@ -8,7 +8,7 @@ import MasterCardLogo from '@/app/components/dashboard/MasterCardLogo';
 import { Card, CardContent } from '@/app/components/shared/common/card';
 import Sidenav from '@/app/components/shared/desktop/nav';
 import TopBar from '@/app/components/shared/desktop/top-bar';
-import { useCardsData } from '@/pages/creditCards/useCardsData';
+import { useCreditCards } from '@/app/contexts/CreditCardsContext';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
@@ -49,18 +49,8 @@ const CardsSkeleton = () => (
   </div>
 );
 
-interface CreditCardsProps {
-  initialCardsData: any[] | null;
-  ssrConfig: {
-    CARDS_SSR_ENABLED: boolean;
-  };
-}
-
-const CreditCards: React.FC<CreditCardsProps> = ({ initialCardsData, ssrConfig }) => {
-  const { cardsData, isLoading, error } = useCardsData({
-    initialData: initialCardsData,
-    ssrConfig
-  });
+const CreditCards: React.FC = () => {
+  const { cardsData, isLoading, error } = useCreditCards();
 
   if (isLoading) {
     return <CardsSkeleton />;
