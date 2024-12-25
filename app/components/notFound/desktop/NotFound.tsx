@@ -22,7 +22,7 @@ const NotFound: React.FC = () => {
           aria-label='404 Page Not Found'>
           <Card className='rounded-[25px]'>
             <CardContent>
-              <div className='flex flex-col items-center gap-6 p-6 text-center'>
+              <div className='flex flex-col items-center gap-6 p-6 min-h-[25rem] text-center'>
                 <h1 className='text-3xl font-bold text-[#343C6A]'>
                   404: Page Not Found
                 </h1>

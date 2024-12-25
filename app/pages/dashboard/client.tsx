@@ -8,8 +8,8 @@ import MobileDashboard from './mobile/Dashboard';
 
 interface Props {
   initialIsMobile: boolean;
-  initialDashboardData: any;
-  ssrConfig: any;
+  initialDashboardData?: any;
+  ssrConfig?: any;
 }
 
 const ClientDashboard = ({ initialIsMobile }: Props) => {

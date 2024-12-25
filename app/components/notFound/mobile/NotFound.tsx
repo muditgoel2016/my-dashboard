@@ -19,7 +19,7 @@ const NotFound: React.FC = () => {
         role='main'
         aria-label='404 Page Not Found'>
         <Card className='rounded-[15px] w-full max-w-md bg-white shadow-md'>
-          <CardContent className='flex flex-col items-center text-center gap-4 p-6'>
+          <CardContent className='flex flex-col items-center text-center gap-4 p-6 min-h-[16rem]'>
             <h1 className='text-[36px] font-semibold text-[#343C6A]'>404</h1>
             <p className='text-gray-600 text-sm'>
               Oops! The page you are looking for isn’t available.
