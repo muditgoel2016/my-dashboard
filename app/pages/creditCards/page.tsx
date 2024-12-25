@@ -8,7 +8,7 @@ import { isMobileUserAgent } from '@/app/services/otherServices/utils';
 import ClientCCList from './client';
 
 const CONFIG = {
-  CARDS_SSR_ENABLED: true,
+  CARDS_SSR_ENABLED: false,
 } as const;
 
 const CreditCards: NextPage = async (): Promise<JSX.Element> => {
