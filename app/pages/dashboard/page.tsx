@@ -18,11 +18,11 @@ interface DashboardData {
 
 // Configuration flags for each data service
 const CONFIG = {
-  CARDS_SSR_ENABLED: true,
-  TRANSACTIONS_SSR_ENABLED: true,
+  CARDS_SSR_ENABLED: false,
+  TRANSACTIONS_SSR_ENABLED: false,
   WEEKLY_SSR_ENABLED: false, //should be kept false as ui library dosnt's support SSR
   EXPENSE_SSR_ENABLED: false, //should be kept false as ui library dosnt's support SSR
-  QUICK_TRANSFER_SSR_ENABLED: true,
+  QUICK_TRANSFER_SSR_ENABLED: false,
   BALANCE_HISTORY_SSR_ENABLED: false, //should be kept false as ui library dosnt's support SSR
 } as const;
 

@@ -7,7 +7,7 @@ import { settingsDataService } from '@/app/services/dataServices/settings/settin
 import ClientSettings from './client';
 
 const CONFIG = {
-  SETTINGS_SSR_ENABLED: true,
+  SETTINGS_SSR_ENABLED: false,
 } as const;
 
 const SettingsPage: NextPage = async (): Promise<JSX.Element> => {
