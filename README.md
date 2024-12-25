@@ -1,5 +1,33 @@
 # Soar Dashboard Documentation
 
+## How to setup and run.
+ - Download repo from Github (https://github.com/muditgoel2016/my-dashboard.git)
+ - Ensure latest node installed.
+ - Do npm install --legacy-peer-deps inside project root, my-dashboard
+ - Run `npm run dev` for running app locally in dev mode
+ - Launch browser at http://localhost:3000 to access the webapp
+
+# Branching Strategy
+
+## Main Branches
+- `main` - Production code
+- `staging` - Pre-production testing
+- `develop` - Development integration
+
+## Feature Development Flow
+1. Branch from: `develop`
+2. Naming: 
+  - `feature/SOAR-123-short-description`
+  - `bugfix/SOAR-123-issue-description`
+  - `hotfix/SOAR-123-critical-fix`
+
+## Development Process
+1. Developer creates feature branch
+   git checkout develop
+   git pull origin develop
+   git checkout -b feature/SOAR-123-add-transactions
+2. Developer run various scripts (check package.json) in the course of development
+
 ## Project Structure
 
 1. File and Folder Organization
